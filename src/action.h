@@ -5,9 +5,9 @@
 
 class Action { //classe abstraite
 public:
-    virtual void executer()=0; //méthode virtuelle pure, définition dans les classes dérivées
-    virtual void annuler()=0; //méthode virtuelle pure
-    virtual ~Action() = default; // destructeur virtuel car la classe est sous-classée
+    virtual void executer()=0; //methode virtuelle pure, definition dans les classes derivees
+    virtual void annuler()=0; //methode virtuelle pure
+    virtual ~Action() = default; // destructeur virtuel car la classe est sous-classee
 };
 
 // Selection de tuile dans la pioche
@@ -44,7 +44,7 @@ public:
     void annuler();
 };
 
-// Placer un jeton sur une tuile qui est déjà placée
+// Placer un jeton sur une tuile qui est deja placee
 class ActionPlacerJeton: public Action {
 private:
     TuilePlacee* cible;
@@ -63,8 +63,8 @@ private:
 public:
     ActionUtiliserJetonNature(Action* a);
     virtual ~ActionUtiliserJetonNature();
-    virtual void executer()=0; //méthode virtuelle pure
-    virtual void annuler()=0; //méthode virtuelle pure
+    virtual void executer()=0; //methode virtuelle pure
+    virtual void annuler()=0; //methode virtuelle pure
 };
 
 class SelectionTuileJeton : public ActionUtiliserJetonNature {

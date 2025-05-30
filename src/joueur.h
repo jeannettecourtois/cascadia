@@ -23,7 +23,7 @@ public:
                 return tuiles[i];
             }
         }
-        return nullptr; // Si aucune tuile n'est trouvée à cette position
+        return nullptr; // Si aucune tuile n'est trouvee a cette position
     }
 };
 

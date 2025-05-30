@@ -21,7 +21,7 @@ class JetonFaune {
 public:
     JetonFaune(Animal a) : ani(a){}
     ~JetonFaune() = default;
-    //méthodes et accesseurs en lecture 
+    //methodes et accesseurs en lecture 
     Animal getAnimal() const{return ani;}
 };
 

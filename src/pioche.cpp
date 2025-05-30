@@ -6,7 +6,7 @@ SacTuile::SacTuile() {}
 
 SacTuile::~SacTuile() {}
 
-Tuile* SacTuile::Piocher() {return nullptr;} //à changer, juste pour compiler coder
+Tuile* SacTuile::Piocher() {return nullptr;} //a changer, juste pour compiler coder
 
 void SacTuile::mettreDansLeSac(Tuile&) {}
 
@@ -15,7 +15,7 @@ SacJeton::SacJeton() {}
 
 SacJeton::~SacJeton() {}
 
-Animal* SacJeton::Piocher() {return nullptr;} //à changer, juste pour compiler coder
+Animal* SacJeton::Piocher() {return nullptr;} //a changer, juste pour compiler coder
 
 void SacJeton::mettreDansLeSac(const Animal& a) {}
 
@@ -39,7 +39,7 @@ Pioche::~Pioche() {
 }
 
 void Pioche::preparerPioche() {
-    // Préparer la pioche de tuiles et de jetons
+    // Preparer la pioche de tuiles et de jetons
     for (int i = 0; i < 4; ++i) {
         tuiles[i] = sacDeTuiles->Piocher();
         jetons[i] = sacDeJetons->Piocher();
@@ -47,7 +47,7 @@ void Pioche::preparerPioche() {
 }
 
 void Pioche::selectionnerTuile() {
-    // Sélectionner une tuile parmi celles disponibles
+    // Selectionner une tuile parmi celles disponibles
     idTuileChoisis = rand() % 4;
 }
 

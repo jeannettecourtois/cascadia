@@ -3,7 +3,7 @@
 #include <string>
 #include "tuile.h"
 
-class TuilePlaceeDeplacable; // déclaration anticipée pour TuilePlacee
+class TuilePlaceeDeplacable; // declaration anticipee pour TuilePlacee
 
 class Position {
 public:

@@ -1,7 +1,7 @@
 #pragma once
 #include "enum.h"
 #include "controleurGeneral.h"
-class PlateauJoueur; // Déclaration anticipée
+class PlateauJoueur; // Declaration anticipee
 
 class CarteMarquageFaune {
 private:

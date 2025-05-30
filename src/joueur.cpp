@@ -2,20 +2,20 @@
 #include "partie.h"
 
 Joueur :: Joueur() : idJoueur(1), nbJetonNature(0), nomJoueur("Joueur 1"), plateau(new PlateauJoueur()) {
-    // Constructeur par défaut
+    // Constructeur par defaut
 }
 Joueur :: ~Joueur() {
     delete plateau;
 }
 int Joueur :: calculScore() {
     int score = 0;
-    // Calculer le score en fonction des tuiles placées et des jetons selon les règles
+    // Calculer le score en fonction des tuiles placees et des jetons selon les regles
     return score;
 }
 
 
 PlateauJoueur :: PlateauJoueur() : nbTuiles(0), tuiles(nullptr) {
-    // Constructeur par défaut
+    // Constructeur par defaut
 }
 PlateauJoueur :: ~PlateauJoueur() {
     for (int i = 0; i < nbTuiles; ++i) {
@@ -29,9 +29,9 @@ void PlateauJoueur:: ajouterTuile(const TuilePlacee* tuile) {
     for (int i = 0; i < nbTuiles; ++i) {
         newTuiles[i] = tuiles[i]; //copie des tuiles existantes
     }
-    newTuiles[nbTuiles] = new TuilePlacee(*tuile); //copie de la tuile passé en paramètre
+    newTuiles[nbTuiles] = new TuilePlacee(*tuile); //copie de la tuile passe en parametre
     delete[] tuiles;
-    tuiles = newTuiles; //nouveau tableau avec la nouvelle tuile placée à la fin
+    tuiles = newTuiles; //nouveau tableau avec la nouvelle tuile placee a la fin
     nbTuiles++;
 }
 void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {
@@ -52,18 +52,18 @@ void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {
 void PlateauJoueur::afficherPlateau() const {
     /*Affichage du plateau du joueur en vrac pour le moment,
     * la rotation des tuiles n'est pas prise en compte/!\
-    * faudra ajouter le design d'Alexandre pour que les tuiles soient correctement affichées*/
+    * faudra ajouter le design d'Alexandre pour que les tuiles soient correctement affichees*/
 
     for (int i = 0; i < nbTuiles; ++i) {
         const TuilePlacee* tuile = tuiles[i];
         if (tuile) {
-            const Position& pos = tuile->getPosition();  // Getter ajouté dans tuilePlacee.h
+            const Position& pos = tuile->getPosition();  // Getter ajoute dans tuilePlacee.h
             const Tuile* t = tuile->getTuile();
             Animal animal = tuile->getJeton();
 
             std::cout << "Tuile " << i + 1 << " : ";
             std::cout << "Position (" << pos.x << ", " << pos.y << "), ";
-            std::cout << "Animal: " << animal << std::endl; // Surchargé dans enum.h
+            std::cout << "Animal: " << animal << std::endl; // Surcharge dans enum.h
         }
     }
 }

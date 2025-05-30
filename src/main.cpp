@@ -11,16 +11,16 @@
 using namespace std;
 
 static void createNewGame() {
-    cout << "Création d'une nouvelle partie" << endl;
+    cout << "Creation d'une nouvelle partie" << endl;
     int nbPlayers = askNumberOfPlayers();
-    cout << "Nombre de joueurs sélectionné : " << nbPlayers << endl;
+    cout << "Nombre de joueurs selectionne : " << nbPlayers << endl;
     try {
         cout << "Lancement du jeu ! " << endl;
         Partie partie(nbPlayers);
         partie.initialiserPartie();
     }
-    catch (const exception& e) {cerr << "Erreur lors de la création de la partie : " << e.what() << endl;}
-    catch (...) {cerr << "Erreur inconnue lors de la création de la partie." << endl;}
+    catch (const exception& e) {cerr << "Erreur lors de la creation de la partie : " << e.what() << endl;}
+    catch (...) {cerr << "Erreur inconnue lors de la creation de la partie." << endl;}
 }
 
 
@@ -30,12 +30,12 @@ int main() {
     cout << "Bienvenue dans Cascadia - Version Console" << endl;
     try {
         if (askLoadGame()) {
-            // pour l'instant permet juste d'éviter une variable globale
+            // pour l'instant permet juste d'eviter une variable globale
             string filename = askFilename();
             try {                
                 FileHandler handler;
                 if (handler.loadGame(false, filename)) {
-                    cout << "Partie chargée avec succès !" << endl;                    
+                    cout << "Partie chargee avec succes !" << endl;                    
                     // ON LANCE LA PARTIE
                     //ControleurGeneral::getInstance().startConsole();
 
@@ -45,7 +45,7 @@ int main() {
                     if (saveChoice == "y" || saveChoice == "Y") {
                         string saveFile = askFilename();
                         if (handler.saveGame(false, saveFile)) {
-                            cout << "Partie sauvegardée avec succès dans " << saveFile << endl;
+                            cout << "Partie sauvegardee avec succes dans " << saveFile << endl;
                         } else {
                             cerr << "Erreur lors de la sauvegarde." << endl;
                         }
@@ -54,7 +54,7 @@ int main() {
                     //ControleurGeneral::freeInstance();
                 } else {cerr << "Impossible de charger la partie." << endl;}
 
-                // On indique ce qui a été chargé
+                // On indique ce qui a ete charge
                 cout << "Chargement et lancement de la partie depuis : " << filename << endl;
             }
             catch (const exception& e) {cerr << "Exception lors du chargement de la partie : " << e.what() << endl;}
@@ -63,7 +63,7 @@ int main() {
         // SINON ON CREER UNE NOUVELLE PARTIE
         else {createNewGame();}
     }
-    // On récupère ici toutes les éventuelles erreurs pour une sortie "propre" du programme
+    // On recupere ici toutes les eventuelles erreurs pour une sortie "propre" du programme
     catch (const exception& e) {
         cerr << "Erreur fatale : " << e.what() << endl;
         return 1;
@@ -74,6 +74,6 @@ int main() {
     }
 
     // AU REVOIR
-    cout << "Merci d'avoir joué !" << endl;
+    cout << "Merci d'avoir joue !" << endl;
     return 0;
 }

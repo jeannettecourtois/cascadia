@@ -62,7 +62,7 @@ public:
 public:
     Keystone();
     ~Keystone() override;
-    // Donne un jeton keyStone à joueur si pose animal sur bonne case keyStone
+    // Donne un jeton keyStone a joueur si pose animal sur bonne case keyStone
     void associationJeton() const override; // Où mettre joueur ?
-    // on peut mettre dans ActionPlacerJeton car dernière action du tour
+    // on peut mettre dans ActionPlacerJeton car derniere action du tour
 };*/
