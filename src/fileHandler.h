@@ -17,9 +17,7 @@ public:
     bool loadFromFile(const string& filename = "save.txt");
 };
 
-static string askFilename() {
-    return "save.txt";
-}
+static string askFilename() { return "save.txt"; }
 
 bool askLoadGame() {
     string input;

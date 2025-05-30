@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action.h" />
-    <ClInclude Include="src\affichable.h" />
     <ClInclude Include="src\carteMarquageFaune.h" />
     <ClInclude Include="src\controleurGeneral.h" />
     <ClInclude Include="src\enum.h" />

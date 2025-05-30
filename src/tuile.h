@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include "enum.h"
-#include "affichable.h"
 #include <random>
 
 
@@ -57,9 +56,6 @@ public:
         f << std::endl;
     }
 };
-
-
-
 
 
 /*class Keystone : public Tuile {

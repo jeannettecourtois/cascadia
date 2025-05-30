@@ -1,7 +1,6 @@
 #include <iostream>
 #include "carteMarquageFaune.h"
 #include "controleurGeneral.h"
-#include "affichable.h"
 #include "enum.h"
 #include "tuile.h"
 
@@ -27,7 +26,7 @@ static void createNewGame() {
 
 int main() {
     cout << "Initalisation de la partie..." << endl;
-    ControleurGeneral CG;
+    // ControleurGeneral CG;
     cout << "Bienvenue dans Cascadia - Version Console" << endl;
     try {
         if (askLoadGame()) {

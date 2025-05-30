@@ -87,7 +87,7 @@ Joueur* Partie::getGagnant() const {
 
 void Partie::initialiserPartie() {
     //récupération du singleton du jeu
-    SINGLETON::ControleurGeneral& ctrl = SINGLETON::ControleurGeneral::getInstance();
+    ControleurGeneral& ctrl = ControleurGeneral::getInstance();
     //initialisation du RNG (générateur de nombres aléatoires) pour choix de cartes
     srand(time(nullptr));
 
@@ -98,12 +98,12 @@ void Partie::initialiserPartie() {
     }
 
     // Sélection d’un set de 3 tuiles de départ (même pour tous les joueurs)
-    TuileDepart* set = ctrl.getTuilesDepartAleatoires(); // un tableau de 3 tuiles
+    TuileDepart** set = ctrl.getTuilesDepartAleatoires(); // un tableau de 3 tuiles
     cout << "Set de tuiles de départ généré." << std::endl;
 
     // Distribution d'une copie du set à chaque joueur
     for (int i = 0; i < nbJoueur; ++i) {
-        TuileDepart* copie = new TuileDepart(*set); // copie pour chaque joueur
+        TuileDepart* copie = new TuileDepart(**set); // copie pour chaque joueur
         joueurs[i]->getPlateau()->ajouterTuileDepart(copie);
     }
     delete set; // libération mémoire
