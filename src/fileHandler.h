@@ -16,10 +16,8 @@ public:
     bool loadFromFile(const string& filename = "save.txt");
 };
 
-static string askFilename() { return "save.txt"; }
-
 bool askLoadGame();
-
+static string askFilename() { return "save.txt"; }
 static int askNumberOfPlayers() {
     int nbPlayers = -1;
     while (nbPlayers < 0 || nbPlayers > 4) {
