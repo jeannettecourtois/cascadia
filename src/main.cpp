@@ -1,11 +1,10 @@
+#include <string>
+#include <exception>
 #include <iostream>
 #include "carteMarquageFaune.h"
 #include "controleurGeneral.h"
 #include "enum.h"
 #include "tuile.h"
-
-#include <string>
-#include <exception>
 #include "fileHandler.h"
 
 using namespace std;

@@ -20,7 +20,7 @@ bool askLoadGame();
 static string askFilename() { return "save.txt"; }
 static int askNumberOfPlayers() {
     int nbPlayers = -1;
-    while (nbPlayers < 0 || nbPlayers > 4) {
+    while (nbPlayers < 1 || nbPlayers > 4) {
         cout << "Combien de joueurs ? (1 a 4) : ";
         cin >> nbPlayers;
         if (cin.fail()) {
