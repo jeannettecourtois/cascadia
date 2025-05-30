@@ -59,7 +59,7 @@ void PlateauJoueur::afficherPlateau() const {
         if (tuile) {
             const Position& pos = tuile->getPosition();  // Getter ajouté dans tuilePlacee.h
             const Tuile* t = tuile->getTuile();
-            animalOuPas animal = tuile->getJeton();
+            Animal animal = tuile->getJeton();
 
             std::cout << "Tuile " << i + 1 << " : ";
             std::cout << "Position (" << pos.x << ", " << pos.y << "), ";

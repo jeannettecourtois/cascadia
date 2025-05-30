@@ -87,7 +87,7 @@ Joueur* Partie::getGagnant() const {
 
 void Partie::initialiserPartie() {
     //récupération du singleton du jeu
-    ControleurGeneral& ctrl = ControleurGeneral::getInstance();
+    SINGLETON::ControleurGeneral& ctrl = SINGLETON::ControleurGeneral::getInstance();
     //initialisation du RNG (générateur de nombres aléatoires) pour choix de cartes
     srand(time(nullptr));
 
@@ -136,10 +136,10 @@ void Partie::jouerTour() {
         return;
     }
     Joueur* joueur = joueurs[joueurCourant];
-    cout << "Tour du joueur " << joueur + 1 << endl;
+    cout << "Tour du joueur " << joueurCourant << endl;
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
-    string animalJetonSelectionne = "";
+    Animal* animalJetonSelectionne = nullptr;
     bool tuilePlacee = false;
     bool jetonPlace = false;
 
@@ -192,7 +192,7 @@ void Partie::jouerTour() {
                 break;
             }
             case 3: { // Placer un jeton faune
-                if (animalJetonSelectionne.empty()){
+                if (!animalJetonSelectionne){ // Test si le pointeur est nul
                     cout << "Aucun jeton faune sélectionné. Veuillez d'abord sélectionner un jeton." << endl;
                     break;
                 }
@@ -210,7 +210,7 @@ void Partie::jouerTour() {
                     break;
                 }
                 // Vérifier si le jeton peut être placé sur la tuile
-                if (!tuilePlacee->getTuile()->contientAnimal(animalJetonSelectionne)) {
+                if (!tuilePlacee->getTuile()->contientAnimal(*animalJetonSelectionne)) {
                     cout << "Le jeton faune ne peut pas être placé sur cette tuile." << endl;
                     break;
                 }

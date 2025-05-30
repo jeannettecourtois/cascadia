@@ -30,7 +30,7 @@ public:
 class TuilePlacee {
 private:
     const Tuile* tuile;
-    animalOuPas jeton;
+    Animal jeton;
 protected:
     Position pos;
     int rotation;
@@ -40,10 +40,10 @@ public:
     ~TuilePlacee();
 
     const Tuile* getTuile() const {return tuile;}
-    animalOuPas getJeton() const {return jeton;}
+    Animal getJeton() const {return jeton;}
     virtual void deplacer(const Position& p);
     virtual void tourner(const int n);
-    void ajouterJeton(const animalOuPas a);
+    void ajouterJeton(const Animal a);
     Position getPosition() const { return pos; }
 };
 

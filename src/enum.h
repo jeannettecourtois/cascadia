@@ -4,14 +4,6 @@
 //Mieux d'utiliser "Animal" que "animal"
 //Même chose pour "Habitat" que "habitat"
 enum class Animal {
-    Ours,
-    Cerf,
-    Saumon,
-    Aigle,
-    Renard
-};
-
-enum class animalOuPas {
     Vide = 0,
     Ours = 1,
     Cerf, 
@@ -20,14 +12,14 @@ enum class animalOuPas {
     Renard
 };
 
-std::ostream& operator<<(std::ostream& f, const animalOuPas& animal) {
+std::ostream& operator<<(std::ostream& f, const Animal& animal) {
     switch (animal) {
-    case animalOuPas::Vide: f << "Vide"; break;
-    case animalOuPas::Ours: f << "Ours"; break;
-    case animalOuPas::Cerf: f << "Cerf"; break;
-    case animalOuPas::Saumon: f << "Saumon"; break;
-    case animalOuPas::Aigle: f << "Aigle"; break;
-    case animalOuPas::Renard: f << "Renard";break;
+    case Animal::Vide: f << "Vide"; break;
+    case Animal::Ours: f << "Ours"; break;
+    case Animal::Cerf: f << "Cerf"; break;
+    case Animal::Saumon: f << "Saumon"; break;
+    case Animal::Aigle: f << "Aigle"; break;
+    case Animal::Renard: f << "Renard";break;
     }
     return f;
 }

@@ -33,7 +33,7 @@ public:
 class Pioche {
 private:
     Tuile* tuiles[4];
-    animalOuPas jetons[4];
+    Animal* jetons[4];
     int idTuileChoisis;
     SacTuile* sacDeTuiles;
     SacJeton* sacDeJetons;
@@ -43,7 +43,7 @@ public:
     void preparerPioche();
     void afficherTuilesDisponibles() const;
     void selectionnerTuile();
-    void selectionnerJeton() const;
+    Animal selectionnerJeton() const;
     Tuile* getTuile(int i) const { return tuiles[i]; }
-    animalOuPas getJeton(int i) const { return jetons[i]; }
+    Animal* getJeton(int i) const { return jetons[i]; }
 };

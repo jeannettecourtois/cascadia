@@ -71,29 +71,34 @@ public:
 };
 
 // Env Test
-namespace singleton{
-    class ControleurGeneral : public affichable {
+namespace SINGLETON{
+    class ControleurGeneral {
     private:
         int nbTuilesHabitat;
         int nbJetonFaune;
         int nbJetonsNature;
         int nbCartesMarquageFaune;
-        //
+
         JetonFaune* tabJetons[100];
         Tuile* tabTuiles[85];
         CarteMarquageFaune* tabCartesMarquage[15];
-        //
+
         std::random_device rd;
         std::mt19937 gen;
         std::uniform_int_distribution<> distTuiles;
         std::uniform_int_distribution<> distJetons;
         std::uniform_int_distribution<> distCartes;
 
-    public:
         ControleurGeneral();
-        ~ControleurGeneral();
         ControleurGeneral(const ControleurGeneral&) = delete;
-        void afficher(std::ostream& f = std::cout) const override { f << "Le jeu peut commencer.\n"; }
+        ControleurGeneral& operator=(const ControleurGeneral&) = delete;
+
+    public:
+        ~ControleurGeneral();
+        static ControleurGeneral& getInstance() {
+            static ControleurGeneral instance;
+            return instance;
+        }
         Tuile* getTuile() { return tabTuiles[distTuiles(gen)]; }
         JetonFaune* getJetonFaune() { return tabJetons[distJetons(gen)]; }
         CarteMarquageFaune* getCarteMarquageFaune() { return tabCartesMarquage[distCartes(gen)]; }

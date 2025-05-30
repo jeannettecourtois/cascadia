@@ -56,8 +56,6 @@ public:
         }
         f << std::endl;
     }
-
-    bool contientAnimal(const std::string& animal) const;
 };
 
 

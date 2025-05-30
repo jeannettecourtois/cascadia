@@ -2,7 +2,7 @@
 #include "enum.h"
 
 
-TuilePlacee::TuilePlacee():tuile(nullptr),jeton(animalOuPas::Vide),pos(0,0),rotation(0){}
+TuilePlacee::TuilePlacee():tuile(nullptr),jeton(Animal::Vide),pos(0,0),rotation(0){}
 
 TuilePlacee::TuilePlacee(const TuilePlaceeDeplacable* t):tuile(t->getTuile()),jeton(t->getJeton()),pos(t->getPosition()),rotation(t->getRotation()){}
 
@@ -16,6 +16,6 @@ void TuilePlacee::tourner(int n) {
     // to do
 }
 
-void TuilePlacee::ajouterJeton(animalOuPas a) {
+void TuilePlacee::ajouterJeton(Animal a) {
     jeton = a;
 }

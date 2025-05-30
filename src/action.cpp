@@ -8,12 +8,12 @@ ActionSelectionTuile::~ActionSelectionTuile() {}
 void ActionSelectionTuile::executer() {}
 void ActionSelectionTuile::annuler() {}
 
-ActionSelectionJeton::ActionSelectionJeton() : jetonSelection(animalOuPas::Vide) {}
+ActionSelectionJeton::ActionSelectionJeton() : jetonSelection(Animal::Vide) {}
 ActionSelectionJeton::~ActionSelectionJeton() {}
 void ActionSelectionJeton::executer() {}
 void ActionSelectionJeton::annuler() {}
 
-ActionPlacerTuile::ActionPlacerTuile(Tuile* t, Position p) : tuile(t), pos(p) {}
+ActionPlacerTuile::ActionPlacerTuile(Tuile* t, const Position& p) : tuile(t), pos(p) {}
 ActionPlacerTuile::~ActionPlacerTuile() {}
 void ActionPlacerTuile::executer() {
     //indiquer la position de la tuile
@@ -21,7 +21,7 @@ void ActionPlacerTuile::executer() {
 }
 void ActionPlacerTuile::annuler() {}
 
-ActionPlacerJeton::ActionPlacerJeton(animalOuPas j, TuilePlacee* c) : jeton(j), cible(c) {}
+ActionPlacerJeton::ActionPlacerJeton(Animal* j, TuilePlacee* c) : jeton(j), cible(c) {}
 ActionPlacerJeton::~ActionPlacerJeton() {}
 void ActionPlacerJeton::executer() {
     //verifier si la tuile est déjà placée

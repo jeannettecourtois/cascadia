@@ -24,7 +24,7 @@ public:
 // Selection de jeton dans la pioche
 class ActionSelectionJeton: public Action {
 private:
-    animalOuPas jetonSelection;
+    Animal jetonSelection;
 public:
     ActionSelectionJeton();
     ~ActionSelectionJeton();
@@ -38,7 +38,7 @@ private:
     Tuile* tuile;
     Position pos;
 public:
-    ActionPlacerTuile(Tuile* t, Position p);
+    ActionPlacerTuile(Tuile* t, const Position& p);
     ~ActionPlacerTuile();
     void executer();
     void annuler();
@@ -48,9 +48,9 @@ public:
 class ActionPlacerJeton: public Action {
 private:
     TuilePlacee* cible;
-    animalOuPas jeton;
+    Animal* jeton;
 public:
-    ActionPlacerJeton(animalOuPas j, TuilePlacee* c);
+    ActionPlacerJeton(Animal* j, TuilePlacee* c);
     ~ActionPlacerJeton();
     void executer();
     void annuler();
