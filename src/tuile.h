@@ -37,6 +37,18 @@ public:
         }
     }
 
+    Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animaux, const Habitat* habitats) {
+        this->nbAnimaux = nbAnimaux;
+        this->nbHabitat = nbHabitat;
+        listeAnimaux = new Animal*[nbAnimaux];
+        listeHabitat = new Habitat*[nbHabitat];
+        for (unsigned int i = 0; i < nbAnimaux; ++i)
+            listeAnimaux[i] = new Animal(animaux[i]);
+        for (unsigned int i = 0; i < nbHabitat; ++i)
+            listeHabitat[i] = new Habitat(habitats[i]);
+    }
+
+
     ~Tuile();
 
     bool contientAnimal(const Animal& a) const;

@@ -14,6 +14,13 @@ public:
     TuileDepart(const TuileDepart& other);
     ~TuileDepart();
     TuilePlacee* getTuile(int i) const { return tuiles[i]; }
+    void setTuile(int i, TuilePlacee* t) {;
+        if (i >= 0 && i < 3) {
+            tuiles[i] = t;
+        } else {
+            std::cerr << "Index hors limites pour les tuiles de départ.\n";
+        }
+    }
 };
 
 class JetonFaune {
@@ -55,14 +62,14 @@ private:
     ControleurGeneral();
     ControleurGeneral(const ControleurGeneral&) = delete;
     ControleurGeneral& operator=(const ControleurGeneral&) = delete;
-
+    void initialiserTuilesDepart(); // Initialise les tuiles de départ, méthode privée
 public:
     ~ControleurGeneral();
     static ControleurGeneral& getInstance();
 
     Tuile* getTuile();
     JetonFaune* getJetonFaune();
-    CarteMarquageFaune* getCarteMarquageFaune();
-    CarteMarquageFaune* getCarteRegleAleatoire();
-    TuileDepart** getTuilesDepartAleatoires(); // retourne un tableau de 3 pointeurs
+    CarteMarquageFaune* getCarteMarquageParAnimalAleatoire(Animal a);
+
+    TuileDepart* getTuileDepartAleatoire();
 };

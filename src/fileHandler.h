@@ -3,8 +3,8 @@
 #include <iostream>
 #include <fstream>  // pour la gestion des fichiers
 
-/* Pour l'instant gere un ajout tres simple de donnees dans un txt :
-    - Pourrait valoir le coup de passer a un csv ou json*/
+/* Pour l'instant g�re un ajout tr�s simple de donn�es dans un txt :
+    - Pourrait valoir le coup de passer � un csv ou json*/
 
 using namespace std;
 
@@ -20,13 +20,13 @@ bool askLoadGame();
 static string askFilename() { return "save.txt"; }
 static int askNumberOfPlayers() {
     int nbPlayers = -1;
-    while (nbPlayers < 1 || nbPlayers > 4) {
-        cout << "Combien de joueurs ? (1 a 4) : ";
+    while (nbPlayers < 0 || nbPlayers > 4) {
+        cout << "Combien de joueurs ? (1 � 4) : ";
         cin >> nbPlayers;
         if (cin.fail()) {
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "Entree invalide, veuillez entrer un nombre entre 1 et 4 inclus." << endl;
+            cout << "Entr�e invalide, veuillez entrer un nombre entre 1 et 4 inclus." << endl;
             nbPlayers = -1;
         }
     }

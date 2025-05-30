@@ -90,14 +90,14 @@ CarteMarquageFaune* ControleurGeneral::getCarteMarquageFaune() {
 
 CarteMarquageFaune* ControleurGeneral::getCarteRegleAleatoire() {
     if (nbCartesRegles == 0 || cartesRegles == nullptr)
-        throw std::runtime_error("Aucune carte regle disponible.");
+        throw std::runtime_error("Aucune carte règle disponible.");
     std::uniform_int_distribution<> dist(0, nbCartesRegles - 1);
     return cartesRegles[dist(gen)];
 }
 
 TuileDepart** ControleurGeneral::getTuilesDepartAleatoires() {
     if (nbTuilesDepart == 0 || tuilesDepart == nullptr)
-        throw std::runtime_error("Aucune tuile de depart disponible.");
+        throw std::runtime_error("Aucune tuile de départ disponible.");
 
     TuileDepart** selection = new TuileDepart * [3];
     for (int i = 0; i < 3; ++i) {

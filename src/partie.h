@@ -40,13 +40,14 @@ public:
     int getNbJoueur() const {return nbJoueur;}
     int getNbTour() const {return nbTour;}
     Joueur* getJoueur(int i) const {return joueurs[i];}
-    CarteMarquageFaune* getCarteRegle(int i) const { return cartesRegles[i]; }
-    Pioche* getPioche() const { return pioche; }
+        Pioche* getPioche() const { return pioche; }
     int getJoueurCourant() const { return joueurCourant; }
+    CarteMarquageFaune* getCarteRegle(int i) const { return cartesRegles[i]; }
 
     bool estFini() const;
     Joueur* getGagnant() const;
     void initialiserPartie();
+    void initialiserCartesRegles();
     void jouerTour();
     void passerAuJoueurSuivant();
 };

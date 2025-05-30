@@ -36,6 +36,9 @@ protected:
 public:
     TuilePlacee();
     TuilePlacee(const TuilePlaceeDeplacable* t);
+    TuilePlacee(const Tuile* tuile, Animal a) : tuile(tuile), jeton(a), rotation(0) {}
+    TuilePlacee(const Tuile* tuile) : tuile(tuile), jeton(Animal::Vide), rotation(0) {}
+
     ~TuilePlacee();
 
     const Tuile* getTuile() const {return tuile;}
