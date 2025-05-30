@@ -31,6 +31,7 @@ void ControleurTour::annulerDerniereAction() {
 
 
 // PARTIE
+//à voir si vrmt besoin du constructeur pour partie solo -> 1 à 4 joueur dans partie(int nbJoueurs)
 //1 joueur par defaut quand on créer une partie - Partie solo
 Partie::Partie() : nbJoueur(1), joueurs(new Joueur*[1]), pioche(new Pioche()), ctrlTour(new ControleurTour()), joueurCourant(0) {
         joueurs[0]=new Joueur();
@@ -85,28 +86,25 @@ Joueur* Partie::getGagnant() const {
 }
 
 
-void Partie::initialiserPartie() {
-    //récupération du singleton du jeu
+void Partie::initialiserCartesRegles() {
+    static const Animal animaux[5] = { Animal::Aigle, Animal::Cerf, Animal::Ours, Animal::Renard, Animal::Saumon };
     ControleurGeneral& ctrl = ControleurGeneral::getInstance();
-    //initialisation du RNG (générateur de nombres aléatoires) pour choix de cartes
-    srand(time(nullptr));
-
-    // Sélection aléatoire de 5 cartes de marquage faune
     for (int i = 0; i < 5; ++i) {
-        cartesRegles[i] = ctrl.getCarteRegleAleatoire();
-        cout << "Carte règle faune " << i+1 << " sélectionnée." << std::endl;
+        cartesRegles[i] = ctrl.getCarteMarquageParAnimalAleatoire(animaux[i]);
     }
+}
 
-    // Sélection d’un set de 3 tuiles de départ (même pour tous les joueurs)
-    TuileDepart** set = ctrl.getTuilesDepartAleatoires(); // un tableau de 3 tuiles
-    cout << "Set de tuiles de départ généré." << std::endl;
+void Partie::initialiserPartie() {
+    ControleurGeneral& ctrl = ControleurGeneral::getInstance();
+    initialiserCartesRegles();
+    cout << "Cartes de règles initialisées." << std::endl;
 
-    // Distribution d'une copie du set à chaque joueur
+    // Sélection et distribution d'une tuile de départ aléatoire différente pour chaque joueur
     for (int i = 0; i < nbJoueur; ++i) {
-        TuileDepart* copie = new TuileDepart(**set); // copie pour chaque joueur
-        joueurs[i]->getPlateau()->ajouterTuileDepart(copie);
+        TuileDepart* tuile = ctrl.getTuileDepartAleatoire(); // tirage aléatoire
+        joueurs[i]->getPlateau()->ajouterTuileDepart(tuile);
     }
-    delete set; // libération mémoire
+    cout << "Tuiles de départ distribuées à chaque joueur." << std::endl;
 
     //Mise à jour de la pioche
     if (!pioche) {

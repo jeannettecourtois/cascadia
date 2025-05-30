@@ -29,7 +29,7 @@ ControleurGeneral::ControleurGeneral()
     : nbTuilesHabitat(85),
     nbJetonFaune(100),
     nbJetonsNature(25),
-    nbCartesMarquageFaune(21),
+    nbCartesMarquageFaune(15),
     nbCartesRegles(0),
     nbTuilesDepart(0),
     gen(rd()),
@@ -53,6 +53,9 @@ ControleurGeneral::ControleurGeneral()
     for (unsigned int i = 6; i < 9; ++i) tabCartesMarquage[i] = new CarteMarquageFaune(Animal::Ours);
     for (unsigned int i = 9; i < 12; ++i) tabCartesMarquage[i] = new CarteMarquageFaune(Animal::Renard);
     for (unsigned int i = 12; i < 15; ++i) tabCartesMarquage[i] = new CarteMarquageFaune(Animal::Saumon);
+
+    // Construction des Tuiles de Départ
+    initialiserTuilesDepart();
 }
 
 ControleurGeneral::~ControleurGeneral() {
@@ -84,25 +87,133 @@ JetonFaune* ControleurGeneral::getJetonFaune() {
     return tabJetons[distJetons(gen)];
 }
 
-CarteMarquageFaune* ControleurGeneral::getCarteMarquageFaune() {
+/*CarteMarquageFaune* ControleurGeneral::getCarteMarquageFaune() {
     return tabCartesMarquage[distCartes(gen)];
+}*/
+
+CarteMarquageFaune* ControleurGeneral::getCarteMarquageParAnimalAleatoire(Animal a) {
+    int debut = 0;
+    switch (a) {
+        case Animal::Aigle:   debut = 0; break;
+        case Animal::Cerf:   debut = 3; break;
+        case Animal::Ours:   debut = 6; break;
+        case Animal::Renard: debut = 9; break;
+        case Animal::Saumon: debut = 12; break;
+        default: throw std::runtime_error("Animal inconnu pour la sélection de carte.");
+    }
+    std::uniform_int_distribution<> distCarte(0, 2);
+    return tabCartesMarquage[debut + distCarte(gen)];
 }
 
-CarteMarquageFaune* ControleurGeneral::getCarteRegleAleatoire() {
-    if (nbCartesRegles == 0 || cartesRegles == nullptr)
-        throw std::runtime_error("Aucune carte règle disponible.");
-    std::uniform_int_distribution<> dist(0, nbCartesRegles - 1);
-    return cartesRegles[dist(gen)];
+void ControleurGeneral::initialiserTuilesDepart() {
+    nbTuilesDepart = 5;
+    tuilesDepart = new TuileDepart*[nbTuilesDepart];
+
+    // TuileDepart 0
+    {
+        Animal a1[1] = { Animal::Aigle };
+        Habitat h1[1] = { Habitat::Marais };
+        Tuile* t1 = new Tuile(1, 1, a1, h1);
+
+        Animal a2[2] = { Animal::Ours, Animal::Renard };
+        Habitat h2[2] = { Habitat::Montagne, Habitat::Prairie };
+        Tuile* t2 = new Tuile(2, 2, a2, h2);
+
+        Animal a3[3] = { Animal::Saumon, Animal::Cerf, Animal::Aigle };
+        Habitat h3[2] = { Habitat::Fleuve, Habitat::Foret };
+        Tuile* t3 = new Tuile(3, 2, a3, h3);
+
+        tuilesDepart[0] = new TuileDepart();
+        tuilesDepart[0]->setTuile(0, new TuilePlacee(t1));
+        tuilesDepart[0]->setTuile(1, new TuilePlacee(t2));
+        tuilesDepart[0]->setTuile(2, new TuilePlacee(t3));
+    }
+
+    // TuileDepart 1
+    {
+        Animal a1[1] = { Animal::Ours };
+        Habitat h1[1] = { Habitat::Montagne };
+        Tuile* t1 = new Tuile(1, 1, a1, h1);
+
+        Animal a2[2] = { Animal::Ours, Animal::Saumon };
+        Habitat h2[2] = { Habitat::Prairie, Habitat::Fleuve };
+        Tuile* t2 = new Tuile(2, 2, a2, h2);
+
+        Animal a3[3] = { Animal::Cerf, Animal::Aigle, Animal::Renard };
+        Habitat h3[2] = { Habitat::Marais, Habitat::Foret };
+        Tuile* t3 = new Tuile(3, 2, a3, h3);
+
+        tuilesDepart[1] = new TuileDepart();
+        tuilesDepart[1]->setTuile(0, new TuilePlacee(t1));
+        tuilesDepart[1]->setTuile(1, new TuilePlacee(t2));
+        tuilesDepart[1]->setTuile(2, new TuilePlacee(t3));
+    }
+
+    // TuileDepart 2
+    {
+        Animal a1[1] = { Animal::Cerf };
+        Habitat h1[1] = { Habitat::Foret };
+        Tuile* t1 = new Tuile(1, 1, a1, h1);
+
+        Animal a2[2] = { Animal::Renard, Animal::Saumon };
+        Habitat h2[2] = { Habitat::Prairie, Habitat::Marais };
+        Tuile* t2 = new Tuile(2, 2, a2, h2);
+
+        Animal a3[3] = { Animal::Aigle, Animal::Cerf, Animal::Ours };
+        Habitat h3[2] = { Habitat::Montagne, Habitat::Fleuve };
+        Tuile* t3 = new Tuile(3, 2, a3, h3);
+
+        tuilesDepart[2] = new TuileDepart();
+        tuilesDepart[2]->setTuile(0, new TuilePlacee(t1));
+        tuilesDepart[2]->setTuile(1, new TuilePlacee(t2));
+        tuilesDepart[2]->setTuile(2, new TuilePlacee(t3));
+    }
+
+    // TuileDepart 3
+    {
+        Animal a1[1] = { Animal::Saumon };
+        Habitat h1[1] = { Habitat::Fleuve };
+        Tuile* t1 = new Tuile(1, 1, a1, h1);
+
+        Animal a2[2] = { Animal::Aigle, Animal::Renard };
+        Habitat h2[2] = { Habitat::Montagne, Habitat::Fleuve };
+        Tuile* t2 = new Tuile(2, 2, a2, h2);
+
+        Animal a3[3] = { Animal::Ours, Animal::Cerf, Animal::Saumon };
+        Habitat h3[2] = { Habitat::Foret, Habitat::Prairie };
+        Tuile* t3 = new Tuile(3, 2, a3, h3);
+
+        tuilesDepart[3] = new TuileDepart();
+        tuilesDepart[3]->setTuile(0, new TuilePlacee(t1));
+        tuilesDepart[3]->setTuile(1, new TuilePlacee(t2));
+        tuilesDepart[3]->setTuile(2, new TuilePlacee(t3));
+    }
+
+    // TuileDepart 4
+    {
+        Animal a1[1] = { Animal::Renard };
+        Habitat h1[1] = { Habitat::Prairie };
+        Tuile* t1 = new Tuile(1, 1, a1, h1);
+
+        Animal a2[2] = { Animal::Ours, Animal::Cerf };
+        Habitat h2[2] = { Habitat::Montagne, Habitat::Foret };
+        Tuile* t2 = new Tuile(2, 2, a2, h2);
+
+        Animal a3[3] = { Animal::Aigle, Animal::Saumon, Animal::Renard };
+        Habitat h3[2] = { Habitat::Fleuve, Habitat::Marais };
+        Tuile* t3 = new Tuile(3, 2, a3, h3);
+
+        tuilesDepart[4] = new TuileDepart();
+        tuilesDepart[4]->setTuile(0, new TuilePlacee(t1));
+        tuilesDepart[4]->setTuile(1, new TuilePlacee(t2));
+        tuilesDepart[4]->setTuile(2, new TuilePlacee(t3));
+    }
 }
 
-TuileDepart** ControleurGeneral::getTuilesDepartAleatoires() {
+TuileDepart* ControleurGeneral::getTuileDepartAleatoire() {
     if (nbTuilesDepart == 0 || tuilesDepart == nullptr)
         throw std::runtime_error("Aucune tuile de départ disponible.");
 
-    TuileDepart** selection = new TuileDepart * [3];
-    for (int i = 0; i < 3; ++i) {
-        int index = std::uniform_int_distribution<>(0, nbTuilesDepart - 1)(gen);
-        selection[i] = new TuileDepart(*tuilesDepart[index]);
-    }
-    return selection;
+    std::uniform_int_distribution<> dist(0, nbTuilesDepart - 1);
+    return new TuileDepart(*tuilesDepart[dist(gen)]);
 }
