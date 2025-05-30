@@ -58,3 +58,14 @@ bool FileHandler::loadFromFile(const string& filename) {
         return false;
     }
 }
+
+bool askLoadGame() {
+    string input;
+    while (true) {
+        cout << "Voulez-vous charger une partie sauvegardée ? (y/n) : ";
+        cin >> input;
+        if (input == "y" || input == "Y") return true;
+        else if (input == "n" || input == "N") return false;
+        else cout << "Réponse invalide, veuillez entrer 'y' ou 'n'." << endl;
+    }
+}

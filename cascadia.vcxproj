@@ -122,6 +122,7 @@
     <ClCompile Include="src\action.cpp" />
     <ClCompile Include="src\carteMarquageFaune.cpp" />
     <ClCompile Include="src\controleurGeneral.cpp" />
+    <ClCompile Include="src\enum.cpp" />
     <ClCompile Include="src\fileHandler.cpp" />
     <ClCompile Include="src\joueur.cpp" />
     <ClCompile Include="src\main.cpp" />

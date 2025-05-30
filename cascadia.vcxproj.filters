@@ -45,6 +45,9 @@
     <ClCompile Include="src\fileHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\enum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Action.h">

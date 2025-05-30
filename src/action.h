@@ -69,16 +69,16 @@ public:
 
 class SelectionTuileJeton : public ActionUtiliserJetonNature {
 public:
-    SelectionTuileJeton();
-    ~SelectionTuileJeton();
+    SelectionTuileJeton() = default; // Temporaire
+    ~SelectionTuileJeton() = default; // Temporaire
     void executer();
     void annuler();
 };
 
 class SupressionJetonPioche : public ActionUtiliserJetonNature {
 public:
-    SupressionJetonPioche();
-    ~SupressionJetonPioche();
+    SupressionJetonPioche() = default; // Temporaire
+    ~SupressionJetonPioche() = default; // Temporaire
     void executer();
     void annuler();
 };

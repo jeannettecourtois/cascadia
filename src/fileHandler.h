@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 #include <iostream>
 #include <fstream>  // pour la gestion des fichiers
@@ -19,16 +18,7 @@ public:
 
 static string askFilename() { return "save.txt"; }
 
-bool askLoadGame() {
-    string input;
-    while (true) {
-        cout << "Voulez-vous charger une partie sauvegardée ? (y/n) : ";
-        cin >> input;
-        if (input == "y" || input == "Y") return true;
-        else if (input == "n" || input == "N") return false;
-        else cout << "Réponse invalide, veuillez entrer 'y' ou 'n'." << endl;
-    }
-}
+bool askLoadGame();
 
 static int askNumberOfPlayers() {
     int nbPlayers = -1;
