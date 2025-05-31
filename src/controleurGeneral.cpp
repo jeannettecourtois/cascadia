@@ -54,7 +54,7 @@ ControleurGeneral::ControleurGeneral()
     for (unsigned int i = 9; i < 12; ++i) tabCartesMarquage[i] = new CarteMarquageFaune(Animal::Renard);
     for (unsigned int i = 12; i < 15; ++i) tabCartesMarquage[i] = new CarteMarquageFaune(Animal::Saumon);
 
-    // Construction des Tuiles de Départ
+    // Construction des Tuiles de Depart
     initialiserTuilesDepart();
 }
 
@@ -99,7 +99,7 @@ CarteMarquageFaune* ControleurGeneral::getCarteMarquageParAnimalAleatoire(Animal
         case Animal::Ours:   debut = 6; break;
         case Animal::Renard: debut = 9; break;
         case Animal::Saumon: debut = 12; break;
-        default: throw std::runtime_error("Animal inconnu pour la sélection de carte.");
+        default: throw std::runtime_error("Animal inconnu pour la selection de carte.");
     }
     std::uniform_int_distribution<> distCarte(0, 2);
     return tabCartesMarquage[debut + distCarte(gen)];
@@ -212,7 +212,7 @@ void ControleurGeneral::initialiserTuilesDepart() {
 
 TuileDepart* ControleurGeneral::getTuileDepartAleatoire() {
     if (nbTuilesDepart == 0 || tuilesDepart == nullptr)
-        throw std::runtime_error("Aucune tuile de départ disponible.");
+        throw std::runtime_error("Aucune tuile de depart disponible.");
 
     std::uniform_int_distribution<> dist(0, nbTuilesDepart - 1);
     return new TuileDepart(*tuilesDepart[dist(gen)]);

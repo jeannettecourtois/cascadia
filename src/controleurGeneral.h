@@ -18,7 +18,7 @@ public:
         if (i >= 0 && i < 3) {
             tuiles[i] = t;
         } else {
-            std::cerr << "Index hors limites pour les tuiles de départ.\n";
+            std::cerr << "Index hors limites pour les tuiles de depart.\n";
         }
     }
 };
@@ -62,7 +62,7 @@ private:
     ControleurGeneral();
     ControleurGeneral(const ControleurGeneral&) = delete;
     ControleurGeneral& operator=(const ControleurGeneral&) = delete;
-    void initialiserTuilesDepart(); // Initialise les tuiles de départ, méthode privée
+    void initialiserTuilesDepart(); // Initialise les tuiles de depart, methode privee
 public:
     ~ControleurGeneral();
     static ControleurGeneral& getInstance();
