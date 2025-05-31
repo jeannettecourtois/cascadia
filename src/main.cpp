@@ -17,6 +17,8 @@ static void createNewGame() {
         cout << "Lancement du jeu ! " << endl;
         Partie partie(nbPlayers);
         partie.initialiserPartie();
+        // Jouer la partie
+        partie.jouerTour();
     }
     catch (const exception& e) {cerr << "Erreur lors de la creation de la partie : " << e.what() << endl;}
     catch (...) {cerr << "Erreur inconnue lors de la creation de la partie." << endl;}

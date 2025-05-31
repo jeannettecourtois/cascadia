@@ -31,18 +31,8 @@ void ControleurTour::annulerDerniereAction() {
 
 
 // PARTIE
-//a voir si vrmt besoin du constructeur pour partie solo -> 1 a 4 joueur dans partie(int nbJoueurs)
-//1 joueur par defaut quand on creer une partie - Partie solo
-Partie::Partie() : nbJoueur(1), joueurs(new Joueur*[1]), pioche(new Pioche()), ctrlTour(new ControleurTour()), joueurCourant(0) {
-        joueurs[0]=new Joueur();
-}
-
 //Partie avec plusieurs joueurs (max 4)
 Partie::Partie(int nbJoueurs) : nbJoueur(nbJoueurs), joueurs(new Joueur*[nbJoueur]), pioche(new Pioche()), ctrlTour(new ControleurTour()), joueurCourant(0) {
-    if (nbJoueurs < 1 || nbJoueurs > 4) {
-        cerr << "Nombre de joueurs invalide. Doit être entre 1 et 4.\n";
-        nbJoueur = 1; // Reinitialiser a 1 joueur par defaut
-    }
     for (int i = 0; i < nbJoueur; ++i) {
         joueurs[i] = new Joueur();
     }

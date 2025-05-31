@@ -3,11 +3,9 @@
 
 using namespace std;
 
-TuileDepart::TuileDepart() {
-    for (int i = 0; i < 3; ++i) {
-        tuiles[i] = nullptr;
-    }
-}
+// TuileDepart
+TuileDepart::TuileDepart() { for (int i = 0; i < 3; ++i) tuiles[i] = nullptr; }
+TuileDepart::~TuileDepart() { for (int i = 0; i < 3; ++i) delete tuiles[i]; }
 
 TuileDepart::TuileDepart(const TuileDepart& other) {
     for (int i = 0; i < 3; ++i) {
@@ -18,13 +16,7 @@ TuileDepart::TuileDepart(const TuileDepart& other) {
     }
 }
 
-TuileDepart::~TuileDepart() {
-    for (int i = 0; i < 3; ++i) {
-        delete tuiles[i];
-    }
-}
-
-
+// ControleurGeneral
 ControleurGeneral::ControleurGeneral()
     : nbTuilesHabitat(85),
     nbJetonFaune(100),
@@ -94,10 +86,10 @@ JetonFaune* ControleurGeneral::getJetonFaune() {
 CarteMarquageFaune* ControleurGeneral::getCarteMarquageParAnimalAleatoire(Animal a) {
     int debut = 0;
     switch (a) {
-        case Animal::Aigle:   debut = 0; break;
-        case Animal::Cerf:   debut = 3; break;
-        case Animal::Ours:   debut = 6; break;
-        case Animal::Renard: debut = 9; break;
+        case Animal::Aigle:  debut = 0;  break;
+        case Animal::Cerf:   debut = 3;  break;
+        case Animal::Ours:   debut = 6;  break;
+        case Animal::Renard: debut = 9;  break;
         case Animal::Saumon: debut = 12; break;
         default: throw std::runtime_error("Animal inconnu pour la selection de carte.");
     }

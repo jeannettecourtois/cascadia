@@ -1,5 +1,4 @@
 #include "tuile.h"
-#include <random>
 
 Tuile::~Tuile() {
     for(unsigned int i = 0; i<nbAnimaux; ++i){

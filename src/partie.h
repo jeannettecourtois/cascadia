@@ -31,8 +31,7 @@ private:
     int nbTour = 20;
     int joueurCourant=0;
 public:
-    Partie(); //partie solo
-    Partie(int nbJoueurs); //partie multi-joueurs
+    Partie(int nbJoueurs);
     Partie(const Partie&) = delete;
     Partie& operator=(const Partie&) = delete;
     ~Partie();
