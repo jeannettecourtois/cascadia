@@ -124,7 +124,7 @@ void Partie::jouerTour() {
         return;
     }
     Joueur* joueur = joueurs[joueurCourant];
-    cout << "Tour du joueur " << joueurCourant << endl;
+    cout << "Tour du joueur " << joueurCourant + 1 << endl;
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
     Animal* animalJetonSelectionne = nullptr;
@@ -132,6 +132,9 @@ void Partie::jouerTour() {
     bool jetonPlace = false;
 
     while (!actionFinie) {
+        // On affiche le plateau
+        cout << endl << "Plateau : " << endl; joueur->getPlateau()->afficherPlateau(); cout << endl;
+        // On affiche les actions
         cout << "Que voulez-vous faire ?" << endl;
         cout << "1. Selectionner une tuile de la pioche" << endl;
         cout << "2. Placer une tuile sur votre plateau" << endl;
@@ -185,7 +188,7 @@ void Partie::jouerTour() {
                     break;
                 }
                 int x,y;
-                cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << animalJetonSelectionne << endl;
+                cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << *animalJetonSelectionne << endl;
                 cout << " x : ";
                 cin >> x;
                 cout << " y : ";
