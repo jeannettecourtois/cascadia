@@ -110,10 +110,10 @@ void PlateauJoueur::afficherPlateau() const {
                 else {
                     jetons << "|" << tuile->getJeton() << "|";
                 }
-                lignes[2 * j + 0] << "/ " << tuile->getTuile()->getNbHabitat()[(0 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << " \\";
-                lignes[2 * j + 1] << "/" << tuile->getTuile()->getNbHabitat()[(5 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << i % 10 << "," << j % 10 << tuile->getTuile()->getNbHabitat()[(1 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "\\";
-                lignes[2 * j + 2] << "\\" << tuile->getTuile()->getNbHabitat()[(4 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << jetons << tuile->getTuile()->getNbHabitat()[(2 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "/";
-                lignes[2 * j + 3] << "\\_" << tuile->getTuile()->getNbHabitat()[(3 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "_/";
+                lignes[2 * j + 0] << "/ " << tuile->getTuile()->getListeHabitat()[(0 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << " \\";
+                lignes[2 * j + 1] << "/" << tuile->getTuile()->getListeHabitat()[(5 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << i % 10 << "," << j % 10 << tuile->getTuile()->getListeHabitat()[(1 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "\\";
+                lignes[2 * j + 2] << "\\" << tuile->getTuile()->getListeHabitat()[(4 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << jetons << tuile->getTuile()->getListeHabitat()[(2 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "/";
+                lignes[2 * j + 3] << "\\_" << tuile->getTuile()->getListeHabitat()[(3 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "_/";
             }
             else {
                 lignes[2 * j + 0] << "     ";
