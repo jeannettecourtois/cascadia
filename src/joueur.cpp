@@ -78,18 +78,12 @@ void PlateauJoueur::afficherPlateau() const {
             if (pos.x > max_x) max_x = pos.x;
             if (pos.y < min_y) min_y = pos.y;
             if (pos.y > max_y) max_y = pos.y;
-            //const Tuile* t = tuile->getTuile();
-            //Animal animal = tuile->getJeton();
-
-            //std::cout << "Tuile " << i + 1 << " : ";
-            //std::cout << "Position (" << pos.x << ", " << pos.y << "), ";
-            //std::cout << "Animal: " << animal << std::endl; // Surcharge dans enum.h
         }
     }
-    const int nb_lignes = 2 * (max_y - min_y) + 2;
+    const int nb_lignes = 2 * (max_y - min_y) + 2; // diviser tout par 4 plutôt que deux
     std::vector<std::ostringstream> lignes(nb_lignes);
     //Initialisation des espaces
-    for (int j = max_y; j < min_y; j--) {
+    for (int j = max_y; j < min_y; j--) { // changer par (int j = max_y; j >= min_y; j--)
         if ((max_y - y_min_x) % 2)
         {
             lignes[2 * j + 0] << " ";
@@ -102,7 +96,7 @@ void PlateauJoueur::afficherPlateau() const {
     }
 
     for (int i = min_x; i < max_x; i++) {
-        for (int j = max_y; j < min_y; j--) {
+        for (int j = max_y; j < min_y; j--) { // changer par (int j = max_y; j >= min_y; j--)
             TuilePlacee* tuile = getTuilePlacee(Position(i, j));
             if (tuile) {
                 std::ostringstream jetons;
@@ -129,7 +123,7 @@ void PlateauJoueur::afficherPlateau() const {
         }
     }
 
-    for (int i = 0; i < nb_lignes; i++) {// il faut peut-être changer le sens d'évolution de i
-        cout << lignes[i].str() << "\n";
+    for (const auto& ligne : lignes) {
+        std::cout << ligne.str() << '\n';
     }
 }
