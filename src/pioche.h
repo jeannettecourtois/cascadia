@@ -1,33 +1,33 @@
 #pragma once
 #include <iostream>
+#include <vector>
+#include <map>
 #include "tuile.h"
 #include "controleurGeneral.h"
 
 class SacTuile {
 private:
     int nbTuile;
-    Tuile** tuiles;
+    std::vector<Tuile*> tuiles;
 public:
-    SacTuile();
+    SacTuile(int nbTuiles);
     ~SacTuile();
     Tuile* Piocher();
-    void mettreDansLeSac(Tuile&);
+    void mettreDansLeSac(Tuile* t);
 };
 
 
 class SacJeton {
 private:
-//Est-ce qu'il serait pas mieux de faire une liste base sur l'enumeration animal => on peut rajouter des animaux dans la liste
-    int nbOurs;
-    int nbCerf;
-    int nbSaumon;
-    int nbAigle;
-    int nbRenard;
+    int nbJetons;
+    // vecteur du compte des jetons indexé par Animal
+    std::vector<int> compteJetons;
 public:
-    SacJeton();
+    SacJeton(const std::vector<int>& repartition);
     ~SacJeton();
-    Animal* Piocher();
-    void mettreDansLeSac(const Animal& a);
+    Animal Piocher();
+    void mettreDansLeSac(Animal a);
+    int getNbJetons() const { return nbJetons; }
 };
 
 class Pioche {
@@ -38,12 +38,13 @@ private:
     SacTuile* sacDeTuiles;
     SacJeton* sacDeJetons;
 public:
-    Pioche();
+    Pioche(int nbJoueurs);
     ~Pioche();
     void preparerPioche();
     void afficherTuilesDisponibles() const;
     void selectionnerTuile();
-    Animal selectionnerJeton() const;
+    void completerPioche();
+    Animal* selectionnerJeton() const;
     Tuile* getTuile(int i) const { return tuiles[i]; }
     Animal* getJeton(int i) const { return jetons[i]; }
 };
