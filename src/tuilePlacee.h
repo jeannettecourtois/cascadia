@@ -24,6 +24,9 @@ public:
     bool operator==(const Position& other) const {
         return x == other.x && y == other.y;
     }
+    bool operator<(const Position& other) const {
+    return (x < other.x) || (x == other.x && y < other.y);
+    }
 };
 
 class TuilePlacee {
@@ -62,7 +65,7 @@ public:
 
     void afficherTuilePlacee(std::ostream& f = std::cout) const {
         if (!tuile) {
-            f << "Aucune tuile placée.\n";
+            f << "Aucune tuile placï¿½e.\n";
             return;
         }
 

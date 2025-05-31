@@ -29,6 +29,7 @@ void ControleurTour::annulerDerniereAction() {
 }
 
 void ControleurTour::afficherActions() const {
+    cout << "\nListe des actions du tour : " << endl;
     for (Action* action : listeActions) {
         action->afficher();
     }
@@ -158,11 +159,10 @@ void Partie::jouerTour() {
                 cout << "Quelle tuile souhaitez-vous prendre (indice 0-3) ? ";
                 cin >> indiceTuile;
 
-                //animalJetonSelectionne = pioche->getJeton(indiceTuile); // Recupere le jeton associe a la tuile selectionnee
-                //cout << "Jeton selectionne : " << animalJetonSelectionne << endl;
-
-                Action* action = new ActionSelectionTuile(indiceTuile, pioche);
-                controleur->executerAction(action);
+                Action* action1 = new ActionSelectionTuile(indiceTuile, pioche);
+                Action* action2 = new ActionSelectionJeton(indiceTuile, pioche); // Selectionne le jeton associe a la tuile
+                controleur->executerAction(action1);
+                controleur->executerAction(action2);
                 controleur->afficherActions();
                 break;
             }
