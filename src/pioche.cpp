@@ -3,21 +3,23 @@
 
 /* SacTuile */
 SacTuile::SacTuile() {}
-
 SacTuile::~SacTuile() {}
-
-Tuile* SacTuile::Piocher() {return nullptr;} //a changer, juste pour compiler coder
-
-void SacTuile::mettreDansLeSac(Tuile&) {}
+Tuile* SacTuile::Piocher() {
+    return nullptr; //a changer, juste pour compiler coder
+}
+void SacTuile::mettreDansLeSac(Tuile&) {
+    // To do
+}
 
 /* SacJeton */
 SacJeton::SacJeton() {}
-
 SacJeton::~SacJeton() {}
-
-Animal* SacJeton::Piocher() {return nullptr;} //a changer, juste pour compiler coder
-
-void SacJeton::mettreDansLeSac(const Animal& a) {}
+Animal* SacJeton::Piocher() {
+    return nullptr; //a changer, juste pour compiler coder
+}
+void SacJeton::mettreDansLeSac(const Animal& a) {
+    // To do
+}
 
 /* Pioche */
 Pioche::Pioche() {

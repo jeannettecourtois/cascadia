@@ -38,7 +38,7 @@ int main() {
                 if (handler.loadGame(false, filename)) {
                     cout << "Partie chargee avec succes !" << endl;                    
                     // ON LANCE LA PARTIE
-                    //ControleurGeneral::getInstance().startConsole();
+                    createNewGame(); // Temporaire
 
                     // ON SAUVEGARDE LA PARTIE
                     cout << "Voulez-vous sauvegarder la partie ? (y/n) : ";
