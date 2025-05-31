@@ -19,11 +19,18 @@ void ActionSelectionTuile::executer() {
 
 void ActionSelectionTuile::annuler() {}
 
-ActionSelectionJeton::ActionSelectionJeton() : jetonSelection(Animal::Vide) {
-    // To do
-}
+ActionSelectionJeton::ActionSelectionJeton(int indice, Pioche* p) : indiceSelection(indice), pioche(p), jetonSelection(Animal::Vide) {}
 ActionSelectionJeton::~ActionSelectionJeton() {}
-void ActionSelectionJeton::executer() {}
+void ActionSelectionJeton::executer() {
+    if (indiceSelection < 0 || indiceSelection > 3 || !pioche->getJeton(indiceSelection)) {
+        cout << "Indice invalide." << endl;
+        return;
+    }
+    Animal* jeton = pioche->getJeton(indiceSelection);
+    jetonSelection = *jeton;
+    cout << "Jeton " << indiceSelection << " sélectionnée." << jetonSelection << endl;
+}
+
 void ActionSelectionJeton::annuler() {}
 
 ActionPlacerTuile::ActionPlacerTuile(Tuile* t, const Position& p) : tuile(t), pos(p) {}

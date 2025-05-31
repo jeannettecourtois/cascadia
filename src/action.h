@@ -37,14 +37,14 @@ class ActionSelectionJeton: public Action {
 private:
     Animal jetonSelection;
     int indiceSelection; // Indice du jeton selectionne dans la pioche
-    //Pioche* pioche;
+    Pioche* pioche;
 public:
-    ActionSelectionJeton();
+    ActionSelectionJeton(int indice, Pioche* p);
     ~ActionSelectionJeton();
     void executer() override;
     void annuler()override;
     void afficher() const override {
-        cout << "\nSelection du jeton :" << endl;
+        cout << "\nAction Selection du jeton :" << endl;
         if (jetonSelection != Animal::Vide) {
             cout << "Jeton selectionné : " << jetonSelection << endl;
         } else {
@@ -64,7 +64,7 @@ public:
     void executer() override;
     void annuler() override;
     void afficher() const override {
-        cout << "\nPlacement de la tuile " << endl;
+        cout << "\nAction Placement de la tuile " << endl;
         tuile->afficherTuile();
     }
 };
@@ -80,7 +80,7 @@ public:
     void executer() override;
     void annuler() override;
     void afficher() const override {
-        cout << "\nPlacement du jeton " << endl;
+        cout << "\nAction Placement du jeton " << endl;
         if (jeton) {
             cout << "Jeton placé : " << *jeton << endl;
         } else {
