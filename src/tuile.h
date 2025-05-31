@@ -57,11 +57,11 @@ public:
     int getNbAnimaux() const { return nbAnimaux; }
     void afficherTuile(std::ostream& f = std::cout) const {
         f << "Tuile avec " << nbAnimaux << " animaux et " << nbHabitat << " habitats.\n";
-        f << "Animaux : ";
+        f << " | Animaux : ";
         for (unsigned int i = 0; i < nbAnimaux; ++i) {
             f << *listeAnimaux[i] << " ";
         }
-        f << "\nHabitats : ";
+        f << "\n | Habitats : ";
         for (unsigned int i = 0; i < nbHabitat; ++i) {
             f << *listeHabitat[i] << " ";
         }

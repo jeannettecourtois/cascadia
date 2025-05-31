@@ -130,7 +130,7 @@ void Partie::jouerTour() {
         return;
     }
     Joueur* joueur = joueurs[joueurCourant];
-    cout << "\nTour du joueur " << joueurCourant << endl;
+    cout << "\nTour du joueur " << joueurCourant +1 << endl;
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
     Animal* animalJetonSelectionne = nullptr;

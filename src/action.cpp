@@ -19,7 +19,9 @@ void ActionSelectionTuile::executer() {
 
 void ActionSelectionTuile::annuler() {}
 
-ActionSelectionJeton::ActionSelectionJeton() : jetonSelection(Animal::Vide) {}
+ActionSelectionJeton::ActionSelectionJeton() : jetonSelection(Animal::Vide) {
+    // To do
+}
 ActionSelectionJeton::~ActionSelectionJeton() {}
 void ActionSelectionJeton::executer() {}
 void ActionSelectionJeton::annuler() {}
