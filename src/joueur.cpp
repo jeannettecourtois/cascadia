@@ -1,5 +1,7 @@
 #include "joueur.h"
 #include "partie.h"
+#include <vector>
+#include <sstream>
 
 Joueur::Joueur(Partie* p) : idJoueur(1), nbJetonNature(0), nomJoueur("Joueur 1"), plateau(new PlateauJoueur()), partie(p) {
     // Constructeur par defaut
@@ -85,7 +87,7 @@ void PlateauJoueur::afficherPlateau() const {
         }
     }
     const int nb_lignes = 2 * (max_y - min_y) + 2;
-    std::ostream lignes[nb_lignes];
+    std::vector<std::ostringstream> lignes(nb_lignes);
     //Initialisation des espaces
     for (int j = max_y; j < min_y; j--) {
         if ((max_y - y_min_x) % 2)
@@ -103,16 +105,19 @@ void PlateauJoueur::afficherPlateau() const {
         for (int j = max_y; j < min_y; j--) {
             TuilePlacee* tuile = getTuilePlacee(Position(i, j));
             if (tuile) {
-                ostream jetons;
+                std::ostringstream jetons;
                 if (tuile->getJeton() == Animal::Vide) {
-                    jetons << (tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getListeAnimaux()[1] : " " << tuile->getTuile()->getListeAnimaux()[0] << (tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getListeAnimaux()[2] : " ";
+                    jetons << ((tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getListeAnimaux()[1] : Animal::Vide);
+                    jetons << tuile->getTuile()->getListeAnimaux()[0];
+                    jetons << ((tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getListeAnimaux()[2] : Animal::Vide);
+
                 }
                 else {
                     jetons << "|" << tuile->getJeton() << "|";
                 }
                 lignes[2 * j + 0] << "/ " << tuile->getTuile()->getListeHabitat()[(0 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << " \\";
                 lignes[2 * j + 1] << "/" << tuile->getTuile()->getListeHabitat()[(5 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << i % 10 << "," << j % 10 << tuile->getTuile()->getListeHabitat()[(1 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "\\";
-                lignes[2 * j + 2] << "\\" << tuile->getTuile()->getListeHabitat()[(4 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << jetons << tuile->getTuile()->getListeHabitat()[(2 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "/";
+                lignes[2 * j + 2] << "\\" << tuile->getTuile()->getListeHabitat()[(4 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << jetons.str() << tuile->getTuile()->getListeHabitat()[(2 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "/";
                 lignes[2 * j + 3] << "\\_" << tuile->getTuile()->getListeHabitat()[(3 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "_/";
             }
             else {
@@ -125,6 +130,6 @@ void PlateauJoueur::afficherPlateau() const {
     }
 
     for (int i = 0; i < nb_lignes; i++) {// il faut peut-être changer le sens d'évolution de i
-        cout << lignes[i] << "\n";
+        cout << lignes[i].str() << "\n";
     }
 }
