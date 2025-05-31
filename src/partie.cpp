@@ -28,6 +28,12 @@ void ControleurTour::annulerDerniereAction() {
     }
 }
 
+void ControleurTour::afficherActions() const {
+    for (Action* action : listeActions) {
+        action->afficher();
+    }
+}
+
 
 
 // PARTIE
@@ -105,12 +111,12 @@ void Partie::initialiserPartie() {
     cout << "Pioche preparee." << std::endl;
     // Reinitialisation du compteur de tours
     nbTour = 20;
-    cout << "Initialisation de la partie terminee." << std::endl;
+    cout << "Initialisation de la partie terminee.\n" << std::endl;
 }
 
 void Partie::jouerTour() {
     if (estFini()) {
-        cout << "La partie est terminee." << endl;
+        cout << "\nLa partie est terminee." << endl;
         return;
     }
 
@@ -124,7 +130,7 @@ void Partie::jouerTour() {
         return;
     }
     Joueur* joueur = joueurs[joueurCourant];
-    cout << "Tour du joueur " << joueurCourant + 1 << endl;
+    cout << "\nTour du joueur " << joueurCourant << endl;
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
     Animal* animalJetonSelectionne = nullptr;
@@ -140,7 +146,7 @@ void Partie::jouerTour() {
         cout << "2. Placer une tuile sur votre plateau" << endl;
         cout << "3. Placer un jeton faune" << endl;
         cout << "4. Annuler derniere action" << endl;
-        cout << "5. Terminer mon tour" << endl;
+        cout << "5. Terminer mon tour\n" << endl;
 
         int choix;
         cin >> choix;
@@ -151,18 +157,13 @@ void Partie::jouerTour() {
                 pioche->afficherTuilesDisponibles(); // Affiche les tuiles disponibles dans la pioche
                 cout << "Quelle tuile souhaitez-vous prendre (indice 0-3) ? ";
                 cin >> indiceTuile;
-                if (indiceTuile < 0 || indiceTuile > 3 || !pioche->getTuile(indiceTuile)) {
-                    cout << "Indice invalide." << endl;
-                    break;
-                }
-                tuileSelectionnee = pioche->getTuile(indiceTuile);
-                animalJetonSelectionne = pioche->getJeton(indiceTuile); // Recupere le jeton associe a la tuile selectionnee
-                cout << "Tuile selectionnee : ";
-                tuileSelectionnee->afficherTuile();
-                cout << "Jeton selectionne : " << animalJetonSelectionne << endl;
 
-                Action* action = new ActionSelectionTuile();
+                //animalJetonSelectionne = pioche->getJeton(indiceTuile); // Recupere le jeton associe a la tuile selectionnee
+                //cout << "Jeton selectionne : " << animalJetonSelectionne << endl;
+
+                Action* action = new ActionSelectionTuile(indiceTuile, pioche);
                 controleur->executerAction(action);
+                controleur->afficherActions();
                 break;
             }
             case 2: { // Placer une tuile sur le plateau

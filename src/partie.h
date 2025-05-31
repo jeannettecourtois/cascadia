@@ -1,6 +1,9 @@
 #pragma once
 #include<vector>
+#include "action.h"
+#include "partie.h"
 using namespace std;
+
 
 class Pioche;
 class ControleurTour;
@@ -11,6 +14,8 @@ class CarteMarquageFaune;
 class Action;
 
 
+
+
 class ControleurTour {
     vector<Action*> listeActions;
 public:
@@ -18,6 +23,7 @@ public:
     ~ControleurTour();
     void executerAction(Action* a);
     void annulerDerniereAction();
+    void afficherActions() const;
 };
 
 

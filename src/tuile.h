@@ -67,6 +67,9 @@ public:
         }
         f << std::endl;
     }
+
+    Animal* getAnimal(unsigned int i) const { return listeAnimaux[i]; }
+    Habitat* getHabitat(unsigned int i) const { return listeHabitat[i]; }
 };
 
 

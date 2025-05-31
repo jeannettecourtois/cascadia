@@ -1,11 +1,24 @@
 #include "action.h"
 
+using namespace std;
+
 void Action::executer() {}
 void Action::annuler() {}
 
-ActionSelectionTuile::ActionSelectionTuile() : tuileSelection(nullptr) {}
+ActionSelectionTuile::ActionSelectionTuile(int indice, Pioche* p) : indiceSelection(indice), pioche(p), tuileSelection(nullptr)  {}
 ActionSelectionTuile::~ActionSelectionTuile() {}
-void ActionSelectionTuile::executer() {}
+
+void ActionSelectionTuile::executer() {
+    if (indiceSelection < 0 || indiceSelection > 3 || !pioche->getTuile(indiceSelection)) {
+        cout << "Indice invalide." << endl;
+        return;
+    }
+    tuileSelection = pioche->getTuile(indiceSelection);
+    cout << "Tuile " << indiceSelection << " sélectionnée." << endl;
+    tuileSelection->afficherTuile();
+
+}
+
 void ActionSelectionTuile::annuler() {}
 
 ActionSelectionJeton::ActionSelectionJeton() : jetonSelection(Animal::Vide) {}

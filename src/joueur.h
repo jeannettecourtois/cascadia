@@ -4,6 +4,8 @@
 #include "controleurGeneral.h"
 using namespace std;
 
+class TuileDepart;
+
 class PlateauJoueur {
 private:
     int nbTuiles;

@@ -7,6 +7,8 @@
 #include <random>
 #include <iostream>
 
+class Partie;
+
 class TuileDepart {
 public:
     TuilePlacee* tuiles[3];

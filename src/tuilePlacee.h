@@ -47,6 +47,18 @@ public:
     virtual void tourner(const int n);
     void ajouterJeton(const Animal a);
     Position getPosition() const { return pos; }
+    void afficherTuilePlacee(std::ostream& f = std::cout) const {
+        f << "Tuile avec " << tuile->getNbAnimaux() << " animaux et " << tuile->getNbHabitat() << " habitats.\n";
+        f << "Animaux : ";
+        for (unsigned int i = 0; i < tuile->getNbAnimaux(); ++i) {
+            f << tuile->getAnimal(i) << " ";
+        }
+        f << "\nHabitats : ";
+        for (unsigned int i = 0; i < tuile->getNbHabitat(); ++i) {
+            f << tuile->getHabitat(i) << " ";
+        }
+        f << std::endl;
+    }
 };
 
 
