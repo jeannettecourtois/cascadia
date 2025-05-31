@@ -38,9 +38,9 @@ void ControleurTour::afficherActions() const {
 
 // PARTIE
 //Partie avec plusieurs joueurs (max 4)
-Partie::Partie(int nbJoueurs) : nbJoueur(nbJoueurs), joueurs(new Joueur*[nbJoueur]), pioche(new Pioche(nbJoueurs)), ctrlTour(new ControleurTour()), joueurCourant(0) {
+Partie::Partie(int nbJoueurs) : nbJoueur(nbJoueurs), joueurs(new Joueur* [nbJoueur]), pioche(new Pioche(nbJoueurs)), ctrlTour(new ControleurTour()), joueurCourant(0) {
     for (int i = 0; i < nbJoueur; ++i) {
-        joueurs[i] = new Joueur();
+        joueurs[i] = new Joueur(this);
     }
 }
 

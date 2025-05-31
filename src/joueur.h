@@ -5,6 +5,7 @@
 using namespace std;
 
 class TuileDepart;
+class Partie;
 
 class PlateauJoueur {
 private:
@@ -36,8 +37,9 @@ private:
     int nbJetonNature;
     std::string  nomJoueur;
     PlateauJoueur* plateau;
+    Partie* partie;
 public:
-    Joueur();
+    Joueur(Partie* p);
     ~Joueur();
     Joueur(const Joueur&) = delete;
     Joueur& operator=(const Joueur&) = delete;

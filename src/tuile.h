@@ -55,6 +55,11 @@ public:
 
     int getNbHabitat() const { return nbHabitat; }
     int getNbAnimaux() const { return nbAnimaux; }
+    Animal* getAnimal(unsigned int i) const { return listeAnimaux[i]; }
+    Habitat* getHabitat(unsigned int i) const { return listeHabitat[i]; }
+    Habitat* getListeHabitat() const { return *listeHabitat; }
+    Animal* getListeAnimaux() const { return *listeAnimaux; }
+
     void afficherTuile(std::ostream& f = std::cout) const {
         f << "Tuile avec " << nbAnimaux << " animaux et " << nbHabitat << " habitats.\n";
         f << " | Animaux : ";
@@ -67,9 +72,6 @@ public:
         }
         f << std::endl;
     }
-
-    Animal* getAnimal(unsigned int i) const { return listeAnimaux[i]; }
-    Habitat* getHabitat(unsigned int i) const { return listeHabitat[i]; }
 };
 
 
