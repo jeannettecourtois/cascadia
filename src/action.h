@@ -28,7 +28,6 @@ public:
     void executer() override;
     void annuler() override;
     void afficher() const override {
-        cout << "\nSelection de la tuile :" << endl;
         tuileSelection->afficherTuile() ;
     }
 };

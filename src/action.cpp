@@ -15,8 +15,6 @@ void ActionSelectionTuile::executer() {
     }
     tuileSelection = pioche->getTuile(indiceSelection);
     cout << "Tuile " << indiceSelection << " sélectionnée." << endl;
-    tuileSelection->afficherTuile();
-
 }
 
 void ActionSelectionTuile::annuler() {}
