@@ -84,7 +84,7 @@ void PlateauJoueur::afficherPlateau() const {
             //std::cout << "Animal: " << animal << std::endl; // Surcharge dans enum.h
         }
     }
-    int const nb_lignes = 2 * (max_y - min_y) + 2;
+    const int nb_lignes = 2 * (max_y - min_y) + 2;
     std::ostream lignes[nb_lignes];
     //Initialisation des espaces
     for (int j = max_y; j < min_y; j--) {
@@ -105,7 +105,7 @@ void PlateauJoueur::afficherPlateau() const {
             if (tuile) {
                 ostream jetons;
                 if (tuile->getJeton() == Animal::Vide) {
-                    jetons << (tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getListeAnimaux()[1] : " " << tuile->getTuile()->getListeAnimaux()[0] << (tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getNbAnimaux()[2] : " ";
+                    jetons << (tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getListeAnimaux()[1] : " " << tuile->getTuile()->getListeAnimaux()[0] << (tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getListeAnimaux()[2] : " ";
                 }
                 else {
                     jetons << "|" << tuile->getJeton() << "|";
