@@ -59,11 +59,11 @@ public:
         f << "Tuile avec " << nbAnimaux << " animaux et " << nbHabitat << " habitats.\n";
         f << "Animaux : ";
         for (unsigned int i = 0; i < nbAnimaux; ++i) {
-            f << listeAnimaux[i] << " ";
+            f << *listeAnimaux[i] << " ";
         }
         f << "\nHabitats : ";
         for (unsigned int i = 0; i < nbHabitat; ++i) {
-            f << listeHabitat[i] << " ";
+            f << *listeHabitat[i] << " ";
         }
         f << std::endl;
     }

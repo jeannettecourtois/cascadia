@@ -168,7 +168,7 @@ void Partie::jouerTour() {
                     break;
                 }
                 int x, y;
-                cout << "Où souhaitez-vous placer la tuile ? (x,y) : "; // pas avec la position mais avec les cardinaux d'un id de tuile deja placee
+                cout << "Ou souhaitez-vous placer la tuile ? (x,y) : "; // pas avec la position mais avec les cardinaux d'un id de tuile deja placee
                 cout << " x : ";
                 cin >> x;
                 cout << " y : ";

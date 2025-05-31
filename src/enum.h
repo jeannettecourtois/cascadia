@@ -20,6 +20,7 @@ enum class Habitat {
     Marais,
     Fleuve
 };
+std::ostream& operator<<(std::ostream& os, const Habitat& animal);
 
 enum class presenceAnimal {
     PasRenard = -5,

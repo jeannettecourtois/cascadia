@@ -12,3 +12,14 @@ std::ostream& operator<<(std::ostream& f, const Animal& animal) {
     }
     return f;
 }
+
+std::ostream& operator<<(std::ostream& os, const Habitat& habitat) {
+    switch (habitat) {
+    case Habitat::Montagne: os << "Montagne"; break;
+    case Habitat::Foret:    os << "Foret";    break;
+    case Habitat::Prairie:  os << "Prairie";  break;
+    case Habitat::Marais:   os << "Marais";   break;
+    case Habitat::Fleuve:   os << "Fleuve";   break;
+    }
+    return os;
+}

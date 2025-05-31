@@ -77,7 +77,7 @@ Pioche::Pioche(int nbJoueurs) {
     int nbJetonsTotal = nbJoueurs * 20;
 
     std::vector<int> repartition(6,0);
-    int nbAnimaux;
+    int nbAnimaux = 0;
     for (Animal a : animaux) {
         repartition[static_cast<int>(a)] = nbJetonsTotal / 5;
         nbAnimaux++;
@@ -129,7 +129,7 @@ void Pioche::afficherTuilesDisponibles() const {
 
         std::cout << " | Jeton: ";
         if (jetons[i] != nullptr) {
-            std::cout << jetons[i];
+            std::cout << *jetons[i];
         } else {
             std::cout << "Vide";
         }
