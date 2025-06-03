@@ -28,7 +28,7 @@ void ActionSelectionJeton::executer() {
     }
     Animal* jeton = pioche->getJeton(indiceSelection);
     jetonSelection = *jeton;
-    cout << "Jeton " << indiceSelection << " sélectionnée." << jetonSelection << endl;
+    cout << "Jeton " << indiceSelection << " sélectionnée." << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
 }
 
 void ActionSelectionJeton::annuler() {}

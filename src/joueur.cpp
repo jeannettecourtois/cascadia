@@ -65,15 +65,12 @@ void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {
 }
 
 void PlateauJoueur::afficherPlateau() const {
-    /*Affichage du plateau du joueur en vrac pour le moment,
-    * la rotation des tuiles n'est pas prise en compte/!\
-    * faudra ajouter le design d'Alexandre pour que les tuiles soient correctement affichees*/
     int min_x = 0, min_y = 0, max_x = 0, max_y = 0;
     int y_min_x = 0;//La valeur de y pour laquelle x est minimal
     for (int i = 0; i < nbTuiles; ++i) {
         const TuilePlacee* tuile = tuiles[i];
         if (tuile) {
-            const Position& pos = tuile->getPosition();  // Getter ajoute dans tuilePlacee.h
+            const Position& pos = tuile->getPosition();
             if (pos.x < min_x) min_x = pos.x, y_min_x = pos.y;
             if (pos.x > max_x) max_x = pos.x;
             if (pos.y < min_y) min_y = pos.y;
@@ -101,18 +98,18 @@ void PlateauJoueur::afficherPlateau() const {
             if (tuile) {
                 std::ostringstream jetons;
                 if (tuile->getJeton() == Animal::Vide) {
-                    jetons << ((tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getListeAnimaux()[1] : Animal::Vide);
-                    jetons << tuile->getTuile()->getListeAnimaux()[0];
-                    jetons << ((tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getListeAnimaux()[2] : Animal::Vide);
+                    jetons << AnimalFormateur{ ((tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getListeAnimaux()[1] : Animal::Vide), Format::Court };
+                    jetons << AnimalFormateur{ tuile->getTuile()->getListeAnimaux()[0], Format::Court };
+                    jetons << AnimalFormateur{ ((tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getListeAnimaux()[2] : Animal::Vide), Format::Court };
 
                 }
                 else {
-                    jetons << "|" << tuile->getJeton() << "|";
+                    jetons << "|" << AnimalFormateur{ tuile->getJeton(), Format::Court } << "|";
                 }
-                lignes[2 * j + 0] << "/ " << tuile->getTuile()->getListeHabitat()[(0 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << " \\";
-                lignes[2 * j + 1] << "/" << tuile->getTuile()->getListeHabitat()[(5 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << i % 10 << "," << j % 10 << tuile->getTuile()->getListeHabitat()[(1 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "\\";
-                lignes[2 * j + 2] << "\\" << tuile->getTuile()->getListeHabitat()[(4 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << jetons.str() << tuile->getTuile()->getListeHabitat()[(2 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "/";
-                lignes[2 * j + 3] << "\\_" << tuile->getTuile()->getListeHabitat()[(3 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()] << "_/";
+                lignes[2 * j + 0] << "/ " << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(0 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << " \\";
+                lignes[2 * j + 1] << "/" << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(5 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << i % 10 << "," << j % 10 << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(1 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << "\\";
+                lignes[2 * j + 2] << "\\" << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(4 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << jetons.str() << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(2 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << "/";
+                lignes[2 * j + 3] << "\\_" << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(3 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << "_/";
             }
             else {
                 lignes[2 * j + 0] << "     ";

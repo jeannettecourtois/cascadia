@@ -189,7 +189,7 @@ void Partie::jouerTour() {
                     break;
                 }
                 int x,y;
-                cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << *animalJetonSelectionne << endl;
+                cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << AnimalFormateur{ *animalJetonSelectionne, Format::Complet } << endl;
                 cout << " x : ";
                 cin >> x;
                 cout << " y : ";

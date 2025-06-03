@@ -5,7 +5,6 @@
 #include <random>
 
 
-
 class Tuile {
 private:
     unsigned int nbAnimaux;
@@ -64,11 +63,11 @@ public:
         f << "Tuile avec " << nbAnimaux << " animaux et " << nbHabitat << " habitats.\n";
         f << " | Animaux : ";
         for (unsigned int i = 0; i < nbAnimaux; ++i) {
-            f << *listeAnimaux[i] << " ";
+            f << AnimalFormateur{ *listeAnimaux[i], Format::Complet } << " ";
         }
         f << "\n | Habitats : ";
         for (unsigned int i = 0; i < nbHabitat; ++i) {
-            f << *listeHabitat[i] << " ";
+            f << HabitatFormateur{ *listeHabitat[i], Format::Complet } << " ";
         }
         f << std::endl;
     }

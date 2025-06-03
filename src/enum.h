@@ -1,8 +1,7 @@
 #pragma once
 #include <initializer_list>
 #include <iostream>
-//Mieux d'utiliser "Animal" que "animal"
-//Même chose pour "Habitat" que "habitat"
+
 enum class Animal {
     Vide = 0,
     Ours = 1,
@@ -11,7 +10,6 @@ enum class Animal {
     Aigle,
     Renard
 };
-std::ostream& operator<<(std::ostream& os, const Animal& animal);
 
 enum class Habitat {
     Montagne,
@@ -20,7 +18,6 @@ enum class Habitat {
     Marais,
     Fleuve
 };
-std::ostream& operator<<(std::ostream& os, const Habitat& animal);
 
 enum class presenceAnimal {
     PasRenard = -5,
@@ -34,6 +31,27 @@ enum class presenceAnimal {
     Aigle,
     Renard
 };
+
+// Pour différencier l'affichage entre dans le jeu et plateau
+enum class Format {
+    Court,
+    Complet
+};
+
+// Formatters
+struct AnimalFormateur {
+    const Animal& animal;
+    Format format;
+};
+
+struct HabitatFormateur {
+    const Habitat& habitat;
+    Format format;
+};
+
+// Opérateurs de sortie formatés
+std::ostream& operator<<(std::ostream& os, const AnimalFormateur& af);
+std::ostream& operator<<(std::ostream& os, const HabitatFormateur& hf);
 
 //Quelques listes a devoirs utiliser pour
 const std::initializer_list<Animal> animaux = {Animal::Aigle, Animal::Cerf, Animal::Ours, Animal::Renard, Animal::Saumon};

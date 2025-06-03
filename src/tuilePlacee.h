@@ -58,7 +58,7 @@ public:
     virtual Position getPosition() const { return pos; }
     virtual int getRotation() const { return rotation; }
 
-    virtual void deplacer(const Position& p) {}
+    virtual void deplacer(const Position& p) { this->pos.x = p.x; this->pos.y = p.y; } // à compléter pour s'assurer que y'ait pas déjà des tuiles à cet endroit
     virtual void tourner(const int n) {}
 
     void ajouterJeton(const Animal a) { jeton = a; }

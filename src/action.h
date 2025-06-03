@@ -46,7 +46,7 @@ public:
     void afficher() const override {
         cout << "\nAction Selection du jeton :" << endl;
         if (jetonSelection != Animal::Vide) {
-            cout << "Jeton selectionné : " << jetonSelection << endl;
+            cout << "Jeton selectionné : " << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
         } else {
             cout << "Aucun jeton sélectionné." << endl;
         }
@@ -82,7 +82,7 @@ public:
     void afficher() const override {
         cout << "\nAction Placement du jeton " << endl;
         if (jeton) {
-            cout << "Jeton placé : " << *jeton << endl;
+            cout << "Jeton placé : " << AnimalFormateur{ *jeton, Format::Complet } << endl;
         } else {
             cout << "Aucun jeton placé." << endl;
         }
