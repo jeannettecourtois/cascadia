@@ -3,9 +3,11 @@
 #include "enum.h"
 #include "pioche.h"
 
+
 using namespace std;
 
-class Pioche;
+class Joueur; //  Pas besoin de tout le fichier joueur.h
+class Pioche; // De même
 
 class Action { //classe abstraite
 public:
@@ -28,8 +30,14 @@ public:
     void executer() override;
     void annuler() override;
     void afficher() const override {
-        tuileSelection->afficherTuile() ;
+        if (tuileSelection) {
+            tuileSelection->afficherTuile();
+        }
+        else {
+            cout << "Aucune tuile sélectionnée." << endl;
+        }
     }
+    Tuile* getTuileSelectionnee() const { return tuileSelection; }
 };
 
 // Selection de jeton dans la pioche
@@ -58,8 +66,9 @@ class ActionPlacerTuile: public Action {
 private:
     Tuile* tuile;
     Position pos;
+    Joueur* joueur;
 public:
-    ActionPlacerTuile(Tuile* t, const Position& p);
+    ActionPlacerTuile(Tuile* t, const Position& p, Joueur* j);
     ~ActionPlacerTuile();
     void executer() override;
     void annuler() override;

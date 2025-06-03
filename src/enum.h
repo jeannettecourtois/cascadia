@@ -52,6 +52,7 @@ struct HabitatFormateur {
 // Operateurs de sortie formates
 std::ostream& operator<<(std::ostream& os, const AnimalFormateur& af);
 std::ostream& operator<<(std::ostream& os, const HabitatFormateur& hf);
+// Exemple d'utilisation : AnimalFormateur{ tuile->getJeton(), Format::Court }
 
 //Quelques listes a devoirs utiliser pour
 const std::initializer_list<Animal> animaux = {Animal::Aigle, Animal::Cerf, Animal::Ours, Animal::Renard, Animal::Saumon};

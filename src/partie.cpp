@@ -164,7 +164,8 @@ void Partie::jouerTour() {
                 controleur->executerAction(action1);
                 controleur->executerAction(action2);
                 controleur->afficherActions();
-                break;
+                break; // utilité du break ?
+                // une fois qu'elle est selectionnee, faut la mettre dans tuileSelectionnee !!
             }
             case 2: { // Placer une tuile sur le plateau
                 if (!tuileSelectionnee) {
@@ -178,7 +179,7 @@ void Partie::jouerTour() {
                 cout << " y : ";
                 cin >> y;
                 Position pos(x, y);
-                Action* action = new ActionPlacerTuile(tuileSelectionnee, pos); // recupere la tuile selectionnee dans case 1
+                Action* action = new ActionPlacerTuile(tuileSelectionnee, pos, joueur); // recupere la tuile selectionnee dans case 1
                 controleur->executerAction(action);
                 tuilePlacee = true;
                 break;
