@@ -14,7 +14,7 @@ void ActionSelectionTuile::executer() {
         return;
     }
     tuileSelection = pioche->getTuile(indiceSelection);
-    cout << "Tuile " << indiceSelection << " sélectionnée." << endl;
+    cout << "Tuile " << indiceSelection << " selectionnee." << endl;
 }
 
 void ActionSelectionTuile::annuler() {}
@@ -28,7 +28,7 @@ void ActionSelectionJeton::executer() {
     }
     Animal* jeton = pioche->getJeton(indiceSelection);
     jetonSelection = *jeton;
-    cout << "Jeton " << indiceSelection << " sélectionnée." << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
+    cout << "Jeton " << indiceSelection << " selectionnee." << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
 }
 
 void ActionSelectionJeton::annuler() {}

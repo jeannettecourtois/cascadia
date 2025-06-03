@@ -20,7 +20,7 @@ public:
 class SacJeton {
 private:
     int nbJetons;
-    // vecteur du compte des jetons indexé par Animal
+    // vecteur du compte des jetons indexe par Animal
     std::vector<int> compteJetons;
 public:
     SacJeton(const std::vector<int>& repartition);

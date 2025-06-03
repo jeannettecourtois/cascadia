@@ -17,9 +17,9 @@ int Joueur::calculScore() {
 
 
 
-    //Plus points majorité de couloir à ajouter (c'est à la partie de le faire, c'est elle qui peut avoir accès aux infos des différents joueurs)
+    //Plus points majorite de couloir à ajouter (c'est à la partie de le faire, c'est elle qui peut avoir accès aux infos des differents joueurs)
 
-    // Calcul des points des animaux (après la réu => car dépend de CarteMarquageFaune)
+    // Calcul des points des animaux (après la reu => car depend de CarteMarquageFaune)
     for (int i = 0; i < 5; i++) {
         score += partie->getCarteRegle(i)->calculPoints(*plateau);
     }

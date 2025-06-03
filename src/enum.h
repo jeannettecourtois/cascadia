@@ -32,7 +32,7 @@ enum class presenceAnimal {
     Renard
 };
 
-// Pour différencier l'affichage entre dans le jeu et plateau
+// Pour differencier l'affichage entre dans le jeu et plateau
 enum class Format {
     Court,
     Complet
@@ -49,7 +49,7 @@ struct HabitatFormateur {
     Format format;
 };
 
-// Opérateurs de sortie formatés
+// Operateurs de sortie formates
 std::ostream& operator<<(std::ostream& os, const AnimalFormateur& af);
 std::ostream& operator<<(std::ostream& os, const HabitatFormateur& hf);
 

@@ -46,9 +46,9 @@ public:
     void afficher() const override {
         cout << "\nAction Selection du jeton :" << endl;
         if (jetonSelection != Animal::Vide) {
-            cout << "Jeton selectionné : " << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
+            cout << "Jeton selectionne : " << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
         } else {
-            cout << "Aucun jeton sélectionné." << endl;
+            cout << "Aucun jeton selectionne." << endl;
         }
     }
 };
@@ -82,9 +82,9 @@ public:
     void afficher() const override {
         cout << "\nAction Placement du jeton " << endl;
         if (jeton) {
-            cout << "Jeton placé : " << AnimalFormateur{ *jeton, Format::Complet } << endl;
+            cout << "Jeton place : " << AnimalFormateur{ *jeton, Format::Complet } << endl;
         } else {
-            cout << "Aucun jeton placé." << endl;
+            cout << "Aucun jeton place." << endl;
         }
         cible->afficherTuilePlacee();
     }

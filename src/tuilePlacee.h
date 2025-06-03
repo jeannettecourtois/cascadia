@@ -38,18 +38,9 @@ protected:
     int rotation;
 public:
     TuilePlacee() : tuile(nullptr), jeton(Animal::Vide), pos(0, 0), rotation(0) {}
-
-    TuilePlacee(const Tuile* tuile, Animal a, const Position& p, int rot = 0)
-        : tuile(tuile), jeton(a), pos(p), rotation(rot) {
-    }
-
-    TuilePlacee(const Tuile* tuile, Animal a)
-        : tuile(tuile), jeton(a), pos(0, 0), rotation(0) {
-    }
-
-    TuilePlacee(const Tuile* tuile)
-        : tuile(tuile), jeton(Animal::Vide), pos(0, 0), rotation(0) {
-    }
+    TuilePlacee(const Tuile* tuile, Animal a, const Position& p, int rot = 0) : tuile(tuile), jeton(a), pos(p), rotation(rot) {}
+    TuilePlacee(const Tuile* tuile, Animal a) : tuile(tuile), jeton(a), pos(0, 0), rotation(0) {}
+    TuilePlacee(const Tuile* tuile) : tuile(tuile), jeton(Animal::Vide), pos(0, 0), rotation(0) {}
 
     virtual ~TuilePlacee() = default;
 
@@ -58,8 +49,11 @@ public:
     virtual Position getPosition() const { return pos; }
     virtual int getRotation() const { return rotation; }
 
-    virtual void deplacer(const Position& p) { this->pos.x = p.x; this->pos.y = p.y; } // à compléter pour s'assurer que y'ait pas déjà des tuiles à cet endroit
-    virtual void tourner(const int n) {}
+    /*
+    Obliger d'utiliser cette methode virtuel deplacer, car dans PlateauJoueur::ajouterTuileDepart, on utilise des TuilePlacee,
+    et si veut changer en TuilePlaceeDeplacable, doit revoir tout ControleurGeneral.*/
+    virtual void deplacer(const Position& p) { this->pos.SetPosition(p); }
+    virtual void tourner(const int n) {} // Rotation tuile à faire
 
     void ajouterJeton(const Animal a) { jeton = a; }
 

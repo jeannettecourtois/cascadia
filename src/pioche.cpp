@@ -166,7 +166,7 @@ void Pioche::completerPioche() {
     // parcours du dictionnaire
     for (const auto& pair : compteur) {
         if (pair.second >= 3) {
-            std::cout << "Trois ou plus jetons identiques (" << AnimalFormateur{ pair.first,Format::Complet } << ") détectés. On les remplace tous.\n";
+            std::cout << "Trois ou plus jetons identiques (" << AnimalFormateur{ pair.first,Format::Complet } << ") detectes. On les remplace tous.\n";
 
             // on remet les jetons dans sacJeton et on repioche
             for (int i = 0; i < 4; ++i) {
