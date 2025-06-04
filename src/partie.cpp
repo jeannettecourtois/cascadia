@@ -160,10 +160,18 @@ void Partie::jouerTour() {
                 cin >> indiceTuile;
 
                 Action* action1 = new ActionSelectionTuile(indiceTuile, pioche);
-                Action* action2 = new ActionSelectionJeton(indiceTuile, pioche); // Selectionne le jeton associe a la tuile
-                controleur->executerAction(action1);
-                controleur->executerAction(action2);
-                controleur->afficherActions();
+                int indiceSelection = action1->executer();
+                if (indiceSelection == -1) {
+                    cout << "Action de sélection de tuile échouée." << endl;
+                }
+                else {
+                    // Si l'action a réussi, tu peux continuer avec l'action associée au jeton
+                    Action* action2 = new ActionSelectionJeton(indiceTuile, pioche);
+                    controleur->executerAction(action2);
+                    tuileSelectionnee = pioche->getTuile(indiceSelection); // Utilisation de l'indice valide
+                }
+
+                
                 break; // utilité du break ?
                 // une fois qu'elle est selectionnee, faut la mettre dans tuileSelectionnee !!
             }
