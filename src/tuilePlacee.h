@@ -53,7 +53,7 @@ public:
     Obliger d'utiliser cette methode virtuel deplacer, car dans PlateauJoueur::ajouterTuileDepart, on utilise des TuilePlacee,
     et si veut changer en TuilePlaceeDeplacable, doit revoir tout ControleurGeneral.*/
     virtual void deplacer(const Position& p) { this->pos.SetPosition(p); }
-    virtual void tourner(const int n) {} // Rotation tuile à faire
+    virtual void tourner(const int n) {} // Rotation tuile a faire
 
     void ajouterJeton(const Animal a) { jeton = a; }
 

@@ -6,7 +6,7 @@
 using namespace std;
 
 class Joueur; //  Pas besoin de tout le fichier joueur.h
-class Pioche; // De même
+class Pioche; // De meme
 
 class Action { // Classe abstraite
 public:
@@ -83,7 +83,7 @@ public:
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-// Placer un jeton sur une tuile qui est dejà placee
+// Placer un jeton sur une tuile qui est deja placee
 class ActionPlacerJeton : public Action {
 private:
     TuilePlacee* cible;

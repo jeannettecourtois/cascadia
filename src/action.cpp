@@ -19,7 +19,7 @@ int ActionSelectionTuile::executer() {
         return -1;  // Retourne un code d'erreur
     }
     tuileSelection = pioche->getTuile(indiceSelection);
-    cout << "Tuile " << indiceSelection << " selectionnee." << endl;
+    cout << "Tuile " << indiceSelection << " selectionnee :" << endl;
     return indiceSelection;  // Retourne l'indice de la tuile selectionnee
 }
 
@@ -63,9 +63,9 @@ ActionPlacerTuile::~ActionPlacerTuile() {}
 
 int ActionPlacerTuile::executer() {
     // Indiquer la position de la tuile et verifier la validite avant de la placer
-    TuilePlacee t(tuile, Animal::Vide, pos, 0); // Cree une tuile placee, la rotation peut être ajoutee ici
+    TuilePlacee t(tuile, Animal::Vide, pos, 0); // Cree une tuile placee, la rotation peut etre ajoutee ici
     joueur->getPlateau()->ajouterTuile(t);  // Ajoute la tuile au plateau
-    cout << "Tuile placee à la position (" << pos.x << ", " << pos.y << ")." << endl;
+    cout << "Tuile placee a la position (" << pos.x << ", " << pos.y << ")." << endl;
     return 1;  // Indiquer que l'action a ete executee avec succes
 }
 
@@ -83,7 +83,7 @@ ActionPlacerJeton::ActionPlacerJeton(Animal* j, TuilePlacee* c)
 ActionPlacerJeton::~ActionPlacerJeton() {}
 
 int ActionPlacerJeton::executer() {
-    // Verifier si la tuile est dejà placee et si l'animal du jeton est valide pour cette tuile
+    // Verifier si la tuile est deja placee et si l'animal du jeton est valide pour cette tuile
     if (!cible || !jeton) {
         cout << "Tuile ou jeton invalide." << endl;
         return -1;  // Retourner une erreur si la tuile ou le jeton est invalide
@@ -96,7 +96,7 @@ int ActionPlacerJeton::executer() {
         return 1;  // Action reussie
     }
     else {
-        cout << "Le jeton ne peut pas être place sur cette tuile." << endl;
+        cout << "Le jeton ne peut pas etre place sur cette tuile." << endl;
         return -1;  // Retourne une erreur si l'action echoue
     }
     */
@@ -114,7 +114,7 @@ ActionUtiliserJetonNature::ActionUtiliserJetonNature(Action* a) : actionCible(a)
 ActionUtiliserJetonNature::~ActionUtiliserJetonNature() {}
 
 int ActionUtiliserJetonNature::executer() {
-    // Logique à definir pour cette classe abstraite
+    // Logique a definir pour cette classe abstraite
     return 0;  // Par defaut, renvoie 0
 }
 
