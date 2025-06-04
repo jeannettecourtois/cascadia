@@ -3,6 +3,8 @@
 #include <vector>
 #include <sstream>
 
+class tuilePlacee;
+
 Joueur::Joueur(Partie* p)
     : idJoueur(1), nbJetonNature(0), nomJoueur("Joueur 1"), plateau(new PlateauJoueur()), partie(p) {
     // Constructeur par defaut
@@ -40,6 +42,15 @@ void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {
 
     set->getTuile(2)->deplacer(pos3);
     ajouterTuile(*set->getTuile(2));
+}
+
+void PlateauJoueur::supprimerTuile(const Position& pos) {
+    for (auto it = tuiles.begin(); it != tuiles.end(); ++it) {
+        if (it->getPosition() == pos) {
+            tuiles.erase(it);
+            return;
+        }
+    }
 }
 
 void PlateauJoueur::afficherPlateau() const {

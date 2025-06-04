@@ -71,6 +71,11 @@ int ActionPlacerTuile::executer() {
 
 void ActionPlacerTuile::annuler() {
     // Logique pour annuler l'action si necessaire
+    if (joueur) {
+        // Supprimer la tuile du plateau du joueur a la position correspondante
+        joueur->getPlateau()->supprimerTuile(pos);
+        cout << "Annulation du placement de la tuile." << endl;
+    }
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

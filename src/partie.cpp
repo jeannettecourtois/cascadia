@@ -154,7 +154,7 @@ void Partie::jouerTour() {
         if (tuileSelectionnee && !tuilePlacee) {cout << "2. Placer une tuile sur votre plateau" << endl;}
         if (tuilePlacee && !animalJetonSelectionne) { cout << "3. Selectionner un jeton faune" << endl; }
         if (animalJetonSelectionne && !jetonPlace) {cout << "4. Placer un jeton faune" << endl;}
-        if (!historiqueActions.empty()) { cout << "5. Annuler la derniere action" << endl; }  // Pour ne pas afficher lors de la première 
+        if (!historiqueActions.empty()) { cout << "5. Annuler la derniere action" << endl; }  // Pour ne pas afficher lors de la premiere 
         if (tuilePlacee && jetonPlace) {cout << "6. Terminer mon tour\n" << endl;}
 
         int choix;
@@ -217,7 +217,7 @@ void Partie::jouerTour() {
                 }
             }
             if (!adjacente) {
-                cout << "La tuile doit être placee a côte d'une tuile deja existante." << endl;
+                cout << "La tuile doit etre placee a côte d'une tuile deja existante." << endl;
                 break; // Retourner au menu des actions si la position n'est pas adjacente a une tuile
             }
 
@@ -268,9 +268,9 @@ void Partie::jouerTour() {
                 cout << "Aucune tuile placee a cette position. Veuillez selectionner une tuile deja placee." << endl;
                 break;
             }
-            // Verifier si le jeton peut être place sur la tuile
+            // Verifier si le jeton peut etre place sur la tuile
             if (!tuilePlacee->getTuile()->contientAnimal(*animalJetonSelectionne)) {
-                cout << "Le jeton faune ne peut pas être place sur cette tuile." << endl;
+                cout << "Le jeton faune ne peut pas etre place sur cette tuile." << endl;
                 break;
             }
 
@@ -281,14 +281,14 @@ void Partie::jouerTour() {
             break;
         }
         case 5: { // Annuler la derniere action
-            /*Problème général : on ne peut annuler qu'une action, après ça fait tout buguer ==> à revoir*/
             if (!historiqueActions.empty()) {
+                controleur->annulerDerniereAction();
                 int derniereAction = historiqueActions.back();
                 historiqueActions.pop_back(); // Enlever la derniere action de l'historique
                 cout << "Action annulee." << endl;
                 switch (derniereAction) {
                     case 1: {
-                        tuileSelectionnee = nullptr; // Annuler la sélection de tuile
+                        tuileSelectionnee = nullptr; // Annuler la selection de tuile
                         break;
                     }
                     case 2: {
@@ -296,7 +296,7 @@ void Partie::jouerTour() {
                         break;
                     }
                     case 3: {
-                        animalJetonSelectionne = nullptr; // Annuler la sélection du jeton faune
+                        animalJetonSelectionne = nullptr; // Annuler la selection du jeton faune
                         break;
                     }
                     case 4: {

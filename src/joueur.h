@@ -20,6 +20,7 @@ public:
 
     void ajouterTuile(const TuilePlacee&);
     void ajouterTuileDepart(const TuileDepart* set);
+    void supprimerTuile(const Position& pos);
 
     int getNbTuiles() const { return static_cast<int>(tuiles.size()); }
 
