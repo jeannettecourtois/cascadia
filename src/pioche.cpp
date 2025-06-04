@@ -118,7 +118,7 @@ Animal* Pioche::selectionnerJeton() const {
 
 
 void Pioche::afficherTuilesDisponibles() const {
-    std::cout << "Tuiles et jetons disponibles dans la pioche :\n\n";
+    std::cout << "Tuiles disponibles dans la pioche :\n\n";
     for (int i = 0; i < 4; ++i) {
         std::cout << "Tuile " << i << ": ";
         if (tuiles[i]) {
@@ -127,11 +127,18 @@ void Pioche::afficherTuilesDisponibles() const {
         else {
             std::cout << "Vide";
         }
-    
-        std::cout << " | Jeton: ";
+        std::cout << "\n";
+    } std::cout << std::endl;
+}
+
+void Pioche::afficherJetonsDisponibles() const {
+    std::cout << "Jetons disponibles dans la pioche :\n\n";
+    for (int i = 0; i < 4; ++i) {
+        std::cout << "Jeton " << i << ": ";
         if (jetons[i] != nullptr) {
             std::cout << AnimalFormateur{ *jetons[i],Format::Complet };
-        } else {
+        }
+        else {
             std::cout << "Vide";
         }
         std::cout << "\n";

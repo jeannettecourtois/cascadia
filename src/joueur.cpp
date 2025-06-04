@@ -5,7 +5,7 @@
 
 Joueur::Joueur(Partie* p)
     : idJoueur(1), nbJetonNature(0), nomJoueur("Joueur 1"), plateau(new PlateauJoueur()), partie(p) {
-    // Constructeur par défaut
+    // Constructeur par defaut
 }
 
 Joueur::~Joueur() {
@@ -24,7 +24,7 @@ int Joueur::calculScore() {
 }
 
 void PlateauJoueur::ajouterTuile(const TuilePlacee& tuile) {
-    tuiles.push_back(tuile);  // Copie locale, gestion mémoire automatique
+    tuiles.push_back(tuile);  // Copie locale, gestion memoire automatique
 }
 
 void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {

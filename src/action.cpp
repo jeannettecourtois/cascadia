@@ -2,8 +2,8 @@
 
 using namespace std;
 
-// Classe Action : implémentation des méthodes de base
-int Action::executer() { return 0; }  // On peut définir un retour générique ici
+// Classe Action : implementation des methodes de base
+int Action::executer() { return 0; }  // On peut definir un retour generique ici
 void Action::annuler() {}
 
 // ActionSelectionTuile
@@ -19,12 +19,12 @@ int ActionSelectionTuile::executer() {
         return -1;  // Retourne un code d'erreur
     }
     tuileSelection = pioche->getTuile(indiceSelection);
-    cout << "Tuile " << indiceSelection << " sélectionnée." << endl;
-    return indiceSelection;  // Retourne l'indice de la tuile sélectionnée
+    cout << "Tuile " << indiceSelection << " selectionnee." << endl;
+    return indiceSelection;  // Retourne l'indice de la tuile selectionnee
 }
 
 void ActionSelectionTuile::annuler() {
-    // Logique pour annuler l'action si nécessaire
+    // Logique pour annuler l'action si necessaire
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -43,13 +43,13 @@ int ActionSelectionJeton::executer() {
     }
     Animal* jeton = pioche->getJeton(indiceSelection);
     jetonSelection = *jeton;
-    cout << "Jeton " << indiceSelection << " sélectionné : "
+    cout << "Jeton " << indiceSelection << " selectionne : "
         << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
-    return indiceSelection;  // Retourne l'indice du jeton sélectionné
+    return indiceSelection;  // Retourne l'indice du jeton selectionne
 }
 
 void ActionSelectionJeton::annuler() {
-    // Logique pour annuler l'action si nécessaire
+    // Logique pour annuler l'action si necessaire
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -62,15 +62,15 @@ ActionPlacerTuile::ActionPlacerTuile(Tuile* t, const Position& p, Joueur* j)
 ActionPlacerTuile::~ActionPlacerTuile() {}
 
 int ActionPlacerTuile::executer() {
-    // Indiquer la position de la tuile et vérifier la validité avant de la placer
-    TuilePlacee t(tuile, Animal::Vide, pos, 0); // Crée une tuile placée, la rotation peut être ajoutée ici
+    // Indiquer la position de la tuile et verifier la validite avant de la placer
+    TuilePlacee t(tuile, Animal::Vide, pos, 0); // Cree une tuile placee, la rotation peut être ajoutee ici
     joueur->getPlateau()->ajouterTuile(t);  // Ajoute la tuile au plateau
-    cout << "Tuile placée à la position (" << pos.x << ", " << pos.y << ")." << endl;
-    return 1;  // Indiquer que l'action a été exécutée avec succès
+    cout << "Tuile placee à la position (" << pos.x << ", " << pos.y << ")." << endl;
+    return 1;  // Indiquer que l'action a ete executee avec succes
 }
 
 void ActionPlacerTuile::annuler() {
-    // Logique pour annuler l'action si nécessaire
+    // Logique pour annuler l'action si necessaire
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -83,27 +83,27 @@ ActionPlacerJeton::ActionPlacerJeton(Animal* j, TuilePlacee* c)
 ActionPlacerJeton::~ActionPlacerJeton() {}
 
 int ActionPlacerJeton::executer() {
-    // Vérifier si la tuile est déjà placée et si l'animal du jeton est valide pour cette tuile
+    // Verifier si la tuile est dejà placee et si l'animal du jeton est valide pour cette tuile
     if (!cible || !jeton) {
         cout << "Tuile ou jeton invalide." << endl;
         return -1;  // Retourner une erreur si la tuile ou le jeton est invalide
     }
 
     /*
-    // Exemple de logique pour vérifier la compatibilité du jeton avec la tuile
-    if (//condition de validité du jeton ) {
-        cout << "Jeton placé sur la tuile." << endl;
-        return 1;  // Action réussie
+    // Exemple de logique pour verifier la compatibilite du jeton avec la tuile
+    if (//condition de validite du jeton ) {
+        cout << "Jeton place sur la tuile." << endl;
+        return 1;  // Action reussie
     }
     else {
-        cout << "Le jeton ne peut pas être placé sur cette tuile." << endl;
-        return -1;  // Retourne une erreur si l'action échoue
+        cout << "Le jeton ne peut pas être place sur cette tuile." << endl;
+        return -1;  // Retourne une erreur si l'action echoue
     }
     */
 }
 
 void ActionPlacerJeton::annuler() {
-    // Logique pour annuler l'action si nécessaire
+    // Logique pour annuler l'action si necessaire
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -114,12 +114,12 @@ ActionUtiliserJetonNature::ActionUtiliserJetonNature(Action* a) : actionCible(a)
 ActionUtiliserJetonNature::~ActionUtiliserJetonNature() {}
 
 int ActionUtiliserJetonNature::executer() {
-    // Logique à définir pour cette classe abstraite
-    return 0;  // Par défaut, renvoie 0
+    // Logique à definir pour cette classe abstraite
+    return 0;  // Par defaut, renvoie 0
 }
 
 void ActionUtiliserJetonNature::annuler() {
-    // Logique pour annuler l'action si nécessaire
+    // Logique pour annuler l'action si necessaire
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

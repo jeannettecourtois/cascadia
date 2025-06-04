@@ -145,9 +145,10 @@ void Partie::jouerTour() {
         cout << "Que voulez-vous faire ?" << endl;
         cout << "1. Selectionner une tuile de la pioche" << endl;
         cout << "2. Placer une tuile sur votre plateau" << endl;
-        cout << "3. Placer un jeton faune" << endl;
-        cout << "4. Annuler derniere action" << endl;
-        cout << "5. Terminer mon tour\n" << endl;
+        cout << "3. Selectionner un jeton faune" << endl;
+        cout << "4. Placer un jeton faune" << endl;
+        cout << "5. Annuler la derniere action" << endl;
+        cout << "6. Terminer mon tour\n" << endl;
 
         int choix;
         cin >> choix;
@@ -162,17 +163,14 @@ void Partie::jouerTour() {
                 Action* action1 = new ActionSelectionTuile(indiceTuile, pioche);
                 int indiceSelection = action1->executer();
                 if (indiceSelection == -1) {
-                    cout << "Action de sélection de tuile échouée." << endl;
+                    cout << "Action de selection de tuile echouee." << endl;
                 }
                 else {
-                    // Si l'action a réussi, tu peux continuer avec l'action associée au jeton
-                    Action* action2 = new ActionSelectionJeton(indiceTuile, pioche);
-                    controleur->executerAction(action2);
-                    tuileSelectionnee = pioche->getTuile(indiceSelection); // Utilisation de l'indice valide
+                    tuileSelectionnee = pioche->getTuile(indiceSelection);
                 }
 
                 
-                break; // utilité du break ?
+                break; // utilite du break ?
                 // une fois qu'elle est selectionnee, faut la mettre dans tuileSelectionnee !!
             }
             case 2: { // Placer une tuile sur le plateau
@@ -192,8 +190,24 @@ void Partie::jouerTour() {
                 tuilePlacee = true;
                 break;
             }
-            case 3: { // Placer un jeton faune
-                if (!animalJetonSelectionne){ // Test si le pointeur est nul
+            case 3: { // Selectionner un jeton faune
+                int indiceJeton;
+                pioche->afficherJetonsDisponibles(); // Affiche les jetons faune disponibles
+                cout << "Quel jeton faune souhaitez-vous prendre (indice 0-3) ? ";
+                cin >> indiceJeton;
+
+                Action* action1 = new ActionSelectionJeton(indiceJeton, pioche);
+                int indiceSelection = action1->executer();
+                if (indiceSelection == -1) {
+                    cout << "Action de selection de jeton echouee." << endl;
+                } else {
+                    animalJetonSelectionne = pioche->getJeton(indiceSelection); // Utilisation de l'indice valide
+                    cout << "Jeton faune selectionne : " << AnimalFormateur{ *animalJetonSelectionne, Format::Complet } << endl;
+                }
+                break;
+            }
+            case 4: { // Placer un jeton faune
+                if (!animalJetonSelectionne){
                     cout << "Aucun jeton faune selectionne. Veuillez d'abord selectionner un jeton." << endl;
                     break;
                 }
@@ -221,11 +235,11 @@ void Partie::jouerTour() {
                 jetonPlace = true;
                 break;
             }
-            case 4: { // Annuler la derniere action
+            case 5: { // Annuler la derniere action
                 controleur->annulerDerniereAction();
                 break;
             }
-            case 5: { // Terminer le tour
+            case 6: { // Terminer le tour
                 if (tuilePlacee && jetonPlace) {
                     cout << "Tour termine avec succes." << endl;
                 } else if (!tuilePlacee) {

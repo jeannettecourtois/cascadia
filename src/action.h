@@ -10,29 +10,29 @@ class Pioche; // De même
 
 class Action { // Classe abstraite
 public:
-    virtual int executer() = 0; // Méthode virtuelle pure, retour int dans toutes les actions
-    virtual void annuler() = 0; // Méthode virtuelle pure
-    virtual void afficher() const = 0; // Méthode virtuelle pure
+    virtual int executer() = 0; // Methode virtuelle pure, retour int dans toutes les actions
+    virtual void annuler() = 0; // Methode virtuelle pure
+    virtual void afficher() const = 0; // Methode virtuelle pure
     virtual ~Action() = default; // Destructeur virtuel
 };
 
-// Sélection de tuile dans la pioche
+// Selection de tuile dans la pioche
 class ActionSelectionTuile : public Action {
 private:
     Tuile* tuileSelection;
-    int indiceSelection; // Indice de la tuile sélectionnée dans la pioche
+    int indiceSelection; // Indice de la tuile selectionnee dans la pioche
     Pioche* pioche;
 public:
     ActionSelectionTuile(int indice, Pioche* p);
     ~ActionSelectionTuile();
-    int executer() override; // Modifié pour retourner un int
+    int executer() override; // Modifie pour retourner un int
     void annuler() override;
     void afficher() const override {
         if (tuileSelection) {
             tuileSelection->afficherTuile();
         }
         else {
-            cout << "Aucune tuile sélectionnée." << endl;
+            cout << "Aucune tuile selectionnee." << endl;
         }
     }
     Tuile* getTuileSelectionnee() const { return tuileSelection; }
@@ -40,24 +40,24 @@ public:
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-// Sélection de jeton dans la pioche
+// Selection de jeton dans la pioche
 class ActionSelectionJeton : public Action {
 private:
     Animal jetonSelection;
-    int indiceSelection; // Indice du jeton sélectionné dans la pioche
+    int indiceSelection; // Indice du jeton selectionne dans la pioche
     Pioche* pioche;
 public:
     ActionSelectionJeton(int indice, Pioche* p);
     ~ActionSelectionJeton();
-    int executer() override; // Modifié pour retourner un int
+    int executer() override; // Modifie pour retourner un int
     void annuler() override;
     void afficher() const override {
-        cout << "\nAction Sélection du jeton :" << endl;
+        cout << "\nAction Selection du jeton :" << endl;
         if (jetonSelection != Animal::Vide) {
-            cout << "Jeton sélectionné : " << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
+            cout << "Jeton selectionne : " << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
         }
         else {
-            cout << "Aucun jeton sélectionné." << endl;
+            cout << "Aucun jeton selectionne." << endl;
         }
     }
 };
@@ -73,7 +73,7 @@ private:
 public:
     ActionPlacerTuile(Tuile* t, const Position& p, Joueur* j);
     ~ActionPlacerTuile();
-    int executer() override; // Modifié pour retourner un int
+    int executer() override; // Modifie pour retourner un int
     void annuler() override;
     void afficher() const override {
         cout << "\nAction Placement de la tuile " << endl;
@@ -83,7 +83,7 @@ public:
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-// Placer un jeton sur une tuile qui est déjà placée
+// Placer un jeton sur une tuile qui est dejà placee
 class ActionPlacerJeton : public Action {
 private:
     TuilePlacee* cible;
@@ -91,15 +91,15 @@ private:
 public:
     ActionPlacerJeton(Animal* j, TuilePlacee* c);
     ~ActionPlacerJeton();
-    int executer() override; // Modifié pour retourner un int
+    int executer() override; // Modifie pour retourner un int
     void annuler() override;
     void afficher() const override {
         cout << "\nAction Placement du jeton " << endl;
         if (jeton) {
-            cout << "Jeton placé : " << AnimalFormateur{ *jeton, Format::Complet } << endl;
+            cout << "Jeton place : " << AnimalFormateur{ *jeton, Format::Complet } << endl;
         }
         else {
-            cout << "Aucun jeton placé." << endl;
+            cout << "Aucun jeton place." << endl;
         }
         cible->afficherTuilePlacee();
     }
@@ -113,8 +113,8 @@ private:
 public:
     ActionUtiliserJetonNature(Action* a);
     virtual ~ActionUtiliserJetonNature();
-    virtual int executer() = 0; // Méthode virtuelle pure modifiée pour retourner un int
-    virtual void annuler() = 0; // Méthode virtuelle pure
+    virtual int executer() = 0; // Methode virtuelle pure modifiee pour retourner un int
+    virtual void annuler() = 0; // Methode virtuelle pure
     virtual void afficher() const = 0;
 };
 
@@ -125,7 +125,7 @@ public:
     int executer() override;
     void annuler() override;
     void afficher() const override {
-        cout << "\nActionUtiliserJeton pour action de sélection de tuile et jeton." << endl;
+        cout << "\nActionUtiliserJeton pour action de selection de tuile et jeton." << endl;
     }
 };
 

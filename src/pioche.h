@@ -42,6 +42,7 @@ public:
     ~Pioche();
     void preparerPioche();
     void afficherTuilesDisponibles() const;
+    void afficherJetonsDisponibles() const;
     void selectionnerTuile();
     void completerPioche();
     Animal* selectionnerJeton() const;
