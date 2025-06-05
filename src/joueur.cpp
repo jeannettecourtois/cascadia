@@ -86,18 +86,17 @@ void PlateauJoueur::afficherPlateau() const {
             if (tuile) {
                 std::ostringstream jetons;
                 if (tuile->getJeton() == Animal::Vide) {
-                    jetons << AnimalFormateur{ ((tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getListeAnimaux()[1] : Animal::Vide), Format::Court };
-                    jetons << AnimalFormateur{ tuile->getTuile()->getListeAnimaux()[0], Format::Court };
-                    jetons << AnimalFormateur{ ((tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getListeAnimaux()[2] : Animal::Vide), Format::Court };
+                    jetons << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 2) ? *tuile->getTuile()->getListeAnimaux()[1] : Animal::Vide, Format::Court } << AnimalFormateur{ *tuile->getTuile()->getListeAnimaux()[0], Format::Court } << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 3) ? *tuile->getTuile()->getListeAnimaux()[2] : Animal::Vide, Format::Court };
                 }
                 else {
                     jetons << "|" << AnimalFormateur{ tuile->getJeton(), Format::Court } << "|";
                 }
-
-                lignes[index + 0] << "/ " << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(0 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << " \\";
-                lignes[index + 1] << "/" << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(5 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << i % 10 << "," << j % 10 << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(1 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << "\\";
-                lignes[index + 2] << "\\" << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(4 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << jetons.str() << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(2 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << "/";
-                lignes[index + 3] << "\\_" << HabitatFormateur{ tuile->getTuile()->getListeHabitat()[(3 + tuile->getRotation()) * 6 / tuile->getTuile()->getNbHabitat()], Format::Court } << "_/";
+                int nbH = tuile->getTuile()->getNbHabitat();
+                int rot = tuile->getRotation();
+                lignes[index + 0] << "/ " << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(0 + rot) % nbH], Format::Court } << " \\";
+                lignes[index + 1] << "/" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(5 + rot) % nbH], Format::Court } << i % 10 << "," << j % 10 << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(1 + rot) % nbH], Format::Court } << "\\";
+                lignes[index + 2] << "\\" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(4 + rot) % nbH], Format::Court } << jetons.str() << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(2 + rot) % nbH], Format::Court } << "/";
+                lignes[index + 3] << "\\_" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(3 + rot) % nbH], Format::Court } << "_/";
             }
             else {
                 lignes[index + 0] << "     ";

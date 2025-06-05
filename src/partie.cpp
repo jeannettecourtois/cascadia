@@ -132,7 +132,7 @@ void Partie::jouerTour() {
         return;
     }
     Joueur* joueur = joueurs[joueurCourant];
-    cout << "\nTour du joueur " << joueurCourant + 1 << endl;
+    cout << "\nTour " << 21 - nbTour << " du joueur " << joueurCourant + 1 << endl;
 
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
@@ -205,9 +205,11 @@ void Partie::jouerTour() {
                 break; // Retourner au menu des actions si la position est innocupee
             }
 
-            cout << "A quelle position souhaitez-vous positionner la nouvelle tuile par rapport à la tuile :" << tuileExistante->getTuile() << endl;
+            cout << "A quelle position souhaitez-vous positionner la nouvelle tuile par rapport a la tuile :" << endl;
+            tuileExistante->getTuile()->afficherTuile();
             cout << "NW, NE, E, SE, SW, W"<< endl;
             cin >> direction;
+            transform(direction.begin(), direction.end(), direction.begin(), ::toupper); // Met la chaine en majuscule
             Position pos;
             if (direction == "NW") pos = posRef.getNW();
             else if (direction == "NE") pos = posRef.getNE();
@@ -225,42 +227,6 @@ void Partie::jouerTour() {
                 cout << "Il y a deja une tuile a cette position. Choisissez une autre position." << endl;
                 break; // Retourner au menu des actions si la position est occupee
             }
-
-
-
-
-            /*int x, y;
-            cout << "Ou souhaitez-vous placer la tuile ? (x,y) : ";
-            cout << " x : ";
-            cin >> x;
-            cout << " y : ";
-            cin >> y;
-            Position pos(x, y);
-
-            // Verification si une tuile est deja placee a cette position
-            TuilePlacee* tuileExistante = joueur->getPlateau()->getTuilePlacee(pos);
-            if (tuileExistante) {
-                cout << "Il y a deja une tuile a cette position. Choisissez une autre position." << endl;
-                break; // Retourner au menu des actions si la position est occupee
-            }
-
-            // Verification de l'adjacence : on regarde les positions adjacentes
-            bool adjacente = false;
-            vector<Position> positionsAdjacentes = {
-                pos.getE(), pos.getSE(), pos.getSW(),
-                pos.getW(), pos.getNW(), pos.getNE()
-            };
-            for (const auto& p : positionsAdjacentes) {
-                TuilePlacee* tuileAdjacente = joueur->getPlateau()->getTuilePlacee(p);
-                if (tuileAdjacente) {
-                    adjacente = true;
-                    break;
-                }
-            }
-            if (!adjacente) {
-                cout << "La tuile doit etre placee a côte d'une tuile deja existante." << endl;
-                break; // Retourner au menu des actions si la position n'est pas adjacente a une tuile
-            }*/
 
             Action* action = new ActionPlacerTuile(tuileSelectionnee, pos, joueur);
             controleur->executerAction(action);
@@ -285,7 +251,6 @@ void Partie::jouerTour() {
             }
             else {
                 animalJetonSelectionne = pioche->getJeton(indiceSelection);
-                cout << "Jeton faune selectionne : " << AnimalFormateur{ *animalJetonSelectionne, Format::Complet } << endl;
                 controleur->executerAction(action);
             }
 
@@ -359,15 +324,20 @@ void Partie::jouerTour() {
             cout << "Choix invalide." << endl;
         }
     }
+    /*!!! Faut rajouter un truc ici pour update la pioche
+    Retirer les jetons/tuiles qui ont été sélecionné
+    et en mettre de nouveaux*/
 
+    // Passe au joueur suivant
     passerAuJoueurSuivant();
-    nbTour--;
 }
 
-
+// Change le joueur courant, diminue le nbTour, et relance JouerTour
 void Partie::passerAuJoueurSuivant() {
     // Fonctionne aussi avec un seul joueur
     joueurCourant = (joueurCourant + 1) % nbJoueur;
+    if (joueurCourant == 0) { nbTour--; } // un tour de moins
+    this->jouerTour();
 }
 
 

@@ -1,16 +1,16 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 #include "enum.h"
 #include <random>
-
 
 class Tuile {
 private:
     unsigned int nbAnimaux;
     unsigned int nbHabitat;
-    Animal** listeAnimaux;
-    Habitat** listeHabitat;
+    std::vector<Animal*> listeAnimaux;
+    std::vector<Habitat*> listeHabitat;
 
 public:
     Tuile() {
@@ -22,31 +22,34 @@ public:
         nbHabitat = dist3(gen);
         nbAnimaux = dist3(gen);
 
-        listeAnimaux = new Animal*[nbAnimaux];
-        listeHabitat = new Habitat*[nbHabitat];
+        // Prend de la place en prevision
+        listeAnimaux.reserve(nbAnimaux);
+        listeHabitat.reserve(nbHabitat);
 
         for (unsigned int i = 0; i < nbAnimaux; ++i) {
             unsigned int unAnimal = dist5(gen);
-            listeAnimaux[i] = new Animal(*(std::next(animaux.begin(), unAnimal)));
+            listeAnimaux.push_back(new Animal(*(std::next(animaux.begin(), unAnimal))));
         }
 
         for (unsigned int i = 0; i < nbHabitat; ++i) {
             unsigned int unHabitat = dist5(gen);
-            listeHabitat[i] = new Habitat(*(std::next(habitats.begin(), unHabitat)));
+            listeHabitat.push_back(new Habitat(*(std::next(habitats.begin(), unHabitat))));
         }
     }
 
-    Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animaux, const Habitat* habitats) {
+    Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr) {
         this->nbAnimaux = nbAnimaux;
         this->nbHabitat = nbHabitat;
-        listeAnimaux = new Animal*[nbAnimaux];
-        listeHabitat = new Habitat*[nbHabitat];
-        for (unsigned int i = 0; i < nbAnimaux; ++i)
-            listeAnimaux[i] = new Animal(animaux[i]);
-        for (unsigned int i = 0; i < nbHabitat; ++i)
-            listeHabitat[i] = new Habitat(habitats[i]);
-    }
+        listeAnimaux.reserve(nbAnimaux);
+        listeHabitat.reserve(nbHabitat);
 
+        for (unsigned int i = 0; i < nbAnimaux; ++i) {
+            listeAnimaux.push_back(new Animal(animauxArr[i]));
+        }
+        for (unsigned int i = 0; i < nbHabitat; ++i) {
+            listeHabitat.push_back(new Habitat(habitatsArr[i]));
+        }
+    }
 
     ~Tuile();
 
@@ -56,8 +59,10 @@ public:
     int getNbAnimaux() const { return nbAnimaux; }
     Animal* getAnimal(unsigned int i) const { return listeAnimaux[i]; }
     Habitat* getHabitat(unsigned int i) const { return listeHabitat[i]; }
-    Habitat* getListeHabitat() const { return *listeHabitat; }
-    Animal* getListeAnimaux() const { return *listeAnimaux; }
+
+    // Renvoie un pointeur vers le premier élément du vecteur (équivalent à l'ancien tableau)
+    Animal** getListeAnimaux() const { return const_cast<Animal**>(listeAnimaux.data()); }
+    Habitat** getListeHabitat() const { return const_cast<Habitat**>(listeHabitat.data()); }
 
     void afficherTuile(std::ostream& f = std::cout) const {
         f << "Tuile avec " << nbAnimaux << " animaux et " << nbHabitat << " habitats.\n";
@@ -72,7 +77,6 @@ public:
         f << std::endl;
     }
 };
-
 
 /*class Keystone : public Tuile {
 public:

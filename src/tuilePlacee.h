@@ -59,7 +59,7 @@ public:
 
     void afficherTuilePlacee(std::ostream& f = std::cout) const {
         if (!tuile) {
-            f << "Aucune tuile plac�e.\n";
+            f << "Aucune tuile placee.\n";
             return;
         }
 
