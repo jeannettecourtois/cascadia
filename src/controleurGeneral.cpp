@@ -51,9 +51,11 @@ ControleurGeneral::ControleurGeneral()
 }
 
 ControleurGeneral::~ControleurGeneral() {
+    /* // ptêt pas besoin de suppr ici */
     for (unsigned int i = 0; i < 100; ++i) delete tabJetons[i];
     for (unsigned int i = 0; i < 85; ++i) delete tabTuiles[i];
     for (unsigned int i = 0; i < 15; ++i) delete tabCartesMarquage[i];
+    
 
     if (cartesRegles) {
         for (int i = 0; i < nbCartesRegles; ++i) delete cartesRegles[i];

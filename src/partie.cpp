@@ -22,6 +22,7 @@ void ControleurTour::executerAction(Action* a) {
 
 void ControleurTour::annulerDerniereAction() {
     if (!listeActions.empty()) {
+        listeActions.back()->afficher(); //!!! Pour debug -> observe que lorsque annule, 3. selection jeton faune: enft annule placement tuile 3
         listeActions.back()->annuler(); // annuler la derniere action
         delete listeActions.back(); // liberer la memoire
         listeActions.pop_back(); // supprimer l'action du vecteur
@@ -169,8 +170,8 @@ void Partie::jouerTour() {
             cout << "Quelle tuile souhaitez-vous prendre (indice 0-3) ? ";
             cin >> indiceTuile;
 
-            Action* action1 = new ActionSelectionTuile(indiceTuile, pioche);
-            int indiceSelection = action1->executer();
+            Action* action = new ActionSelectionTuile(indiceTuile, pioche);
+            int indiceSelection = action->executer();
             if (indiceSelection == -1) {
                 cout << "Action de selection de tuile echouee." << endl;
             }
@@ -237,14 +238,15 @@ void Partie::jouerTour() {
             cout << "Quel jeton faune souhaitez-vous prendre (indice 0-3) ? ";
             cin >> indiceJeton;
 
-            Action* action1 = new ActionSelectionJeton(indiceJeton, pioche);
-            int indiceSelection = action1->executer();
+            Action* action = new ActionSelectionJeton(indiceJeton, pioche);
+            int indiceSelection = action->executer();
             if (indiceSelection == -1) {
                 cout << "Action de selection de jeton echouee." << endl;
             }
             else {
                 animalJetonSelectionne = pioche->getJeton(indiceSelection);
                 cout << "Jeton faune selectionne : " << AnimalFormateur{ *animalJetonSelectionne, Format::Complet } << endl;
+                controleur->executerAction(action);
             }
 
             historiqueActions.push_back(3); // Enregistrer l'action
@@ -282,27 +284,15 @@ void Partie::jouerTour() {
         }
         case 5: { // Annuler la derniere action
             if (!historiqueActions.empty()) {
-                controleur->annulerDerniereAction();
+                controleur->annulerDerniereAction(); //!!! Supprime la tuile même lorsqu'annule la sélectiondu jeton car trigger ActionPlacerTuile::annuler() !!!! à Corriger
                 int derniereAction = historiqueActions.back();
                 historiqueActions.pop_back(); // Enlever la derniere action de l'historique
                 cout << "Action annulee." << endl;
                 switch (derniereAction) {
-                    case 1: {
-                        tuileSelectionnee = nullptr; // Annuler la selection de tuile
-                        break;
-                    }
-                    case 2: {
-                        tuilePlacee = false; // Annuler le placement de la tuile
-                        break;
-                    }
-                    case 3: {
-                        animalJetonSelectionne = nullptr; // Annuler la selection du jeton faune
-                        break;
-                    }
-                    case 4: {
-                        jetonPlace = false; // Annuler le placement du jeton faune
-                        break;
-                    }
+                    case 1: {tuileSelectionnee = nullptr; break;}   // Annuler la selection de tuile
+                    case 2: {tuilePlacee = false; break;}   // Annuler le placement de la tuile
+                    case 3: {animalJetonSelectionne = nullptr; break;}  // Annuler la selection du jeton faune
+                    case 4: {jetonPlace = false; break;}    // Annuler le placement du jeton faune
                 }
             }
             else {

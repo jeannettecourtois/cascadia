@@ -66,11 +66,11 @@ public:
         f << "Tuile avec " << tuile->getNbAnimaux() << " animaux et " << tuile->getNbHabitat() << " habitats.\n";
         f << "Animaux : ";
         for (unsigned int i = 0; i < tuile->getNbAnimaux(); ++i) {
-            f << tuile->getAnimal(i) << " ";
+            f << AnimalFormateur{ *tuile->getAnimal(i), Format::Complet } << " ";
         }
         f << "\nHabitats : ";
         for (unsigned int i = 0; i < tuile->getNbHabitat(); ++i) {
-            f << tuile->getHabitat(i) << " ";
+            f << HabitatFormateur{ *tuile->getHabitat(i), Format::Complet } << " ";
         }
         f << std::endl;
     }
