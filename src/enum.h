@@ -19,6 +19,7 @@ enum class Habitat {
     Fleuve
 };
 
+/* A DEGAGER ??
 enum class presenceAnimal {
     PasRenard = -5,
     PasAigle,
@@ -31,6 +32,7 @@ enum class presenceAnimal {
     Aigle,
     Renard
 };
+*/
 
 // Pour differencier l'affichage entre dans le jeu (affichage) et plateau (tuile)
 enum class Format {

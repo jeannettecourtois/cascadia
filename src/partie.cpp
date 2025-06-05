@@ -366,6 +366,7 @@ void Partie::jouerTour() {
 
 
 void Partie::passerAuJoueurSuivant() {
+    // Fonctionne aussi avec un seul joueur
     joueurCourant = (joueurCourant + 1) % nbJoueur;
 }
 
