@@ -36,7 +36,7 @@ std::ostream& operator<<(std::ostream& f, const HabitatFormateur& hf) {
         case Habitat::Foret:    f << "Foret"; break;
         case Habitat::Prairie:  f << "Prairie"; break;
         case Habitat::Marais:   f << "Marais"; break;
-        case Habitat::Fleuve:   f << "Fleuve"; break;
+        case Habitat::Riviere:   f << "Fleuve"; break;
         }
         break;
 
@@ -46,7 +46,7 @@ std::ostream& operator<<(std::ostream& f, const HabitatFormateur& hf) {
         case Habitat::Foret:    f << "F"; break;
         case Habitat::Prairie:  f << "P"; break;
         case Habitat::Marais:   f << "M"; break;
-        case Habitat::Fleuve:   f << "F"; break;
+        case Habitat::Riviere:   f << "R"; break;
         }
         break;
     }

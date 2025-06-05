@@ -104,7 +104,7 @@ void ControleurGeneral::initialiserTuilesDepart() {
         Tuile* t2 = new Tuile(2, 2, a2, h2);
 
         Animal a3[3] = { Animal::Saumon, Animal::Cerf, Animal::Aigle };
-        Habitat h3[2] = { Habitat::Fleuve, Habitat::Foret };
+        Habitat h3[2] = { Habitat::Riviere, Habitat::Foret };
         Tuile* t3 = new Tuile(3, 2, a3, h3);
 
         tuilesDepart[0] = new TuileDepart();
@@ -120,7 +120,7 @@ void ControleurGeneral::initialiserTuilesDepart() {
         Tuile* t1 = new Tuile(1, 1, a1, h1);
 
         Animal a2[2] = { Animal::Ours, Animal::Saumon };
-        Habitat h2[2] = { Habitat::Prairie, Habitat::Fleuve };
+        Habitat h2[2] = { Habitat::Prairie, Habitat::Riviere };
         Tuile* t2 = new Tuile(2, 2, a2, h2);
 
         Animal a3[3] = { Animal::Cerf, Animal::Aigle, Animal::Renard };
@@ -144,7 +144,7 @@ void ControleurGeneral::initialiserTuilesDepart() {
         Tuile* t2 = new Tuile(2, 2, a2, h2);
 
         Animal a3[3] = { Animal::Aigle, Animal::Cerf, Animal::Ours };
-        Habitat h3[2] = { Habitat::Montagne, Habitat::Fleuve };
+        Habitat h3[2] = { Habitat::Montagne, Habitat::Riviere };
         Tuile* t3 = new Tuile(3, 2, a3, h3);
 
         tuilesDepart[2] = new TuileDepart();
@@ -156,11 +156,11 @@ void ControleurGeneral::initialiserTuilesDepart() {
     // TuileDepart 3
     {
         Animal a1[1] = { Animal::Saumon };
-        Habitat h1[1] = { Habitat::Fleuve };
+        Habitat h1[1] = { Habitat::Riviere };
         Tuile* t1 = new Tuile(1, 1, a1, h1);
 
         Animal a2[2] = { Animal::Aigle, Animal::Renard };
-        Habitat h2[2] = { Habitat::Montagne, Habitat::Fleuve };
+        Habitat h2[2] = { Habitat::Montagne, Habitat::Riviere };
         Tuile* t2 = new Tuile(2, 2, a2, h2);
 
         Animal a3[3] = { Animal::Ours, Animal::Cerf, Animal::Saumon };
@@ -184,7 +184,7 @@ void ControleurGeneral::initialiserTuilesDepart() {
         Tuile* t2 = new Tuile(2, 2, a2, h2);
 
         Animal a3[3] = { Animal::Aigle, Animal::Saumon, Animal::Renard };
-        Habitat h3[2] = { Habitat::Fleuve, Habitat::Marais };
+        Habitat h3[2] = { Habitat::Riviere, Habitat::Marais };
         Tuile* t3 = new Tuile(3, 2, a3, h3);
 
         tuilesDepart[4] = new TuileDepart();

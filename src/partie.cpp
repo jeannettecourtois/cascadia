@@ -146,6 +146,8 @@ void Partie::jouerTour() {
     while (!actionFinie) {
         // On affiche le plateau
         cout << endl << "Plateau : " << endl;
+        cout << "Environnements : F : Forêt, M : Montagne, P : Prairie, M : Marais, R : Riviere" << endl;
+        cout << "Animaux : A : Aigle, C : Cerf, O : Ours, R : Renard, S : Saumon" << endl;
         joueur->getPlateau()->afficherPlateau();
         cout << endl;
 

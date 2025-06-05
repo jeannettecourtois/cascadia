@@ -16,7 +16,7 @@ enum class Habitat {
     Foret,
     Prairie,
     Marais,
-    Fleuve
+    Riviere
 };
 
 /* A DEGAGER ??
@@ -58,4 +58,4 @@ std::ostream& operator<<(std::ostream& os, const HabitatFormateur& hf);
 
 //Quelques listes a devoirs utiliser pour
 const std::initializer_list<Animal> animaux = {Animal::Aigle, Animal::Cerf, Animal::Ours, Animal::Renard, Animal::Saumon};
-const std::initializer_list<Habitat> habitats = {Habitat::Fleuve, Habitat::Foret, Habitat::Marais, Habitat::Montagne, Habitat::Prairie};
+const std::initializer_list<Habitat> habitats = {Habitat::Riviere, Habitat::Foret, Habitat::Marais, Habitat::Montagne, Habitat::Prairie};
