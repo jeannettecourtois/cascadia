@@ -44,7 +44,7 @@ public:
     void afficherTuilesDisponibles() const;
     void afficherJetonsDisponibles() const;
     void selectionnerTuile();
-    void completerPioche();
+    void completerPioche(const Animal* a, const Tuile* t);
     Animal* selectionnerJeton() const;
     Tuile* getTuile(int i) const { return tuiles[i]; }
     Animal* getJeton(int i) const { return jetons[i]; }

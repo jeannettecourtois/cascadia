@@ -324,10 +324,8 @@ void Partie::jouerTour() {
             cout << "Choix invalide." << endl;
         }
     }
-    /*!!! Faut rajouter un truc ici pour update la pioche
-    Retirer les jetons/tuiles qui ont été sélecionné
-    et en mettre de nouveaux*/
-
+    // Update la pioche
+    pioche->completerPioche(animalJetonSelectionne, tuileSelectionnee);
     // Passe au joueur suivant
     passerAuJoueurSuivant();
 }

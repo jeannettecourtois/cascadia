@@ -145,18 +145,18 @@ void Pioche::afficherJetonsDisponibles() const {
     } std::cout << std::endl;
 }
 
-
-void Pioche::completerPioche() {
-    // on complete les tuiles manquants
+// Retirer les jetons/tuiles qui ont été sélecionnés et en mettre de nouveaux
+void Pioche::completerPioche(const Animal* a, const Tuile* t) {
+    // on change la tuile
     for (int i = 0; i < 4; ++i) {
-        if (tuiles[i] == nullptr) {
+        if (tuiles[i] == t) {
             tuiles[i] = sacDeTuiles->Piocher();
         }
     }
 
-    // on complete les jetons manquants
+    // on change le jeton animal
     for (int i = 0; i < 4; ++i) {
-        if (jetons[i] == nullptr) {
+        if (jetons[i] == a) {
             Animal a = sacDeJetons->Piocher();
             jetons[i] = new Animal(a);
         }
