@@ -32,7 +32,7 @@ enum class presenceAnimal {
     Renard
 };
 
-// Pour differencier l'affichage entre dans le jeu et plateau
+// Pour differencier l'affichage entre dans le jeu (affichage) et plateau (tuile)
 enum class Format {
     Court,
     Complet

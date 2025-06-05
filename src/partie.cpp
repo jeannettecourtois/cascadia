@@ -189,7 +189,47 @@ void Partie::jouerTour() {
                 break;
             }
 
-            int x, y;
+            int refX, refY;
+            string direction;
+            cout << "A quelle tuile existante sur votre plateau souhaitez-vous coller la tuile ? (x,y) : ";
+            cout << " x : ";
+            cin >> refX;
+            cout << " y : ";
+            cin >> refY;
+            Position posRef(refX, refY);
+
+            // Verification si une tuile existe a cette position
+            TuilePlacee* tuileExistante = joueur->getPlateau()->getTuilePlacee(posRef);
+            if (!tuileExistante) {
+                cout << "Il n'y a pas de tuile a cette position. Choisissez une autre position." << endl;
+                break; // Retourner au menu des actions si la position est innocupee
+            }
+
+            cout << "A quelle position souhaitez-vous positionner la nouvelle tuile par rapport à la tuile :" << tuileExistante->getTuile() << endl;
+            cout << "NW, NE, E, SE, SW, W"<< endl;
+            cin >> direction;
+            Position pos;
+            if (direction == "NW") pos = posRef.getNW();
+            else if (direction == "NE") pos = posRef.getNE();
+            else if (direction == "E") pos = posRef.getE();
+            else if (direction == "SE") pos = posRef.getSE();
+            else if (direction == "SW") pos = posRef.getSW();
+            else if (direction == "W") pos = posRef.getW();
+            else {
+                cout << "Direction invalide." << endl;
+                break;
+            }
+            // Verification si une tuile est deja placee a cette position
+            TuilePlacee* tuileExistante2 = joueur->getPlateau()->getTuilePlacee(pos);
+            if (tuileExistante2) {
+                cout << "Il y a deja une tuile a cette position. Choisissez une autre position." << endl;
+                break; // Retourner au menu des actions si la position est occupee
+            }
+
+
+
+
+            /*int x, y;
             cout << "Ou souhaitez-vous placer la tuile ? (x,y) : ";
             cout << " x : ";
             cin >> x;
@@ -220,7 +260,7 @@ void Partie::jouerTour() {
             if (!adjacente) {
                 cout << "La tuile doit etre placee a côte d'une tuile deja existante." << endl;
                 break; // Retourner au menu des actions si la position n'est pas adjacente a une tuile
-            }
+            }*/
 
             Action* action = new ActionPlacerTuile(tuileSelectionnee, pos, joueur);
             controleur->executerAction(action);
