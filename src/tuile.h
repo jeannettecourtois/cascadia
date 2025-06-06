@@ -67,6 +67,7 @@ public:
     }*/
 
     // Constructeur pour créer une tuile avec des animaux et habitats donnés
+    //Utilisé pour les tuiles de départ
     Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr) {
         // Verification de doublons pour les animaux
         for (unsigned int i = 0; i < nbAnimaux; ++i) {
