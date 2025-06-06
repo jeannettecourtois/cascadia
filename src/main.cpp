@@ -19,6 +19,8 @@ static void createNewGame() {
         partie.initialiserPartie();
         // Jouer la partie
         partie.jouerTour();
+        // Des qu'on sort, c'est que la partie est finie (pour le moment pas de quoi mettre en pause le jeu
+        partie.getGagnant();
     } 
     catch (const exception& e) {cerr << "Erreur lors de la creation de la partie : " << e.what() << endl;}
     catch (...) {cerr << "Erreur inconnue lors de la creation de la partie." << endl;}

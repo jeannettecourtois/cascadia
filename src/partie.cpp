@@ -119,7 +119,7 @@ void Partie::initialiserPartie() {
 void Partie::jouerTour() {
     if (estFini()) {
         cout << "\nLa partie est terminee." << endl;
-        return;
+        return; // Ici on retourne dans le main qui va Partie::getGagnant()
     }
 
     ControleurTour* controleur = this->ctrlTour;
