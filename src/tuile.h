@@ -66,7 +66,29 @@ public:
         }
     }*/
 
+    // Constructeur pour créer une tuile avec des animaux et habitats donnés
+    //Utilisé pour les tuiles de départ
     Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr) {
+        // Verification de doublons pour les animaux
+        for (unsigned int i = 0; i < nbAnimaux; ++i) {
+            for (unsigned int j = i + 1; j < nbAnimaux; ++j) {
+                if (animauxArr[i] == animauxArr[j]) {
+                    std::cerr << "Erreur : doublon d'animal détecté dans la tuile." << std::endl;
+                    throw std::invalid_argument("Doublon d'animal dans la tuile");
+                }
+            }
+        }
+
+         // Vérification de doublons pour les habitats
+        for (unsigned int i = 0; i < nbHabitat; ++i) {
+            for (unsigned int j = i + 1; j < nbHabitat; ++j) {
+                if (habitatsArr[i] == habitatsArr[j]) {
+                    std::cerr << "Erreur : doublon d'habitat détecté dans la tuile." << std::endl;
+                    throw std::invalid_argument("Doublon d'habitat dans la tuile");
+                }
+            }
+        }
+
         this->nbAnimaux = nbAnimaux;
         this->nbHabitat = nbHabitat;
         listeAnimaux.reserve(nbAnimaux);

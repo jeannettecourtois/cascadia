@@ -11,7 +11,7 @@ class Partie;
 
 class PlateauJoueur {
 private:
-    vector<TuilePlacee> tuiles;
+    vector<TuilePlacee> plateau;
 public:
     PlateauJoueur() = default;
     ~PlateauJoueur() = default;
@@ -22,19 +22,19 @@ public:
     void ajouterTuileDepart(const TuileDepart* set);
     void supprimerTuile(const Position& pos);
 
-    int getNbTuiles() const { return static_cast<int>(tuiles.size()); }
+    int getNbTuiles() const { return static_cast<int>(plateau.size()); }
 
     void afficherPlateau() const;
 
     TuilePlacee* getTuilePlacee(const Position& pos) {
-        for (auto& t : tuiles) {
+        for (auto& t : plateau) {
             if (t.getPosition() == pos) return &t;
         }
         return nullptr;
     }
 
     const TuilePlacee* getTuilePlacee(const Position& pos) const {
-        for (const auto& t : tuiles) {
+        for (const auto& t : plateau) {
             if (t.getPosition() == pos) return &t;
         }
         return nullptr;

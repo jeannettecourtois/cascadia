@@ -26,7 +26,7 @@ int Joueur::calculScore() {
 }
 
 void PlateauJoueur::ajouterTuile(const TuilePlacee& tuile) {
-    tuiles.push_back(tuile);  // Copie locale, gestion memoire automatique
+    plateau.push_back(tuile);  // Copie locale, gestion memoire automatique
 }
 
 void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {
@@ -45,19 +45,21 @@ void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {
 }
 
 void PlateauJoueur::supprimerTuile(const Position& pos) {
-    for (auto it = tuiles.begin(); it != tuiles.end(); ++it) {
+    for (auto it = plateau.begin(); it != plateau.end(); ++it) {
         if (it->getPosition() == pos) {
-            tuiles.erase(it);
+            plateau.erase(it);
             return;
         }
     }
 }
 
 void PlateauJoueur::afficherPlateau() const {
+    //Initialisation des bornes du plateau (coordonnees extremes)
     int min_x = 0, min_y = 0, max_x = 0, max_y = 0;
     int y_min_x = 0;
 
-    for (const auto& tuile : tuiles) {
+    // Determinations des bornes du plateau
+    for (const auto& tuile : plateau) {
         const Position& pos = tuile.getPosition();
         if (pos.x < min_x) min_x = pos.x, y_min_x = pos.y;
         if (pos.x > max_x) max_x = pos.x;
@@ -65,9 +67,12 @@ void PlateauJoueur::afficherPlateau() const {
         if (pos.y > max_y) max_y = pos.y;
     }
 
+    // Preparation des lignes d'affichage (4 par tuile)
     const int nb_lignes = 4 * (max_y - min_y + 1);
     std::vector<std::ostringstream> lignes(nb_lignes);
 
+    // Decalage visuel en fonctions des lignes
+    // Si le nombre de lignes est impair, on ajoute un espace pour centrer (hexagones)
     for (int j = max_y; j >= min_y; j--) {
         if ((max_y - y_min_x) % 2) {
             lignes[2 * j + 0] << " ";
@@ -79,12 +84,14 @@ void PlateauJoueur::afficherPlateau() const {
         }
     }
 
+    // Affichage des tuiles
     for (int i = min_x; i < max_x; i++) {
         for (int j = max_y; j >= min_y; j--) {
-            int index = (max_y - j) * 4;
+            int index = (max_y - j) * 4; // Calcul de l'index de la ligne pour la tuile
             const TuilePlacee* tuile = getTuilePlacee(Position(i, j));
             if (tuile) {
                 std::ostringstream jetons;
+                // On affiche soit les animaux natifs à la tuile, soit le jeton posé dessus
                 if (tuile->getJeton() == Animal::Vide) {
                     jetons << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 2) ? *tuile->getTuile()->getListeAnimaux()[1] : Animal::Vide, Format::Court } << AnimalFormateur{ *tuile->getTuile()->getListeAnimaux()[0], Format::Court } << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 3) ? *tuile->getTuile()->getListeAnimaux()[2] : Animal::Vide, Format::Court };
                 }
@@ -93,10 +100,10 @@ void PlateauJoueur::afficherPlateau() const {
                 }
                 int nbH = tuile->getTuile()->getNbHabitat();
                 int rot = tuile->getRotation();
-                lignes[index + 0] << "/ " << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(0 + rot) % nbH], Format::Court } << " \\";
-                lignes[index + 1] << "/" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(5 + rot) % nbH], Format::Court } << i % 10 << "," << j % 10 << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(1 + rot) % nbH], Format::Court } << "\\";
-                lignes[index + 2] << "\\" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(4 + rot) % nbH], Format::Court } << jetons.str() << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(2 + rot) % nbH], Format::Court } << "/";
-                lignes[index + 3] << "\\_" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(3 + rot) % nbH], Format::Court } << "_/";
+                lignes[index + 0] << "  /  " << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(0 + rot) % nbH], Format::Court } << " \\";
+                lignes[index + 1] << "|" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(5 + rot) % nbH], Format::Court } << i % 10 << "," << j % 10 << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(1 + rot) % nbH], Format::Court } << "|";
+                lignes[index + 2] << "|" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(4 + rot) % nbH], Format::Court } << jetons.str() << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(2 + rot) % nbH], Format::Court } << " |";
+                lignes[index + 3] << " \\_" << HabitatFormateur{ *tuile->getTuile()->getListeHabitat()[(3 + rot) % nbH], Format::Court } << "_/";
             }
             else {
                 lignes[index + 0] << "     ";
