@@ -13,11 +13,9 @@ class Joueur;
 class CarteMarquageFaune;
 class Action;
 
-
-
-
+// ControleurTour : gere les actions du tour de jeu
 class ControleurTour {
-    vector<Action*> listeActions;
+    vector<Action*> listeActions; // Liste des actions effectuees durant le tour du joueur
 public:
     ControleurTour();
     ~ControleurTour();
@@ -26,13 +24,13 @@ public:
     void afficherActions() const;
 };
 
-
+// Partie : gere la partie avec plusieurs joueurs
 class Partie {
 private:
-    CarteMarquageFaune* cartesRegles[5];
+    CarteMarquageFaune* cartesRegles[5]; // Cartes de regles utilisees pour la partie
     int nbJoueur;
     Joueur** joueurs;
-    Pioche* pioche;
+    Pioche* pioche; // Pioche de tuiles et de jetons créés par controleur général
     ControleurTour* ctrlTour;
     int nbTour = 20;
     int joueurCourant=0;

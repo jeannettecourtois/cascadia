@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Controleur Tour
+// CONTROLEUR TOUR
 ControleurTour::ControleurTour() {}
 
 ControleurTour::~ControleurTour() {
@@ -339,6 +339,8 @@ void Partie::passerAuJoueurSuivant() {
     // Fonctionne aussi avec un seul joueur
     joueurCourant = (joueurCourant + 1) % nbJoueur;
     if (joueurCourant == 0) { nbTour--; } // un tour de moins
+    delete ctrlTour; // On supprime le controleur de tour pour en creer un nouveau
+    ctrlTour = new ControleurTour(); // On cree un nouveau controleur de tour pour le joueur suivant
     this->jouerTour();
 }
 
