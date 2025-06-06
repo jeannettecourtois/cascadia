@@ -17,6 +17,35 @@ public:
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dist3(1, 3);
+
+        nbHabitat = dist3(gen);
+        nbAnimaux = dist3(gen);
+
+        // Prend de la place en prevision
+        listeAnimaux.reserve(nbAnimaux);
+        listeHabitat.reserve(nbHabitat);
+
+        // Ajout unique des animaux
+        std::vector<int> animauxIndices = {0, 1, 2, 3, 4};
+        std::shuffle(animauxIndices.begin(), animauxIndices.end(), gen);
+        for (unsigned int i = 0; i < nbAnimaux; ++i) {
+            unsigned int unAnimal = animauxIndices[i];
+            listeAnimaux.push_back(new Animal(*(std::next(animaux.begin(), unAnimal))));
+        }
+
+        // Ajout unique des habitats
+        std::vector<int> habitatsIndices = {0, 1, 2, 3, 4};
+        std::shuffle(habitatsIndices.begin(), habitatsIndices.end(), gen);
+        for (unsigned int i = 0; i < nbHabitat; ++i) {
+            unsigned int unHabitat = habitatsIndices[i];
+            listeHabitat.push_back(new Habitat(*(std::next(habitats.begin(), unHabitat))));
+        }
+    }
+
+    /*Tuile() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist3(1, 3);
         std::uniform_int_distribution<> dist5(0, 4);
 
         nbHabitat = dist3(gen);
@@ -35,7 +64,7 @@ public:
             unsigned int unHabitat = dist5(gen);
             listeHabitat.push_back(new Habitat(*(std::next(habitats.begin(), unHabitat))));
         }
-    }
+    }*/
 
     Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr) {
         this->nbAnimaux = nbAnimaux;

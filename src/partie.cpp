@@ -207,9 +207,10 @@ void Partie::jouerTour() {
                 break; // Retourner au menu des actions si la position est innocupee
             }
 
-            cout << "A quelle position souhaitez-vous positionner la nouvelle tuile par rapport a la tuile :" << endl;
+            cout << "A quelle position (NW, NE, E, SE, SW, W) souhaitez-vous positionner la nouvelle tuile par rapport a la tuile : " << endl;
             tuileExistante->getTuile()->afficherTuile();
-            cout << "NW, NE, E, SE, SW, W"<< endl;
+            //afficher la tuile en mode plateau pour savoir comment la positionner par rapport au plateau
+
             cin >> direction;
             transform(direction.begin(), direction.end(), direction.begin(), ::toupper); // Met la chaine en majuscule
             Position pos;
