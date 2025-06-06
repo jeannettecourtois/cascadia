@@ -193,7 +193,7 @@ void Partie::jouerTour() {
 
             int refX, refY;
             string direction;
-            cout << "A quelle tuile existante sur votre plateau souhaitez-vous coller la tuile ? (x,y) : ";
+            cout << "A quelle tuile existante sur votre plateau souhaitez-vous coller la tuile ? (x,y) : \n";
             cout << " x : ";
             cin >> refX;
             cout << " y : ";
@@ -211,6 +211,7 @@ void Partie::jouerTour() {
             tuileExistante->getTuile()->afficherTuile();
             //afficher la tuile en mode plateau pour savoir comment la positionner par rapport au plateau
 
+            cout << "position : " << endl;
             cin >> direction;
             transform(direction.begin(), direction.end(), direction.begin(), ::toupper); // Met la chaine en majuscule
             Position pos;
