@@ -179,7 +179,7 @@ void Partie::jouerTour() {
             }
             else {
                 tuileSelectionnee = pioche->getTuile(indiceSelection);
-                tuileSelectionnee->afficherTuile();
+                tuileSelectionnee->afficherTuileHexa();
             }
 
             historiqueActions.push_back(1); // Enregistrer l'action
@@ -334,7 +334,7 @@ void Partie::jouerTour() {
     passerAuJoueurSuivant();
 }
 
-// Change le joueur courant, diminue le nbTour, et relance JouerTour
+// Change le joueur courant, diminue le nbTour, et relance JouerTour, gestion ctrl de tour
 void Partie::passerAuJoueurSuivant() {
     // Fonctionne aussi avec un seul joueur
     joueurCourant = (joueurCourant + 1) % nbJoueur;

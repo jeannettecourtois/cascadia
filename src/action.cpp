@@ -6,13 +6,14 @@ using namespace std;
 int Action::executer() { return 0; }  // On peut definir un retour generique ici
 void Action::annuler() {}
 
-// ActionSelectionTuile
+// ActionSelectionTuile : selection d'une tuile dans la pioche
 ActionSelectionTuile::ActionSelectionTuile(int indice, Pioche* p)
     : indiceSelection(indice), pioche(p), tuileSelection(nullptr) {
 }
 
 ActionSelectionTuile::~ActionSelectionTuile() {}
 
+// Valider la selection de la tuile
 int ActionSelectionTuile::executer() {
     if (indiceSelection < 0 || indiceSelection > 3 || !pioche->getTuile(indiceSelection)) {
         cout << "Indice invalide." << endl;
@@ -24,9 +25,11 @@ int ActionSelectionTuile::executer() {
 }
 
 void ActionSelectionTuile::annuler() {
-    // Logique pour annuler l'action si necessaire
+    if (tuileSelection) {
+        cout << "Annulation : sélection de la tuile " << indiceSelection << " annulée." << endl;
+        tuileSelection = nullptr;
+    }
 }
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 // ActionSelectionJeton

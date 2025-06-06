@@ -8,6 +8,7 @@ using namespace std;
 class Joueur; //  Pas besoin de tout le fichier joueur.h
 class Pioche; // De meme
 
+
 class Action { // Classe abstraite
 public:
     virtual int executer() = 0; // Methode virtuelle pure, retour int dans toutes les actions

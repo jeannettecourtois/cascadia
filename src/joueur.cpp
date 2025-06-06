@@ -29,10 +29,11 @@ void PlateauJoueur::ajouterTuile(const TuilePlacee& tuile) {
     plateau.push_back(tuile);  // Copie locale, gestion memoire automatique
 }
 
+// Ajouter les tuiles de depart au plateau du joueur
 void PlateauJoueur::ajouterTuileDepart(const TuileDepart* set) {
     Position pos1(0, 0); // tuile 1 au centre (0,0)
-    Position pos2 = pos1.getSE();  // (0, 1)
-    Position pos3 = pos1.getSW(); // (-1, 1)
+    Position pos2 = pos1.getSE();  // (0, 1) SE
+    Position pos3 = pos1.getSW(); // (-1, 1) SW
 
     set->getTuile(0)->deplacer(pos1);
     ajouterTuile(*set->getTuile(0));
