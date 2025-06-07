@@ -48,9 +48,6 @@
     <ClCompile Include="src\enum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="plateau.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Action.h">
@@ -81,9 +78,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\fileHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="plateau.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

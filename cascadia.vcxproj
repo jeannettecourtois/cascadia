@@ -119,7 +119,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="plateau.cpp" />
     <ClCompile Include="src\action.cpp" />
     <ClCompile Include="src\carteMarquageFaune.cpp" />
     <ClCompile Include="src\controleurGeneral.cpp" />
@@ -133,7 +132,6 @@
     <ClCompile Include="src\tuilePlacee.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="plateau.h" />
     <ClInclude Include="src\action.h" />
     <ClInclude Include="src\carteMarquageFaune.h" />
     <ClInclude Include="src\controleurGeneral.h" />
