@@ -128,6 +128,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\partie.cpp" />
     <ClCompile Include="src\pioche.cpp" />
+    <ClCompile Include="src\plateau.cpp" />
     <ClCompile Include="src\tuile.cpp" />
     <ClCompile Include="src\tuilePlacee.cpp" />
   </ItemGroup>
@@ -140,6 +141,7 @@
     <ClInclude Include="src\joueur.h" />
     <ClInclude Include="src\partie.h" />
     <ClInclude Include="src\pioche.h" />
+    <ClInclude Include="src\plateau.h" />
     <ClInclude Include="src\tuile.h" />
     <ClInclude Include="src\tuilePlacee.h" />
   </ItemGroup>
