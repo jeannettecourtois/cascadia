@@ -4,6 +4,7 @@
 #include "joueur.h"
 #include "carteMarquageFaune.h"
 #include "enum.h"
+#include "jetonFaune.h"
 #include <random>
 #include <iostream>
 
@@ -25,14 +26,7 @@ public:
     }
 };
 
-class JetonFaune {
-    Animal ani;
-public:
-    JetonFaune(Animal a) : ani(a){}
-    ~JetonFaune() = default;
-    //methodes et accesseurs en lecture 
-    Animal getAnimal() const{return ani;}
-};
+
 
 class jetonNature {
     void afficher() const {}

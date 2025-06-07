@@ -124,11 +124,13 @@
     <ClCompile Include="src\controleurGeneral.cpp" />
     <ClCompile Include="src\enum.cpp" />
     <ClCompile Include="src\fileHandler.cpp" />
+    <ClCompile Include="src\jetonFaune.cpp" />
     <ClCompile Include="src\joueur.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\partie.cpp" />
     <ClCompile Include="src\pioche.cpp" />
     <ClCompile Include="src\plateau.cpp" />
+    <ClCompile Include="src\position.cpp" />
     <ClCompile Include="src\tuile.cpp" />
     <ClCompile Include="src\tuilePlacee.cpp" />
   </ItemGroup>
@@ -138,10 +140,12 @@
     <ClInclude Include="src\controleurGeneral.h" />
     <ClInclude Include="src\enum.h" />
     <ClInclude Include="src\fileHandler.h" />
+    <ClInclude Include="src\jetonFaune.h" />
     <ClInclude Include="src\joueur.h" />
     <ClInclude Include="src\partie.h" />
     <ClInclude Include="src\pioche.h" />
     <ClInclude Include="src\plateau.h" />
+    <ClInclude Include="src\position.h" />
     <ClInclude Include="src\tuile.h" />
     <ClInclude Include="src\tuilePlacee.h" />
   </ItemGroup>
