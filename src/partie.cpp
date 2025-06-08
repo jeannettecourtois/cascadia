@@ -2,6 +2,8 @@
 #include "controleurGeneral.h"
 #include "pioche.h"
 #include "action.h"
+#include "fileHandler.h"
+#include "util.h"
 
 using namespace std;
 
@@ -42,11 +44,10 @@ void ControleurTour::afficherActions() const {
 
 Partie* Partie::instance = nullptr;
 
-//Partie avec plusieurs joueurs (max 4)
-Partie::Partie(int nbJoueurs) : nbJoueur(nbJoueurs), joueurs(nbJoueur), pioche(new Pioche(nbJoueurs)), ctrlTour(new ControleurTour()), joueurCourant(0) {
-    for (int i = 0; i < nbJoueur; ++i) {
-        joueurs[i] = new Joueur(this, i);
-    }
+// Constructeur qui initialise avec des valeurs sûres, appelès slmt au tout premier getInstance, après utiliser initialiserPartie()
+Partie::Partie() : nbJoueur(1), nbTour(20), joueurCourant(0), pioche(nullptr), ctrlTour(nullptr), phase("SELECTION_TUILE") {
+    for (int i = 0; i < 5; i++)
+        cartesRegles[i] = nullptr;
 }
 
 Partie::~Partie() {
@@ -58,9 +59,9 @@ Partie::~Partie() {
 }
 
 // Singleton
-Partie& Partie::getInstance(int nbJoueurs) {
+Partie& Partie::getInstance() {
     if (!instance)
-        instance = new Partie(nbJoueurs);
+        instance = new Partie();
     return *instance;
 }
 
@@ -68,6 +69,51 @@ void Partie::libererInstance() {
     delete instance;
     instance = nullptr;
 }
+
+void Partie::reinitialiserPartie() {
+    // Libération des joueurs
+    for (Joueur* j : joueurs)
+        delete j;
+    joueurs.clear();
+
+    // Libération de la pioche
+    delete pioche;
+    pioche = nullptr;
+
+    // Libération du contrôleur de tour
+    delete ctrlTour;
+    ctrlTour = nullptr;
+
+    // Réinitialisation des cartes
+    for (int i = 0; i < 5; ++i)
+        cartesRegles[i] = nullptr;
+
+    nbTour = 20;
+    joueurCourant = 0;
+    phase = "SELECTION_TUILE";
+}
+
+void Partie::initialiserPartie(int nbJoueurs) {
+    reinitialiserPartie();
+
+    this->nbJoueur = nbJoueurs;
+    ControleurGeneral& ctrl = ControleurGeneral::getInstance();
+
+    for (int i = 0; i < nbJoueur; ++i)
+        joueurs.push_back(new Joueur(this, i));
+
+    initialiserCartesRegles();
+
+    for (int i = 0; i < nbJoueur; ++i) {
+        TuileDepart* tuile = ctrl.getTuileDepartAleatoire();
+        joueurs[i]->getPlateau()->ajouterTuileDepart(tuile);
+    }
+
+    pioche = new Pioche(nbJoueurs);
+    pioche->preparerPioche();
+    ctrlTour = new ControleurTour();
+}
+
 
 bool Partie::estFini() const {
     return nbTour == 0;
@@ -111,28 +157,10 @@ void Partie::setCarteFaune(int index, CarteMarquageFaune* carte) {
         cartesRegles[index] = carte;
 }
 
-void Partie::initialiserPartie() {
-    ControleurGeneral& ctrl = ControleurGeneral::getInstance();
-    initialiserCartesRegles();
-    cout << "Cartes de regles initialisees." << std::endl;
-
-    // Selection et distribution d'une tuile de depart aleatoire differente pour chaque joueur
-    for (int i = 0; i < nbJoueur; ++i) {
-        TuileDepart* tuile = ctrl.getTuileDepartAleatoire(); // tirage aleatoire
-        joueurs[i]->getPlateau()->ajouterTuileDepart(tuile);
-    }
-    cout << "Tuiles de depart distribuees a chaque joueur." << std::endl;
-
-    //Mise a jour de la pioche
-    if (!pioche) {
-        cerr << "Erreur : pioche non initialisee !" << std::endl;
-        return;
-    }
-    pioche->preparerPioche();
-    cout << "Pioche preparee." << std::endl;
-    // Reinitialisation du compteur de tours
-    nbTour = 20;
-    cout << "Initialisation de la partie terminee.\n" << std::endl;
+void Partie::setPioche(Pioche* nouvellePioche) {
+    if (pioche != nullptr)
+        delete pioche;
+    pioche = nouvellePioche;
 }
 
 void Partie::jouerTour() {
@@ -178,6 +206,7 @@ void Partie::jouerTour() {
         if (animalJetonSelectionne && !jetonPlace) {cout << "4. Placer un jeton faune" << endl;}
         if (!historiqueActions.empty()) { cout << "5. Annuler la derniere action" << endl; }  // Pour ne pas afficher lors de la premiere 
         if (tuilePlacee && jetonPlace) {cout << "6. Terminer mon tour\n" << endl;}
+        cout << "7. Sauvegarder et quitter la partie\n" << endl;
 
         int choix;
         cin >> choix;
@@ -345,6 +374,16 @@ void Partie::jouerTour() {
                 continue; // Recommencer le tour si le jeton n'est pas place
             }
             actionFinie = true;
+            break;
+        }
+        case 7: {
+            cout << "Sauvegarde en cours..." << endl;
+            if (FileHandler().saveGame(askFilename())) {
+                cout << "Partie sauvegardee ! Fin de la partie." << endl;
+                exit(0); // ou return si vous voulez juste sortir de jouerTour()
+            }
+            else
+                cerr << "Error !" << endl;
             break;
         }
         default:

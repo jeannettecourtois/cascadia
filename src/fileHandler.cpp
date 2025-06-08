@@ -2,90 +2,9 @@
 #include "partie.h"
 
 using namespace std;
-json toJsonPartie(const Partie& partie);
-void fromJsonPartie(const nlohmann::json& j, Partie& partie);
-//
-bool FileHandler::loadGame(const std::string& filename) {
-    std::ifstream file(filename);
-    if (!file) return false;
-
-    nlohmann::json j;
-    file >> j;
-
-    Partie& partie = Partie::getInstance();
-    fromJsonPartie(j, partie);
-    return true;
-}
 
 //
-bool FileHandler::saveGame(const std::string& filename) {
-    Partie& partie = Partie::getInstance();
-    nlohmann::json j = toJsonPartie(partie);
-
-    std::ofstream file(filename);
-    if (!file) return false;
-
-    file << j.dump(4);  // indente correctement (cf. convention)
-    return true;
-}
-
-bool FileHandler::saveToFile(const string& filename) {
-    ofstream fichier(filename, ios::out); // Ouvre le fichier en ecriture
-    if (!fichier.is_open()) {
-        cerr << "[Erreur] Impossible d'ouvrir le fichier '" << filename << "' pour l'ecriture.\n";
-        return false;
-    }
-
-    try {
-        //!! Pour l'instant un traitement basique
-        fichier << "ICI on mettra les Donnee du programme (?)\n";
-        fichier << "ICI on mettra les Donnee du programme (?)\n";
-        fichier << "ICI on mettra les Donnee du programme (?)\n";
-
-        if (fichier.fail()) {
-            throw ios_base::failure("echec lors de l'ecriture dans le fichier.");
-        }
-
-        fichier.close();
-        return true;
-    }
-    catch (const ios_base::failure& e) {
-        cerr << "[Exception] " << e.what() << "\n";
-        fichier.close();
-        return false;
-    }
-}
-
-bool FileHandler::loadFromFile(const string& filename) {
-    ifstream fichier(filename, ios::in); // Ouvre le fichier en lecture
-    if (!fichier.is_open()) {
-        cerr << "[Erreur] Impossible d'ouvrir le fichier '" << filename << "' pour la lecture.\n";
-        return false;
-    }
-
-    try {
-        string ligne;
-        while (getline(fichier, ligne)) {
-            // Pour l'instant un traitement basique
-            cout << "[Lecture] " << ligne << "\n";
-        }
-
-        if (fichier.bad()) {
-            throw ios_base::failure("echec critique lors de la lecture du fichier.");
-        }
-
-        fichier.close();
-        return true;
-    }
-    catch (const ios_base::failure& e) {
-        cerr << "[Exception] " << e.what() << "\n";
-        fichier.close();
-        return false;
-    }
-}
-
-//
-json toJsonPartie(const Partie& partie) {
+static json toJsonPartie(const Partie& partie) {
     json j;
 
     // Meta
@@ -126,10 +45,8 @@ json toJsonPartie(const Partie& partie) {
 }
 
 //
-void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
-    /*
-    partie.reinitialiser(); // reset : une option pour kill la partie en cours rapidement et fermer le porgramme/retourner au debut
-    */
+static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
+    partie.reinitialiserPartie(); // reset : une option pour kill la partie en cours rapidement et fermer le porgramme/retourner au debut
 
     // Joueurs
     for (const auto& jjoueur : j["players"]) {
@@ -145,19 +62,53 @@ void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
     }
 
     // Pioche
-    partie.getPioche()->fromJson(j["pioche"]);
+    Pioche* nouvellePioche = new Pioche(j["players"].size());
+    nouvellePioche->fromJson(j["pioche"]);
+    partie.setPioche(nouvellePioche);
 
     // Game state
     partie.setNbTour(j["gameState"]["toursRestants"]);
     partie.setJoueurCourant(j["gameState"]["joueurCourant"]);
     partie.setPhase(j["gameState"]["phase"]); //!!! Pas ecnore reflechi à comment l'utiliser intelligement : pour l'instant utilise jeu commutateur pour passer entre les options. integrer ?
 
-    /*
-    // Rejouer les actions ??
+    partie.setControleurTour(new ControleurTour());
+    
+    /* Chgt */
+    //!!! Rejouer les actions ??
     for (const auto& ja : j["actionHistory"]) {
-        Action a = Action::fromJson(ja);
-        partie.getControleurTour().executerAction(a.get());
+        Action* a = Action::fromJson(ja, &partie);
+        partie.getControleurTour()->executerAction(a);
         // peut stocker a si on a besoin de le garder
     }
-    */
+
+}
+
+
+// Récupère la partie et load fromJsonPartie
+bool FileHandler::loadGame(const std::string& filename) {
+    ifstream file(filename);
+    if (!file) return false;
+
+    json j;
+    file >> j;
+
+    // Récupère la partie
+    Partie& partie = Partie::getInstance();
+    fromJsonPartie(j, partie);
+    return true;
+}
+
+//
+bool FileHandler::saveGame(const std::string& filename) {
+    // On récupère la partie
+    Partie& partie = Partie::getInstance();
+    // On transforme la partie en json
+    json j = toJsonPartie(partie);
+
+    std::ofstream file(filename);
+    if (!file) return false;
+
+    // On le balance dans le fichier
+    file << j.dump(4);  // indente correctement (cf. convention)
+    return true;
 }

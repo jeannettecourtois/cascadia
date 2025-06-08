@@ -198,7 +198,7 @@ json Pioche::toJson() const {
         j["sacTuiles"].push_back(t->toJson());
 
     // Sac jetons : enum -> string
-    json j_jetons = nlohmann::json::array();
+    json j_jetons = json::array();
     const auto& compte = sacDeJetons->getCompteJetons();
 
     for (size_t i = 0; i < compte.size(); ++i) {
@@ -211,7 +211,7 @@ json Pioche::toJson() const {
     j["sacJetons"] = j_jetons;
 
     // tuiles dans pioche
-    j["tuilesPioche"] = nlohmann::json::array();
+    j["tuilesPioche"] = json::array();
     for (size_t i = 0; i < 4; i++){
         Tuile* t = tuiles[i];
         j["tuilesPioche"].push_back(t->toJson());
@@ -233,10 +233,10 @@ void Pioche::fromJson(const json& j) {
         sacDeTuiles->mettreDansLeSac(new Tuile(Tuile::fromJson(tuile)));
     }
 
-    std::vector<int> compte(5, 0); // 5 animaux
+    vector<int> compte(6, 0); // 5 animaux
     for (const auto& jn : j.at("sacJetons")) {
         Animal a = *fromStringAnimal(jn);
-        ++compte[static_cast<int>(a)];
+        ++compte[static_cast<int>(a)]; // créer erreur out of range
     }
     sacDeJetons = new SacJeton(compte);
 

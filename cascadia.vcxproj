@@ -148,7 +148,7 @@
     <ClInclude Include="src\util.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\save.json" />
+    <None Include="save.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

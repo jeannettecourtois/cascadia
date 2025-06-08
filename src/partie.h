@@ -39,7 +39,7 @@ private:
 
     string phase = "SELECTION_TUILE";;
 
-    Partie(int nbJoueurs); // constructeur prive (singleton)
+    Partie(); // constructeur prive (singleton), appelé qu'une seule fois
     Partie(const Partie&) = delete;
     Partie& operator=(const Partie&) = delete;
 
@@ -47,8 +47,11 @@ public:
     ~Partie();
 
     // Singleton
-    static Partie& getInstance(int nbJoueurs = 2);
+    static Partie& getInstance();
     static void libererInstance();
+
+    void reinitialiserPartie();
+    void initialiserPartie(int nbJoueurs);
 
     // Getters
     int getNbJoueur() const { return nbJoueur; }
@@ -71,11 +74,10 @@ public:
     void setNbTour(int tour) { nbTour = tour; }
     void setJoueurCourant(int courant) { joueurCourant = courant; }
     void setPhase(const string& s) { phase = s; }
-
-
+    void setPioche(Pioche* nouvellePioche);
+    void setControleurTour(ControleurTour* c) { ctrlTour = c; }
 
     // Moteur de jeu
-    void initialiserPartie();
     void initialiserCartesRegles();
     void jouerTour();
     void passerAuJoueurSuivant();
