@@ -150,12 +150,12 @@ json Tuile::toJson() const {
     j["id"] = id;
 
     j["habitats"] = nlohmann::json::array();
-    for (Habitat h : habitats)
-        j["habitats"].push_back(toString(h));
+    for (const Habitat* h : listeHabitat)
+        j["habitats"].push_back(toString(*h));
 
     j["animaux"] = nlohmann::json::array();
-    for (Animal a : animaux)
-        j["animaux"].push_back(toString(a));
+    for (const Animal* a : listeAnimaux)
+        j["animaux"].push_back(toString(*a));
 
     return j;
 }
