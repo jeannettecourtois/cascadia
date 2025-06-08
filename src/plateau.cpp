@@ -1,24 +1,25 @@
-//#include "plateau.h"
-//
-//PlateauJoueur::~PlateauJoueur() {
-//	for(unsigned int i = 0; i < nbTuiles; ++i) {
-//		delete tuiles[i]; // Libération de chaque tuile
-//	}
-//	delete[] tuiles; // Libération du tableau de tuiles
-//	for(unsigned int i = 0; i < nbJetonFaune; ++i) {
-//		delete jetonsFaune[i]; // Libération de chaque jeton faune
-//	}
-//	delete[] jetonsFaune; // Libération du tableau de jetons faune
-//	for(unsigned int i = 0; i < nbCartesMarquage; ++i) {
-//		delete cartesMarquage[i]; // Libération de chaque carte de marquage
-//	}
-//	delete[] cartesMarquage; // Libération du tableau de cartes de marquage
-//}
-//
-//void PlateauJoueur::ajouterTuile() {
-//
-//}
-//
-//void PlateauJoueur::retirerTuile() {
-//
-//}
+#include "plateau.h"
+#include "position.h"
+#include "tuile.h"
+#include "action.h"
+
+PlateauJoueur::PlateauJoueur() {
+    // Créer 40 positions en cercle autour de (0, 0) dans un motif hexagonal
+    int rayon = 4;
+    for (int q = -rayon; q <= rayon; ++q) {
+        for (int r = std::max(-rayon, -q - rayon); r <= std::min(rayon, -q + rayon); ++r) {
+            positionsDisponibles.emplace_back(q, r);
+            if (positionsDisponibles.size() >= maxTuiles) return;
+        }
+    }
+}
+
+void PlateauJoueur:: ajouterTuilePlacee(Tuile* tuile, const Position& pos) {
+    tuilesPlacees.emplace_back(tuile, pos);
+}
+
+void PlateauJoueur::afficherPositionsDisponibles() const {
+	for (const auto& position : positionsDisponibles) {
+		std::cout << "Position disponible: (" << position.getCol() << ", " << position.getRow()<< ")\n";
+	}
+}

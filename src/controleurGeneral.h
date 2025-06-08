@@ -28,9 +28,7 @@ public:
 
 
 
-class jetonNature {
-    void afficher() const {}
-};
+
 
 class ControleurGeneral {
 private:

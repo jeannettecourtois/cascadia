@@ -36,8 +36,8 @@ void ActionSelectionJeton::annuler() {}
 ActionPlacerTuile::ActionPlacerTuile(Tuile* t, const Position& p) : tuile(t), pos(p) {}
 ActionPlacerTuile::~ActionPlacerTuile() {}
 void ActionPlacerTuile::executer() {
-    //indiquer la position de la tuile
-    //donner un indice
+    //plateau->ajouterTuilePlacee(tuile, position);
+	//il faut rajouter comme attribut un PlateauJoueur* pour pouvoir placer la tuile
 }
 void ActionPlacerTuile::annuler() {}
 
