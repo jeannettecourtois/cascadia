@@ -124,7 +124,7 @@ json Joueur::toJson() const {
     json j;
     j["id"] = getIdJoueur();
     // Plateau du joueur
-    j["plateau"] = nlohmann::json::array();
+    j["plateau"] = json::array();
     for (const TuilePlacee& tp : plateau->getPlateau()) {
         j["plateau"].push_back(tp.toJson()); // toJson dans TuilePlacee
     }

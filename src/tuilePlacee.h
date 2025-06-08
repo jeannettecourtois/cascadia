@@ -92,9 +92,7 @@ public:
         const Tuile* t = new Tuile(Tuile::fromJson(j.at("tuile")));
 
         // Jeton
-        Animal jt = Animal::Vide;
-        if (j.contains("jeton") && !j["jeton"].is_null())
-            jt = *fromStringAnimal(j["jeton"]);
+        Animal jt = *fromStringAnimal(j["jeton"]);
 
         // Position
         Position p(j["position"]["x"], j["position"]["y"]);

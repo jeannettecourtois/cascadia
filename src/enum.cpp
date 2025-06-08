@@ -86,7 +86,7 @@ std::string toString(const Habitat& h) {
     switch (h) {
     case Habitat::Foret:     return "Foret";
     case Habitat::Montagne:  return "Montagne";
-    case Habitat::Riviere:       return "Riviere";
+    case Habitat::Riviere:   return "Riviere";
     case Habitat::Prairie:   return "Prairie";
     case Habitat::Marais:    return "Marais";
     default: throw std::invalid_argument("Invalid Habitat enum");

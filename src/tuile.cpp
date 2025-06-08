@@ -149,18 +149,18 @@ json Tuile::toJson() const {
     json j;
     j["id"] = id;
 
-    j["habitats"] = nlohmann::json::array();
+    j["habitats"] = json::array();
     for (const Habitat* h : listeHabitat)
         j["habitats"].push_back(toString(*h));
 
-    j["animaux"] = nlohmann::json::array();
+    j["animaux"] = json::array();
     for (const Animal* a : listeAnimaux)
         j["animaux"].push_back(toString(*a));
 
     return j;
 }
 
-Tuile Tuile::fromJson(const nlohmann::json& j) {
+Tuile Tuile::fromJson(const json& j) {
     Tuile t;
     t.id = j.at("id");
 

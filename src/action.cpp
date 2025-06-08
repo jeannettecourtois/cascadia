@@ -120,30 +120,31 @@ json ActionPlacerTuile::toJson() const {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 // ActionPlacerJeton
-ActionPlacerJeton::ActionPlacerJeton(Animal* j, TuilePlacee* c)
-    : jeton(j), cible(c) {
-}
+ActionPlacerJeton::ActionPlacerJeton(Animal* j, TuilePlacee* c) : jeton(j), cible(c) {}
 
 ActionPlacerJeton::~ActionPlacerJeton() {}
 
 int ActionPlacerJeton::executer() {
-    // Verifier si la tuile est deja placee et si l'animal du jeton est valide pour cette tuile
     if (!cible || !jeton) {
-        cout << "Tuile ou jeton invalide." << endl;
-        return -1;  // Retourner une erreur si la tuile ou le jeton est invalide
+        std::cout << "Tuile ou jeton invalide." << std::endl;
+        return -1;
     }
+    // Vérifie si la tuile accepte ce jeton (animal)
+    if (!cible->getTuile()->contientAnimal(*jeton)) {
+        std::cout << "Le jeton " << toString(*jeton)
+            << " ne peut pas être placé sur cette tuile." << std::endl;
+        return -1;
+    }
+    // Vérifie si un jeton est déjà placé
+    if (cible->getJeton() != Animal::Vide) {
+        std::cout << "Il y a déjà un jeton sur cette tuile." << std::endl;
+        return -1;
+    }
+    // Effectue le placement
+    cible->ajouterJeton(*jeton);
+    std::cout << "Jeton " << toString(*jeton) << " placé avec succès." << std::endl;
 
-    /*
-    // Exemple de logique pour verifier la compatibilite du jeton avec la tuile
-    if (//condition de validite du jeton ) {
-        cout << "Jeton place sur la tuile." << endl;
-        return 1;  // Action reussie
-    }
-    else {
-        cout << "Le jeton ne peut pas etre place sur cette tuile." << endl;
-        return -1;  // Retourne une erreur si l'action echoue
-    }
-    */
+    return 1;
 }
 
 void ActionPlacerJeton::annuler() {
