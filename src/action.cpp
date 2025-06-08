@@ -1,10 +1,38 @@
 #include "action.h"
+#include "joueur.h"
 
 using namespace std;
 
 // Classe Action : implementation des methodes de base
 int Action::executer() { return 0; }  // On peut definir un retour generique ici
 void Action::annuler() {}
+
+Action* Action::fromJson(const json& j, Partie* partie) {
+    // Recupere l'action courante
+    const string type = j.at("type");
+
+    if (type == "SelectionTuile") {
+        int index = j.at("index");
+        return new ActionSelectionTuile(index, partie->getPioche());
+    }
+    else if (type == "PlacementTuile") { //!!!! attentio à peut-etre adapter !!
+        Tuile* tuile = new Tuile(Tuile::fromJson(j.at("tuile")));
+        Position pos{ j["position"]["x"], j["position"]["y"] };
+        Joueur* jr = new Joueur(partie, j.at("joueur"));
+        return new ActionPlacerTuile(tuile, pos, jr);
+    }
+    else if (type == "SelectionJeton") {
+        int a = j.at("indiceJeton");
+        return new ActionSelectionJeton(a, partie->getPioche());
+    }
+    else if (type == "PlacementJeton") {
+        Animal* a = fromStringAnimal(j.at("jeton"));
+        TuilePlacee* t = new TuilePlacee(TuilePlacee::fromJson(j.at("TuileCible")));
+        return new ActionPlacerJeton(a, t);
+    }
+
+    throw runtime_error("Action inconnue : " + type);
+}
 
 // ActionSelectionTuile : selection d'une tuile dans la pioche
 ActionSelectionTuile::ActionSelectionTuile(int indice, Pioche* p)
@@ -26,7 +54,7 @@ int ActionSelectionTuile::executer() {
 
 void ActionSelectionTuile::annuler() {
     if (tuileSelection) {
-        cout << "Annulation : sélection de la tuile " << indiceSelection << " annulée." << endl;
+        cout << "Annulation : selection de la tuile " << indiceSelection << " annulee." << endl;
         tuileSelection = nullptr;
     }
 }
@@ -78,6 +106,15 @@ void ActionPlacerTuile::annuler() {
         joueur->getPlateau()->supprimerTuile(pos);
         cout << "Annulation du placement de la tuile." << endl;
     }
+}
+
+json ActionPlacerTuile::toJson() const {
+    return {
+        {"type", "PlacementTuile"},
+        {"tuile", tuile->toJson()},
+        {"position", {{"x", pos.x}, {"y", pos.y}}},
+        { "joueur", joueur->getIdJoueur() }
+    };
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

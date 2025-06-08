@@ -7,6 +7,7 @@ using namespace std;
 
 class Joueur; //  Pas besoin de tout le fichier joueur.h
 class Pioche; // De meme
+class Partie;
 
 
 class Action { // Classe abstraite
@@ -15,6 +16,8 @@ public:
     virtual void annuler() = 0; // Methode virtuelle pure
     virtual void afficher() const = 0; // Methode virtuelle pure
     virtual ~Action() = default; // Destructeur virtuel
+    virtual json toJson() const = 0;
+    static Action* fromJson(const json& j, Partie* p);
 };
 
 // Selection de tuile dans la pioche
@@ -37,6 +40,12 @@ public:
         }
     }
     Tuile* getTuileSelectionnee() const { return tuileSelection; }
+    json ActionSelectionTuile::toJson() const {
+        return {
+            {"type", "SelectionTuile"},
+            {"tuile", getTuileSelectionnee()->toJson()}
+        };
+    }
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -61,6 +70,12 @@ public:
             cout << "Aucun jeton selectionne." << endl;
         }
     }
+    json toJson() const {
+        return {
+            {"type", "PlacementJeton"},
+            {"indiceJeton", indiceSelection}
+        };
+    }
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -80,6 +95,7 @@ public:
         cout << "\nAction Placement de la tuile " << endl;
         tuile->afficherTuile();
     }
+    json toJson() const;
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -103,6 +119,20 @@ public:
             cout << "Aucun jeton place." << endl;
         }
         cible->afficherTuilePlacee();
+    }
+    json toJson() const {
+        nlohmann::json j;
+        j["type"] = "PlacementJeton";
+
+        // Position de la tuile cible
+        const Position& pos = cible->getPosition();
+        j["TuileCible"] = cible->toJson();
+
+        // Jeton
+        if (jeton)
+            j["jeton"] = toString(*jeton);
+
+        return j;
     }
 };
 

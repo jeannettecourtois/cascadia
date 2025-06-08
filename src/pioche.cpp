@@ -145,7 +145,7 @@ void Pioche::afficherJetonsDisponibles() const {
     } std::cout << std::endl;
 }
 
-// Retirer les jetons/tuiles qui ont été sélecionnés et en mettre de nouveaux
+// Retirer les jetons/tuiles qui ont ete selecionnes et en mettre de nouveaux
 void Pioche::completerPioche(const Animal* a, const Tuile* t) {
     // on change la tuile
     for (int i = 0; i < 4; ++i) {
@@ -184,6 +184,78 @@ void Pioche::completerPioche(const Animal* a, const Tuile* t) {
                 }
             }
             break;
+        }
+    }
+}
+
+// pioche.cpp
+json Pioche::toJson() const {
+    json j;
+
+    // Sac tuiles : en supposant que vous avez un identifiant ou un toJson simple
+    j["sacTuiles"] = nlohmann::json::array();
+    for (const Tuile* t : sacDeTuiles->getTuiles())
+        j["sacTuiles"].push_back(t->toJson());
+
+    // Sac jetons : enum -> string
+    json j_jetons = nlohmann::json::array();
+    const auto& compte = sacDeJetons->getCompteJetons();
+
+    for (size_t i = 0; i < compte.size(); ++i) {
+        Animal a = static_cast<Animal>(i);
+        int nb = compte[i];
+        for (int k = 0; k < nb; ++k) {
+            j_jetons.push_back(toString(a));
+        }
+    }
+    j["sacJetons"] = j_jetons;
+
+    // tuiles dans pioche
+    j["tuilesPioche"] = nlohmann::json::array();
+    for (size_t i = 0; i < 4; i++){
+        Tuile* t = tuiles[i];
+        j["tuilesPioche"].push_back(t->toJson());
+    }
+
+    //  jetons dans pioche
+    j["jetonsPioche"] = nlohmann::json::array();
+    for (size_t i = 0; i < 4; i++) {
+        Animal* a = jetons[i];
+        j["jetonsPioche"].push_back(toString(*a));
+    }
+
+    return j;
+}
+
+void Pioche::fromJson(const json& j) {
+    sacDeTuiles->getTuiles().clear();
+    for (const auto& tuile : j.at("sacTuiles")) {
+        sacDeTuiles->mettreDansLeSac(new Tuile(Tuile::fromJson(tuile)));
+    }
+
+    std::vector<int> compte(5, 0); // 5 animaux
+    for (const auto& jn : j.at("sacJetons")) {
+        Animal a = *fromStringAnimal(jn);
+        ++compte[static_cast<int>(a)];
+    }
+    sacDeJetons = new SacJeton(compte);
+
+    // Les tuiles de la pioche
+    for (int i = 0; i < 4; ++i) {
+        if (i < j["tuilesPioche"].size())
+            tuiles[i] = new Tuile(Tuile::fromJson(j["tuilesPioche"][i]));
+        else
+            tuiles[i] = nullptr;
+    }
+
+    // Les jetons de la pioche
+    for (int i = 0; i < 4; ++i) {
+        if (i < j["jetonsPioche"].size()) {
+            Animal a = *fromStringAnimal(j["jetonsPioche"][i]);
+            jetons[i] = new Animal(a);
+        }
+        else {
+            jetons[i] = nullptr;
         }
     }
 }

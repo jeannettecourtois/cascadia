@@ -19,20 +19,11 @@ enum class Habitat {
     Riviere
 };
 
-/* A DEGAGER ??
-enum class presenceAnimal {
-    PasRenard = -5,
-    PasAigle,
-    PasSaumon,
-    PasCerf,
-    PasOurs,
-    Ours = 1,
-    Cerf,
-    Saumon,
-    Aigle,
-    Renard
-};
-*/
+std::string toString(const Animal& a);
+Animal* fromStringAnimal(const std::string& s);
+
+std::string toString(const Habitat& h);
+Habitat* fromStringHabitat(const std::string& s);
 
 // Pour differencier l'affichage entre dans le jeu (affichage) et plateau (tuile)
 enum class Format {

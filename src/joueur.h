@@ -3,6 +3,9 @@
 #include <vector>
 #include "tuilePlacee.h"
 #include "controleurGeneral.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 using namespace std;
 
@@ -39,6 +42,11 @@ public:
         }
         return nullptr;
     }
+    // renvoie le vector en entier
+    vector<TuilePlacee> getPlateau() { return plateau; }
+
+    // Pour sauvegarder
+    json toJson() const;
 };
 
 
@@ -46,17 +54,34 @@ class Joueur {
 private:
     int idJoueur;
     int nbJetonNature;
-    string nomJoueur;
     PlateauJoueur* plateau;
     Partie* partie;
 public:
-    Joueur(Partie* p);
+    Joueur(Partie* p, int id);
     ~Joueur();
     Joueur(const Joueur&) = delete;
     Joueur& operator=(const Joueur&) = delete;
 
     int calculScore();
     int getNbJetonNature() const { return nbJetonNature; }
-    string getNomJoueur() const { return nomJoueur; }
     PlateauJoueur* getPlateau() const { return plateau; }
+    int getIdJoueur() const { return idJoueur; }
+
+    // Pour sauvegarder
+    json toJson() const;
+    static Joueur* fromJson(const json& j, Partie* partie) {
+        // on recupere l'id du joueur
+        int id = j.at("id");
+        Joueur* joueur = new Joueur(partie, id);
+
+        // Plateau
+        if (j.contains("plateau")) {
+            for (const auto& jtp : j["plateau"]) {
+                TuilePlacee tp = TuilePlacee::fromJson(jtp);
+                joueur->getPlateau()->ajouterTuile(tp);
+            }
+        }
+
+        return joueur;
+    }
 };

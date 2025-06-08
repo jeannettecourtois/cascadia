@@ -39,10 +39,13 @@ void ControleurTour::afficherActions() const {
 
 
 // PARTIE
+
+Partie* Partie::instance = nullptr;
+
 //Partie avec plusieurs joueurs (max 4)
-Partie::Partie(int nbJoueurs) : nbJoueur(nbJoueurs), joueurs(new Joueur* [nbJoueur]), pioche(new Pioche(nbJoueurs)), ctrlTour(new ControleurTour()), joueurCourant(0) {
+Partie::Partie(int nbJoueurs) : nbJoueur(nbJoueurs), joueurs(nbJoueur), pioche(new Pioche(nbJoueurs)), ctrlTour(new ControleurTour()), joueurCourant(0) {
     for (int i = 0; i < nbJoueur; ++i) {
-        joueurs[i] = new Joueur(this);
+        joueurs[i] = new Joueur(this, i);
     }
 }
 
@@ -50,9 +53,20 @@ Partie::~Partie() {
     for (int i = 0; i < nbJoueur; ++i) {
         delete joueurs[i];
     }
-    delete[] joueurs;
     delete pioche;
     delete ctrlTour;
+}
+
+// Singleton
+Partie& Partie::getInstance(int nbJoueurs) {
+    if (!instance)
+        instance = new Partie(nbJoueurs);
+    return *instance;
+}
+
+void Partie::libererInstance() {
+    delete instance;
+    instance = nullptr;
 }
 
 bool Partie::estFini() const {
@@ -90,6 +104,11 @@ void Partie::initialiserCartesRegles() {
     for (int i = 0; i < 5; ++i) {
         cartesRegles[i] = ctrl.getCarteMarquageParAnimalAleatoire(animaux[i]);
     }
+}
+
+void Partie::setCarteFaune(int index, CarteMarquageFaune* carte) {
+    if (index >= 0 && index < 5)
+        cartesRegles[index] = carte;
 }
 
 void Partie::initialiserPartie() {
@@ -146,7 +165,7 @@ void Partie::jouerTour() {
     while (!actionFinie) {
         // On affiche le plateau
         cout << endl << "Plateau : " << endl;
-        cout << "Environnements : F : Forêt, M : Montagne, P : Prairie, M : Marais, R : Riviere" << endl;
+        cout << "Environnements : F : Foret, M : Montagne, P : Prairie, M : Marais, R : Riviere" << endl;
         cout << "Animaux : A : Aigle, C : Cerf, O : Ours, R : Renard, S : Saumon" << endl;
         joueur->getPlateau()->afficherPlateau();
         cout << endl;
@@ -183,6 +202,7 @@ void Partie::jouerTour() {
             }
 
             historiqueActions.push_back(1); // Enregistrer l'action
+            phase = "PLACEMENT_TUILE";
             break;
         }
         case 2: { // Placer une tuile sur le plateau
@@ -236,6 +256,7 @@ void Partie::jouerTour() {
             controleur->executerAction(action);
             tuilePlacee = true;
             historiqueActions.push_back(2); // Enregistrer l'action
+            phase = "SELECTION_JETON";
             break;
         }
         case 3: { // Selectionner un jeton faune
@@ -259,6 +280,7 @@ void Partie::jouerTour() {
             }
 
             historiqueActions.push_back(3); // Enregistrer l'action
+            phase = "PLACEMENT_JETON";
             break;
         }
         case 4: { // Placer un jeton faune
@@ -289,11 +311,12 @@ void Partie::jouerTour() {
             controleur->executerAction(action);
             jetonPlace = true;
             historiqueActions.push_back(4); // Enregistrer l'action
+            phase = "TERMINER";
             break;
         }
         case 5: { // Annuler la derniere action
             if (!historiqueActions.empty()) {
-                controleur->annulerDerniereAction(); //!!! Supprime la tuile même lorsqu'annule la sélectiondu jeton car trigger ActionPlacerTuile::annuler() !!!! à Corriger
+                controleur->annulerDerniereAction(); //!!! Supprime la tuile meme lorsqu'annule la selectiondu jeton car trigger ActionPlacerTuile::annuler() !!!! à Corriger
                 int derniereAction = historiqueActions.back();
                 historiqueActions.pop_back(); // Enlever la derniere action de l'historique
                 cout << "Action annulee." << endl;

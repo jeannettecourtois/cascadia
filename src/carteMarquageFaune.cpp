@@ -1,8 +1,10 @@
 #include "carteMarquageFaune.h"
 #include "joueur.h"
 
-CarteMarquageFaune::CarteMarquageFaune(const Animal& a) : animalCarte(a) {}
+CarteMarquageFaune::CarteMarquageFaune(const Animal& a) : animalCarte(a), id(idCounter++) {}
 CarteMarquageFaune::~CarteMarquageFaune() {}
+
+unsigned int CarteMarquageFaune::idCounter = 0;
 
 int CarteMarquageFaune::calculPoints(PlateauJoueur&) {
     return 0; 
@@ -24,3 +26,9 @@ int CarteMarquageFauneParDiversiteDeType::calculPoints(PlateauJoueur&) {
     return 0; 
 }
 
+json CarteMarquageFaune::toJson() const {
+    return {
+        {"id", id},
+        {"animal", toString(animalCarte)},
+    };
+}

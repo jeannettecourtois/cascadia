@@ -5,8 +5,8 @@
 
 class tuilePlacee;
 
-Joueur::Joueur(Partie* p)
-    : idJoueur(1), nbJetonNature(0), nomJoueur("Joueur 1"), plateau(new PlateauJoueur()), partie(p) {
+Joueur::Joueur(Partie* p, int id)
+    : idJoueur(id), nbJetonNature(0), plateau(new PlateauJoueur()), partie(p) {
     // Constructeur par defaut
 }
 
@@ -92,7 +92,7 @@ void PlateauJoueur::afficherPlateau() const {
             const TuilePlacee* tuile = getTuilePlacee(Position(i, j));
             if (tuile) {
                 std::ostringstream jetons;
-                // On affiche soit les animaux natifs à la tuile, soit le jeton posé dessus
+                // On affiche soit les animaux natifs à la tuile, soit le jeton pose dessus
                 if (tuile->getJeton() == Animal::Vide) {
                     jetons << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 2) ? *tuile->getTuile()->getListeAnimaux()[1] : Animal::Vide, Format::Court } << AnimalFormateur{ *tuile->getTuile()->getListeAnimaux()[0], Format::Court } << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 3) ? *tuile->getTuile()->getListeAnimaux()[2] : Animal::Vide, Format::Court };
                 }
@@ -118,4 +118,15 @@ void PlateauJoueur::afficherPlateau() const {
     for (const auto& ligne : lignes) {
         std::cout << ligne.str() << '\n';
     }
+}
+
+json Joueur::toJson() const {
+    json j;
+    j["id"] = getIdJoueur();
+    // Plateau du joueur
+    j["plateau"] = nlohmann::json::array();
+    for (const TuilePlacee& tp : plateau->getPlateau()) {
+        j["plateau"].push_back(tp.toJson()); // toJson dans TuilePlacee
+    }
+    return j;
 }

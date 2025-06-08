@@ -3,7 +3,9 @@
 
 using namespace std;
 
-Tuile::Tuile() {
+unsigned int Tuile::idCounter = 0;
+
+Tuile::Tuile() : id(idCounter++) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist3(1, 3);
@@ -56,22 +58,22 @@ Tuile::Tuile() {
     }
 }*/
 
-Tuile::Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr) {
+Tuile::Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr) : id(idCounter++) {
     // Verification de doublons pour les animaux
     for (unsigned int i = 0; i < nbAnimaux; ++i) {
         for (unsigned int j = i + 1; j < nbAnimaux; ++j) {
             if (animauxArr[i] == animauxArr[j]) {
-                std::cerr << "Erreur : doublon d'animal détecté dans la tuile." << std::endl;
+                std::cerr << "Erreur : doublon d'animal detecte dans la tuile." << std::endl;
                 throw std::invalid_argument("Doublon d'animal dans la tuile");
             }
         }
     }
 
-    // Vérification de doublons pour les habitats
+    // Verification de doublons pour les habitats
     for (unsigned int i = 0; i < nbHabitat; ++i) {
         for (unsigned int j = i + 1; j < nbHabitat; ++j) {
             if (habitatsArr[i] == habitatsArr[j]) {
-                std::cerr << "Erreur : doublon d'habitat détecté dans la tuile." << std::endl;
+                std::cerr << "Erreur : doublon d'habitat detecte dans la tuile." << std::endl;
                 throw std::invalid_argument("Doublon d'habitat dans la tuile");
             }
         }
@@ -143,6 +145,33 @@ void Tuile::afficherTuileHexa(std::ostream& f) const {
     f << "  \\_"; f << h1.str(); f << "_/\n";
 }
 
+json Tuile::toJson() const {
+    json j;
+    j["id"] = id;
+
+    j["habitats"] = nlohmann::json::array();
+    for (Habitat h : habitats)
+        j["habitats"].push_back(toString(h));
+
+    j["animaux"] = nlohmann::json::array();
+    for (Animal a : animaux)
+        j["animaux"].push_back(toString(a));
+
+    return j;
+}
+
+Tuile Tuile::fromJson(const nlohmann::json& j) {
+    Tuile t;
+    t.id = j.at("id");
+
+    for (const auto& h : j.at("habitats"))
+        t.listeHabitat.push_back(fromStringHabitat(h));
+
+    for (const auto& a : j.at("animaux"))
+        t.listeAnimaux.push_back(fromStringAnimal(a));
+
+    return t;
+}
 
 /*
 Keystone::Keystone() : Tuile() {}

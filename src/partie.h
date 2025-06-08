@@ -6,7 +6,6 @@ using namespace std;
 
 
 class Pioche;
-class ControleurTour;
 class TuileDepart;
 class TuilePlacee;
 class Joueur;
@@ -22,33 +21,60 @@ public:
     void executerAction(Action* a);
     void annulerDerniereAction();
     void afficherActions() const;
+    vector<Action*> getListeActions() { return listeActions; }
 };
 
 // Partie : gere la partie avec plusieurs joueurs
 class Partie {
 private:
-    CarteMarquageFaune* cartesRegles[5]; // Cartes de regles utilisees pour la partie
+    static Partie* instance;
+
+    CarteMarquageFaune* cartesRegles[5];
     int nbJoueur;
-    Joueur** joueurs;
-    Pioche* pioche; // Pioche de tuiles et de jetons créés par controleur général
+    vector<Joueur*> joueurs;
+    Pioche* pioche;
     ControleurTour* ctrlTour;
     int nbTour = 20;
-    int joueurCourant=0;
-public:
-    Partie(int nbJoueurs);
+    int joueurCourant = 0;
+
+    string phase = "SELECTION_TUILE";;
+
+    Partie(int nbJoueurs); // constructeur prive (singleton)
     Partie(const Partie&) = delete;
     Partie& operator=(const Partie&) = delete;
+
+public:
     ~Partie();
 
-    int getNbJoueur() const {return nbJoueur;}
-    int getNbTour() const {return nbTour;}
-    Joueur* getJoueur(int i) const {return joueurs[i];}
-        Pioche* getPioche() const { return pioche; }
+    // Singleton
+    static Partie& getInstance(int nbJoueurs = 2);
+    static void libererInstance();
+
+    // Getters
+    int getNbJoueur() const { return nbJoueur; }
+    int getNbTour() const { return nbTour; }
+    Joueur* getJoueur(int i) const { return joueurs[i]; }
+    vector<Joueur*> getJoueurs() const { return joueurs; }
+    Pioche* getPioche() const { return pioche; }
     int getJoueurCourant() const { return joueurCourant; }
     CarteMarquageFaune* getCarteRegle(int i) const { return cartesRegles[i]; }
+    ControleurTour* getControleurTour() const { return ctrlTour; }
 
+    // etat de la partie
     bool estFini() const;
     Joueur* getGagnant() const;
+    string getPhase() const { return phase; }
+
+    // Setters pour charger partie
+    void ajouterJoueur(Joueur* j) {joueurs.push_back(j);}
+    void setCarteFaune(int index, CarteMarquageFaune* carte);
+    void setNbTour(int tour) { nbTour = tour; }
+    void setJoueurCourant(int courant) { joueurCourant = courant; }
+    void setPhase(const string& s) { phase = s; }
+
+
+
+    // Moteur de jeu
     void initialiserPartie();
     void initialiserCartesRegles();
     void jouerTour();

@@ -49,6 +49,10 @@ public:
     virtual Position getPosition() const { return pos; }
     virtual int getRotation() const { return rotation; }
 
+    // Temporaire
+    int getX() const { return pos.x; }
+    int getY() const { return pos.y; }
+
     /*
     Obliger d'utiliser cette methode virtuel deplacer, car dans PlateauJoueur::ajouterTuileDepart, on utilise des TuilePlacee,
     et si veut changer en TuilePlaceeDeplacable, doit revoir tout ControleurGeneral.*/
@@ -73,6 +77,32 @@ public:
             f << HabitatFormateur{ *tuile->getHabitat(i), Format::Complet } << " ";
         }
         f << std::endl;
+    }
+    // Pour gerer l'affichage
+    json toJson() const {
+        json j;
+        j["tuile"] = tuile->toJson();
+        j["position"] = {{"x", this->getX()}, {"y", this->getY()}};
+        j["rotation"] = rotation;
+        j["jeton"] = toString(jeton);
+        return j;
+    }
+    static TuilePlacee fromJson(const json& j) {
+        // Tuile : creation dynamique
+        const Tuile* t = new Tuile(Tuile::fromJson(j.at("tuile")));
+
+        // Jeton
+        Animal jt = Animal::Vide;
+        if (j.contains("jeton") && !j["jeton"].is_null())
+            jt = *fromStringAnimal(j["jeton"]);
+
+        // Position
+        Position p(j["position"]["x"], j["position"]["y"]);
+
+        // Rotation
+        int r = j.at("rotation");
+
+        return TuilePlacee(t, jt, p, r);
     }
 };
 

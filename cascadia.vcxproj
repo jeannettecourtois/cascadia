@@ -122,6 +122,7 @@
     <ClCompile Include="src\action.cpp" />
     <ClCompile Include="src\carteMarquageFaune.cpp" />
     <ClCompile Include="src\controleurGeneral.cpp" />
+    <ClCompile Include="src\controleurTour.cpp" />
     <ClCompile Include="src\enum.cpp" />
     <ClCompile Include="src\fileHandler.cpp" />
     <ClCompile Include="src\joueur.cpp" />
@@ -130,11 +131,13 @@
     <ClCompile Include="src\pioche.cpp" />
     <ClCompile Include="src\tuile.cpp" />
     <ClCompile Include="src\tuilePlacee.cpp" />
+    <ClCompile Include="src\util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action.h" />
     <ClInclude Include="src\carteMarquageFaune.h" />
     <ClInclude Include="src\controleurGeneral.h" />
+    <ClInclude Include="src\controleurTour.h" />
     <ClInclude Include="src\enum.h" />
     <ClInclude Include="src\fileHandler.h" />
     <ClInclude Include="src\joueur.h" />
@@ -142,6 +145,10 @@
     <ClInclude Include="src\pioche.h" />
     <ClInclude Include="src\tuile.h" />
     <ClInclude Include="src\tuilePlacee.h" />
+    <ClInclude Include="src\util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\save.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
