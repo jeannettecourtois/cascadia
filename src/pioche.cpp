@@ -194,8 +194,9 @@ json Pioche::toJson() const {
 
     // Sac tuiles : en supposant que vous avez un identifiant ou un toJson simple
     j["sacTuiles"] = nlohmann::json::array();
-    for (const Tuile* t : sacDeTuiles->getTuiles())
-        j["sacTuiles"].push_back(t->toJson());
+    for (const Tuile* t : sacDeTuiles->getTuiles()) {
+        j["sacTuiles"].push_back(t->toJson()); //bug free
+    }
 
     // Sac jetons : enum -> string
     json j_jetons = json::array();
@@ -236,7 +237,7 @@ void Pioche::fromJson(const json& j) {
     vector<int> compte(6, 0); // 5 animaux
     for (const auto& jn : j.at("sacJetons")) {
         Animal a = *fromStringAnimal(jn);
-        ++compte[static_cast<int>(a)]; // créer erreur out of range
+        ++compte[static_cast<int>(a)]; // creer erreur out of range
     }
     sacDeJetons = new SacJeton(compte);
 

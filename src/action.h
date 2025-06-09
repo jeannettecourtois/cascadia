@@ -2,12 +2,13 @@
 #include "tuilePlacee.h"
 #include "enum.h"
 #include "pioche.h"
+#include "joueur.h"
 
 using namespace std;
 
-class Joueur; //  Pas besoin de tout le fichier joueur.h
-class Pioche; // De meme
+class Pioche; //  Pas besoin de tout le fichier joueur.h
 class Partie;
+class Joueur;
 
 
 class Action { // Classe abstraite
@@ -43,7 +44,7 @@ public:
     json ActionSelectionTuile::toJson() const {
         return {
             {"type", "SelectionTuile"},
-            {"tuile", getTuileSelectionnee()->toJson()}
+            {"indiceTuile", indiceSelection}
         };
     }
 };
@@ -70,12 +71,13 @@ public:
             cout << "Aucun jeton selectionne." << endl;
         }
     }
-    json toJson() const {
+    json toJson() const override {
         return {
-            {"type", "PlacementJeton"},
+            {"type", "SelectionJeton"},
             {"indiceJeton", indiceSelection}
         };
     }
+    Animal getJetonSelection() const { return jetonSelection; }
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -105,8 +107,9 @@ class ActionPlacerJeton : public Action {
 private:
     TuilePlacee* cible;
     Animal* jeton;
+    Joueur* joueur;
 public:
-    ActionPlacerJeton(Animal* j, TuilePlacee* c);
+    ActionPlacerJeton(Animal* j, TuilePlacee* c, Joueur* joueur);
     ~ActionPlacerJeton();
     int executer() override; // Modifie pour retourner un int
     void annuler() override;
@@ -120,20 +123,7 @@ public:
         }
         cible->afficherTuilePlacee();
     }
-    json toJson() const {
-        nlohmann::json j;
-        j["type"] = "PlacementJeton";
-
-        // Position de la tuile cible
-        const Position& pos = cible->getPosition();
-        j["TuileCible"] = cible->toJson();
-
-        // Jeton
-        if (jeton)
-            j["jeton"] = toString(*jeton);
-
-        return j;
-    }
+    json toJson() const;
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

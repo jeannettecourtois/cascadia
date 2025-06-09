@@ -21,7 +21,10 @@ public:
     void executerAction(Action* a);
     void annulerDerniereAction();
     void afficherActions() const;
-    vector<Action*> getListeActions() { return listeActions; }
+    vector<Action*>& getListeActions() { return listeActions; }
+    void viderActions();
+
+    json toJson() const;
 };
 
 // Partie : gere la partie avec plusieurs joueurs
@@ -37,9 +40,7 @@ private:
     int nbTour = 20;
     int joueurCourant = 0;
 
-    string phase = "SELECTION_TUILE";;
-
-    Partie(); // constructeur prive (singleton), appelé qu'une seule fois
+    Partie(); // constructeur prive (singleton), appele qu'une seule fois
     Partie(const Partie&) = delete;
     Partie& operator=(const Partie&) = delete;
 
@@ -63,17 +64,17 @@ public:
     CarteMarquageFaune* getCarteRegle(int i) const { return cartesRegles[i]; }
     ControleurTour* getControleurTour() const { return ctrlTour; }
 
+    string getPhaseCourante() const;
+
     // etat de la partie
     bool estFini() const;
     Joueur* getGagnant() const;
-    string getPhase() const { return phase; }
 
     // Setters pour charger partie
     void ajouterJoueur(Joueur* j) {joueurs.push_back(j);}
     void setCarteFaune(int index, CarteMarquageFaune* carte);
     void setNbTour(int tour) { nbTour = tour; }
     void setJoueurCourant(int courant) { joueurCourant = courant; }
-    void setPhase(const string& s) { phase = s; }
     void setPioche(Pioche* nouvellePioche);
     void setControleurTour(ControleurTour* c) { ctrlTour = c; }
 

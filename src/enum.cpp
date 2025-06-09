@@ -89,7 +89,9 @@ std::string toString(const Habitat& h) {
     case Habitat::Riviere:   return "Riviere";
     case Habitat::Prairie:   return "Prairie";
     case Habitat::Marais:    return "Marais";
-    default: throw std::invalid_argument("Invalid Habitat enum");
+    default: 
+        std::cerr << "ERREUR: Habitat invalide (" << static_cast<int>(h) << ")" << std::endl;
+        throw std::invalid_argument("Invalid Habitat enum");
     }
 }
 

@@ -1,5 +1,31 @@
 {
-    "actionHistory": [],
+    "actionHistory": [
+        {
+            "indiceTuile": 0,
+            "type": "SelectionTuile"
+        },
+        {
+            "joueur": 0,
+            "position": {
+                "x": -1,
+                "y": 0
+            },
+            "tuile": {
+                "animaux": [
+                    "Saumon",
+                    "Ours",
+                    "Vide"
+                ],
+                "habitats": [
+                    "Riviere",
+                    "Prairie",
+                    "Foret"
+                ],
+                "id": 38
+            },
+            "type": "PlacementTuile"
+        }
+    ],
     "carteMarquageFaune": [
         {
             "animal": "Aigle",
@@ -7,15 +33,15 @@
         },
         {
             "animal": "Cerf",
-            "id": 5
+            "id": 3
         },
         {
             "animal": "Ours",
-            "id": 8
+            "id": 6
         },
         {
             "animal": "Renard",
-            "id": 9
+            "id": 11
         },
         {
             "animal": "Saumon",
@@ -24,8 +50,8 @@
     ],
     "gameState": {
         "joueurCourant": 0,
-        "phase": "TERMINER",
-        "toursRestants": 19
+        "phase": "SELECTION_JETON",
+        "toursRestants": 20
     },
     "metadata": {
         "game": "Cascadia",
@@ -34,12 +60,13 @@
     },
     "pioche": {
         "jetonsPioche": [
-            "Ours",
+            "Cerf",
             "Aigle",
             "Saumon",
             "Renard"
         ],
         "sacJetons": [
+            "Ours",
             "Ours",
             "Ours",
             "Ours",
@@ -59,263 +86,215 @@
         "sacTuiles": [
             {
                 "animaux": [
-                    "Ours"
+                    "Saumon",
+                    "Cerf"
+                ],
+                "habitats": [
+                    "Foret",
+                    "Prairie",
+                    "Montagne"
+                ],
+                "id": 67
+            },
+            {
+                "animaux": [
+                    "Ours",
+                    "Saumon"
+                ],
+                "habitats": [
+                    "Marais",
+                    "Foret",
+                    "Montagne"
+                ],
+                "id": 11
+            },
+            {
+                "animaux": [
+                    "Ours",
+                    "Saumon"
                 ],
                 "habitats": [
                     "Prairie"
                 ],
-                "id": 36
+                "id": 16
+            },
+            {
+                "animaux": [
+                    "Cerf",
+                    "Saumon"
+                ],
+                "habitats": [
+                    "Foret",
+                    "Montagne"
+                ],
+                "id": 53
             },
             {
                 "animaux": [
                     "Ours",
                     "Cerf",
-                    "Renard"
+                    "Vide"
                 ],
                 "habitats": [
-                    "Foret",
+                    "Riviere",
                     "Prairie",
-                    "Marais"
+                    "Foret"
                 ],
-                "id": 42
+                "id": 28
             },
             {
                 "animaux": [
-                    "Renard",
+                    "Cerf",
                     "Saumon",
+                    "Aigle"
+                ],
+                "habitats": [
+                    "Foret",
+                    "Riviere",
+                    "Prairie"
+                ],
+                "id": 77
+            },
+            {
+                "animaux": [
+                    "Vide",
                     "Ours"
                 ],
                 "habitats": [
+                    "Marais",
                     "Foret"
                 ],
-                "id": 83
+                "id": 43
+            },
+            {
+                "animaux": [
+                    "Ours"
+                ],
+                "habitats": [
+                    "Marais",
+                    "Riviere"
+                ],
+                "id": 61
+            },
+            {
+                "animaux": [
+                    "Saumon"
+                ],
+                "habitats": [
+                    "Riviere",
+                    "Marais"
+                ],
+                "id": 62
+            },
+            {
+                "animaux": [
+                    "Ours",
+                    "Cerf",
+                    "Saumon"
+                ],
+                "habitats": [
+                    "Montagne"
+                ],
+                "id": 73
+            },
+            {
+                "animaux": [
+                    "Ours",
+                    "Saumon",
+                    "Vide"
+                ],
+                "habitats": [
+                    "Montagne",
+                    "Marais",
+                    "Riviere"
+                ],
+                "id": 59
             },
             {
                 "animaux": [
                     "Saumon",
+                    "Aigle",
+                    "Ours"
+                ],
+                "habitats": [
+                    "Marais"
+                ],
+                "id": 10
+            },
+            {
+                "animaux": [
                     "Ours",
-                    "Renard"
+                    "Aigle"
+                ],
+                "habitats": [
+                    "Riviere",
+                    "Prairie",
+                    "Marais"
+                ],
+                "id": 76
+            },
+            {
+                "animaux": [
+                    "Ours",
+                    "Cerf",
+                    "Saumon"
+                ],
+                "habitats": [
+                    "Montagne"
+                ],
+                "id": 73
+            },
+            {
+                "animaux": [
+                    "Ours"
                 ],
                 "habitats": [
                     "Prairie",
-                    "Foret",
-                    "Riviere"
+                    "Foret"
                 ],
                 "id": 69
             },
             {
                 "animaux": [
-                    "Renard",
-                    "Aigle"
+                    "Saumon",
+                    "Cerf"
                 ],
                 "habitats": [
-                    "Montagne",
-                    "Riviere"
+                    "Foret",
+                    "Prairie",
+                    "Montagne"
+                ],
+                "id": 67
+            },
+            {
+                "animaux": [
+                    "Vide"
+                ],
+                "habitats": [
+                    "Foret"
+                ],
+                "id": 33
+            },
+            {
+                "animaux": [
+                    "Aigle",
+                    "Vide"
+                ],
+                "habitats": [
+                    "Riviere",
+                    "Montagne"
                 ],
                 "id": 72
             },
             {
                 "animaux": [
-                    "Renard",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Montagne",
-                    "Riviere"
-                ],
-                "id": 72
-            },
-            {
-                "animaux": [
-                    "Saumon",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Riviere",
-                    "Foret",
-                    "Marais"
-                ],
-                "id": 61
-            },
-            {
-                "animaux": [
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Foret"
-                ],
-                "id": 49
-            },
-            {
-                "animaux": [
-                    "Renard"
-                ],
-                "habitats": [
-                    "Marais",
-                    "Prairie"
-                ],
-                "id": 74
-            },
-            {
-                "animaux": [
-                    "Saumon"
-                ],
-                "habitats": [
-                    "Riviere",
-                    "Marais"
-                ],
-                "id": 55
-            },
-            {
-                "animaux": [
-                    "Renard",
                     "Saumon",
                     "Cerf"
                 ],
                 "habitats": [
-                    "Prairie",
-                    "Marais"
-                ],
-                "id": 65
-            },
-            {
-                "animaux": [
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Prairie"
-                ],
-                "id": 71
-            },
-            {
-                "animaux": [
-                    "Renard"
-                ],
-                "habitats": [
-                    "Riviere"
-                ],
-                "id": 82
-            },
-            {
-                "animaux": [
-                    "Renard"
-                ],
-                "habitats": [
-                    "Marais",
-                    "Prairie"
-                ],
-                "id": 74
-            },
-            {
-                "animaux": [
-                    "Saumon",
-                    "Cerf",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Prairie"
-                ],
-                "id": 11
-            },
-            {
-                "animaux": [
-                    "Saumon",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Riviere",
                     "Foret",
-                    "Marais"
-                ],
-                "id": 61
-            },
-            {
-                "animaux": [
-                    "Aigle",
-                    "Saumon",
-                    "Cerf"
-                ],
-                "habitats": [
-                    "Marais",
                     "Prairie",
                     "Montagne"
-                ],
-                "id": 73
-            },
-            {
-                "animaux": [
-                    "Renard"
-                ],
-                "habitats": [
-                    "Riviere"
-                ],
-                "id": 82
-            },
-            {
-                "animaux": [
-                    "Renard"
-                ],
-                "habitats": [
-                    "Foret",
-                    "Marais",
-                    "Prairie"
-                ],
-                "id": 46
-            },
-            {
-                "animaux": [
-                    "Saumon",
-                    "Cerf",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Prairie"
-                ],
-                "id": 11
-            },
-            {
-                "animaux": [
-                    "Aigle",
-                    "Saumon",
-                    "Cerf"
-                ],
-                "habitats": [
-                    "Marais",
-                    "Prairie",
-                    "Montagne"
-                ],
-                "id": 73
-            },
-            {
-                "animaux": [
-                    "Renard",
-                    "Saumon",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Montagne",
-                    "Prairie",
-                    "Riviere"
-                ],
-                "id": 66
-            },
-            {
-                "animaux": [
-                    "Saumon"
-                ],
-                "habitats": [
-                    "Montagne"
-                ],
-                "id": 24
-            },
-            {
-                "animaux": [
-                    "Saumon"
-                ],
-                "habitats": [
-                    "Riviere",
-                    "Montagne",
-                    "Foret"
                 ],
                 "id": 67
             },
@@ -323,98 +302,112 @@
                 "animaux": [
                     "Ours",
                     "Cerf",
-                    "Renard"
+                    "Saumon"
                 ],
                 "habitats": [
-                    "Foret",
-                    "Prairie",
+                    "Montagne"
+                ],
+                "id": 73
+            },
+            {
+                "animaux": [
+                    "Aigle",
+                    "Vide"
+                ],
+                "habitats": [
+                    "Riviere"
+                ],
+                "id": 39
+            },
+            {
+                "animaux": [
+                    "Aigle",
+                    "Cerf",
+                    "Ours"
+                ],
+                "habitats": [
+                    "Marais",
+                    "Riviere"
+                ],
+                "id": 24
+            },
+            {
+                "animaux": [
+                    "Vide",
+                    "Saumon"
+                ],
+                "habitats": [
                     "Marais"
                 ],
-                "id": 42
+                "id": 15
+            },
+            {
+                "animaux": [
+                    "Aigle",
+                    "Vide"
+                ],
+                "habitats": [
+                    "Montagne"
+                ],
+                "id": 84
+            },
+            {
+                "animaux": [
+                    "Cerf",
+                    "Vide",
+                    "Aigle"
+                ],
+                "habitats": [
+                    "Prairie",
+                    "Montagne",
+                    "Riviere"
+                ],
+                "id": 74
             },
             {
                 "animaux": [
                     "Ours",
-                    "Cerf"
+                    "Saumon"
                 ],
                 "habitats": [
-                    "Marais"
-                ],
-                "id": 19
-            },
-            {
-                "animaux": [
-                    "Renard",
-                    "Ours"
-                ],
-                "habitats": [
-                    "Marais"
+                    "Prairie",
+                    "Marais",
+                    "Foret"
                 ],
                 "id": 18
             },
             {
                 "animaux": [
-                    "Renard",
-                    "Saumon",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Marais"
-                ],
-                "id": 48
-            },
-            {
-                "animaux": [
-                    "Ours",
-                    "Cerf"
-                ],
-                "habitats": [
-                    "Foret",
-                    "Marais"
-                ],
-                "id": 40
-            },
-            {
-                "animaux": [
-                    "Aigle",
                     "Cerf",
+                    "Vide",
                     "Ours"
                 ],
                 "habitats": [
-                    "Riviere"
-                ],
-                "id": 30
-            },
-            {
-                "animaux": [
-                    "Aigle",
-                    "Cerf",
-                    "Saumon"
-                ],
-                "habitats": [
-                    "Prairie",
+                    "Foret",
+                    "Marais",
                     "Montagne"
                 ],
-                "id": 33
+                "id": 31
             },
             {
                 "animaux": [
+                    "Saumon",
                     "Cerf"
                 ],
                 "habitats": [
-                    "Prairie",
+                    "Marais",
                     "Riviere"
                 ],
-                "id": 10
+                "id": 55
             },
             {
                 "animaux": [
-                    "Cerf",
+                    "Vide",
                     "Saumon",
-                    "Renard"
+                    "Ours"
                 ],
                 "habitats": [
-                    "Montagne",
+                    "Prairie",
                     "Riviere",
                     "Foret"
                 ],
@@ -422,105 +415,156 @@
             },
             {
                 "animaux": [
-                    "Renard",
                     "Saumon",
+                    "Aigle",
                     "Ours"
                 ],
                 "habitats": [
+                    "Marais"
+                ],
+                "id": 10
+            },
+            {
+                "animaux": [
+                    "Ours"
+                ],
+                "habitats": [
+                    "Montagne",
+                    "Marais",
                     "Foret"
                 ],
-                "id": 83
+                "id": 63
+            },
+            {
+                "animaux": [
+                    "Aigle"
+                ],
+                "habitats": [
+                    "Montagne",
+                    "Riviere"
+                ],
+                "id": 51
+            },
+            {
+                "animaux": [
+                    "Aigle",
+                    "Ours"
+                ],
+                "habitats": [
+                    "Montagne"
+                ],
+                "id": 65
             },
             {
                 "animaux": [
                     "Saumon",
-                    "Renard",
-                    "Aigle"
+                    "Cerf"
+                ],
+                "habitats": [
+                    "Montagne"
+                ],
+                "id": 70
+            },
+            {
+                "animaux": [
+                    "Ours"
+                ],
+                "habitats": [
+                    "Prairie",
+                    "Foret",
+                    "Riviere"
+                ],
+                "id": 66
+            },
+            {
+                "animaux": [
+                    "Cerf",
+                    "Vide"
                 ],
                 "habitats": [
                     "Marais",
+                    "Riviere",
                     "Prairie"
                 ],
-                "id": 16
+                "id": 8
+            },
+            {
+                "animaux": [
+                    "Ours",
+                    "Aigle",
+                    "Saumon"
+                ],
+                "habitats": [
+                    "Marais"
+                ],
+                "id": 1
+            },
+            {
+                "animaux": [
+                    "Aigle"
+                ],
+                "habitats": [
+                    "Prairie",
+                    "Marais"
+                ],
+                "id": 22
             },
             {
                 "animaux": [
                     "Cerf"
                 ],
                 "habitats": [
-                    "Montagne"
+                    "Marais"
                 ],
-                "id": 26
-            },
-            {
-                "animaux": [
-                    "Cerf",
-                    "Renard",
-                    "Ours"
-                ],
-                "habitats": [
-                    "Montagne",
-                    "Riviere"
-                ],
-                "id": 28
-            },
-            {
-                "animaux": [
-                    "Renard",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Prairie",
-                    "Foret",
-                    "Montagne"
-                ],
-                "id": 5
+                "id": 20
             }
         ],
         "tuilesPioche": [
+            {
+                "animaux": [
+                    "Saumon",
+                    "Ours",
+                    "Vide"
+                ],
+                "habitats": [
+                    "Riviere",
+                    "Prairie",
+                    "Foret"
+                ],
+                "id": 38
+            },
             {
                 "animaux": [
                     "Ours",
                     "Saumon"
                 ],
                 "habitats": [
-                    "Prairie",
-                    "Foret"
-                ],
-                "id": 70
-            },
-            {
-                "animaux": [
-                    "Ours",
-                    "Cerf"
-                ],
-                "habitats": [
-                    "Marais"
-                ],
-                "id": 19
-            },
-            {
-                "animaux": [
-                    "Saumon",
-                    "Renard",
-                    "Aigle"
-                ],
-                "habitats": [
-                    "Marais",
                     "Prairie"
                 ],
                 "id": 16
             },
             {
                 "animaux": [
-                    "Renard"
+                    "Saumon",
+                    "Cerf"
                 ],
                 "habitats": [
+                    "Riviere",
                     "Foret",
-                    "Marais",
                     "Prairie"
                 ],
-                "id": 46
+                "id": 40
+            },
+            {
+                "animaux": [
+                    "Ours",
+                    "Cerf",
+                    "Saumon"
+                ],
+                "habitats": [
+                    "Montagne"
+                ],
+                "id": 73
             }
         ]
     },
@@ -585,7 +629,7 @@
                     }
                 },
                 {
-                    "jeton": "Cerf",
+                    "jeton": "Vide",
                     "position": {
                         "x": -1,
                         "y": 0
@@ -593,13 +637,16 @@
                     "rotation": 0,
                     "tuile": {
                         "animaux": [
-                            "Cerf"
+                            "Saumon",
+                            "Ours",
+                            "Vide"
                         ],
                         "habitats": [
+                            "Riviere",
                             "Prairie",
-                            "Riviere"
+                            "Foret"
                         ],
-                        "id": 63
+                        "id": 38
                     }
                 }
             ]
