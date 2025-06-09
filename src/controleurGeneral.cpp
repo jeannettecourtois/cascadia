@@ -37,7 +37,9 @@ ControleurGeneral::ControleurGeneral()
     for (unsigned int i = 80; i < 100; ++i) tabJetons[i] = new JetonFaune(Animal::Renard);
 
     // Construction des Tuiles
-    for (unsigned int i = 0; i < 85; ++i) tabTuiles[i] = new Tuile();
+    for (size_t i = 0; i < 85; ++i) tabTuiles[i] = new Tuile();
+    // Construction des Tuiles de départ (placeholder)
+    for (size_t i = 85; i < 90; ++i) { tabTuiles[i] = nullptr; } // seront remplies dans initialiserTuilesDepart
 
     // Construction des Cartes de Marquage Faune
     for (unsigned int i = 0; i < 3; ++i) tabCartesMarquage[i] = new CarteMarquageFaune(Animal::Aigle);
@@ -94,103 +96,121 @@ void ControleurGeneral::initialiserTuilesDepart() {
     tuilesDepart = new TuileDepart*[nbTuilesDepart];
 
     // TuileDepart 0
-    {
+    {   
         Animal a1[1] = { Animal::Aigle };
         Habitat h1[1] = { Habitat::Marais };
-        Tuile* t1 = new Tuile(1, 1, a1, h1);
+        tabTuiles[85] = new Tuile(1, 1, a1, h1);
+        tabTuiles[85]->setStarter(true);
 
         Animal a2[2] = { Animal::Ours, Animal::Renard };
         Habitat h2[2] = { Habitat::Montagne, Habitat::Prairie };
-        Tuile* t2 = new Tuile(2, 2, a2, h2);
+        tabTuiles[86] = new Tuile(2, 2, a2, h2);
+        tabTuiles[86]->setStarter(true);
 
         Animal a3[3] = { Animal::Saumon, Animal::Cerf, Animal::Aigle };
         Habitat h3[2] = { Habitat::Riviere, Habitat::Foret };
-        Tuile* t3 = new Tuile(3, 2, a3, h3);
+        tabTuiles[87] = new Tuile(3, 2, a3, h3);
+        tabTuiles[87]->setStarter(true);
 
         tuilesDepart[0] = new TuileDepart();
-        tuilesDepart[0]->setTuile(0, new TuilePlacee(t1));
-        tuilesDepart[0]->setTuile(1, new TuilePlacee(t2));
-        tuilesDepart[0]->setTuile(2, new TuilePlacee(t3));
+        tuilesDepart[0]->setTuile(0, new TuilePlacee(tabTuiles[85]));
+        tuilesDepart[0]->setTuile(1, new TuilePlacee(tabTuiles[86]));
+        tuilesDepart[0]->setTuile(2, new TuilePlacee(tabTuiles[87]));
     }
 
     // TuileDepart 1
     {
         Animal a1[1] = { Animal::Ours };
         Habitat h1[1] = { Habitat::Montagne };
-        Tuile* t1 = new Tuile(1, 1, a1, h1);
+        tabTuiles[88] = new Tuile(1, 1, a1, h1);
+        tabTuiles[88]->setStarter(true);
 
         Animal a2[2] = { Animal::Ours, Animal::Saumon };
         Habitat h2[2] = { Habitat::Prairie, Habitat::Riviere };
-        Tuile* t2 = new Tuile(2, 2, a2, h2);
+        tabTuiles[89] = new Tuile(2, 2, a2, h2);
+        tabTuiles[89]->setStarter(true);
 
         Animal a3[3] = { Animal::Cerf, Animal::Aigle, Animal::Renard };
         Habitat h3[2] = { Habitat::Marais, Habitat::Foret };
-        Tuile* t3 = new Tuile(3, 2, a3, h3);
+        tabTuiles[90] = new Tuile(3, 2, a3, h3);
+        tabTuiles[90]->setStarter(true);
 
         tuilesDepart[1] = new TuileDepart();
-        tuilesDepart[1]->setTuile(0, new TuilePlacee(t1));
-        tuilesDepart[1]->setTuile(1, new TuilePlacee(t2));
-        tuilesDepart[1]->setTuile(2, new TuilePlacee(t3));
+        tuilesDepart[1]->setTuile(0, new TuilePlacee(tabTuiles[88]));
+        tuilesDepart[1]->setTuile(1, new TuilePlacee(tabTuiles[89]));
+        tuilesDepart[1]->setTuile(2, new TuilePlacee(tabTuiles[90]));
     }
+
 
     // TuileDepart 2
     {
         Animal a1[1] = { Animal::Cerf };
         Habitat h1[1] = { Habitat::Foret };
-        Tuile* t1 = new Tuile(1, 1, a1, h1);
+        tabTuiles[91] = new Tuile(1, 1, a1, h1);
+        tabTuiles[91]->setStarter(true);
 
         Animal a2[2] = { Animal::Renard, Animal::Saumon };
         Habitat h2[2] = { Habitat::Prairie, Habitat::Marais };
-        Tuile* t2 = new Tuile(2, 2, a2, h2);
+        tabTuiles[92] = new Tuile(2, 2, a2, h2);
+        tabTuiles[92]->setStarter(true);
 
         Animal a3[3] = { Animal::Aigle, Animal::Cerf, Animal::Ours };
         Habitat h3[2] = { Habitat::Montagne, Habitat::Riviere };
-        Tuile* t3 = new Tuile(3, 2, a3, h3);
+        tabTuiles[93] = new Tuile(3, 2, a3, h3);
+        tabTuiles[93]->setStarter(true);
 
         tuilesDepart[2] = new TuileDepart();
-        tuilesDepart[2]->setTuile(0, new TuilePlacee(t1));
-        tuilesDepart[2]->setTuile(1, new TuilePlacee(t2));
-        tuilesDepart[2]->setTuile(2, new TuilePlacee(t3));
+        tuilesDepart[2]->setTuile(0, new TuilePlacee(tabTuiles[91]));
+        tuilesDepart[2]->setTuile(1, new TuilePlacee(tabTuiles[92]));
+        tuilesDepart[2]->setTuile(2, new TuilePlacee(tabTuiles[93]));
     }
+
 
     // TuileDepart 3
     {
         Animal a1[1] = { Animal::Saumon };
         Habitat h1[1] = { Habitat::Riviere };
-        Tuile* t1 = new Tuile(1, 1, a1, h1);
+        tabTuiles[94] = new Tuile(1, 1, a1, h1);
+        tabTuiles[94]->setStarter(true);
 
         Animal a2[2] = { Animal::Aigle, Animal::Renard };
         Habitat h2[2] = { Habitat::Montagne, Habitat::Riviere };
-        Tuile* t2 = new Tuile(2, 2, a2, h2);
+        tabTuiles[95] = new Tuile(2, 2, a2, h2);
+        tabTuiles[95]->setStarter(true);
 
         Animal a3[3] = { Animal::Ours, Animal::Cerf, Animal::Saumon };
         Habitat h3[2] = { Habitat::Foret, Habitat::Prairie };
-        Tuile* t3 = new Tuile(3, 2, a3, h3);
+        tabTuiles[96] = new Tuile(3, 2, a3, h3);
+        tabTuiles[96]->setStarter(true);
 
         tuilesDepart[3] = new TuileDepart();
-        tuilesDepart[3]->setTuile(0, new TuilePlacee(t1));
-        tuilesDepart[3]->setTuile(1, new TuilePlacee(t2));
-        tuilesDepart[3]->setTuile(2, new TuilePlacee(t3));
+        tuilesDepart[3]->setTuile(0, new TuilePlacee(tabTuiles[94]));
+        tuilesDepart[3]->setTuile(1, new TuilePlacee(tabTuiles[95]));
+        tuilesDepart[3]->setTuile(2, new TuilePlacee(tabTuiles[96]));
     }
+
 
     // TuileDepart 4
     {
         Animal a1[1] = { Animal::Renard };
         Habitat h1[1] = { Habitat::Prairie };
-        Tuile* t1 = new Tuile(1, 1, a1, h1);
+        tabTuiles[97] = new Tuile(1, 1, a1, h1);
+        tabTuiles[97]->setStarter(true);
 
         Animal a2[2] = { Animal::Ours, Animal::Cerf };
         Habitat h2[2] = { Habitat::Montagne, Habitat::Foret };
-        Tuile* t2 = new Tuile(2, 2, a2, h2);
+        tabTuiles[98] = new Tuile(2, 2, a2, h2);
+        tabTuiles[98]->setStarter(true);
 
         Animal a3[3] = { Animal::Aigle, Animal::Saumon, Animal::Renard };
         Habitat h3[2] = { Habitat::Riviere, Habitat::Marais };
-        Tuile* t3 = new Tuile(3, 2, a3, h3);
+        tabTuiles[99] = new Tuile(3, 2, a3, h3);
+        tabTuiles[99]->setStarter(true);
 
         tuilesDepart[4] = new TuileDepart();
-        tuilesDepart[4]->setTuile(0, new TuilePlacee(t1));
-        tuilesDepart[4]->setTuile(1, new TuilePlacee(t2));
-        tuilesDepart[4]->setTuile(2, new TuilePlacee(t3));
+        tuilesDepart[4]->setTuile(0, new TuilePlacee(tabTuiles[97]));
+        tuilesDepart[4]->setTuile(1, new TuilePlacee(tabTuiles[98]));
+        tuilesDepart[4]->setTuile(2, new TuilePlacee(tabTuiles[99]));
     }
 }
 

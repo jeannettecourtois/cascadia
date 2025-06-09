@@ -14,12 +14,17 @@ private:
     std::vector<Animal> listeAnimaux;
     std::vector<Habitat> listeHabitat;
 
+    bool starter = false;
+
     static unsigned int idCounter;
 
 public:
     Tuile();
     Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr);
     ~Tuile() = default;
+
+    void setStarter(bool b) { starter = b; }
+    bool isStarterTile() const { return starter; }
 
     int getNbHabitat() const { return listeHabitat.size(); }
     int getNbAnimaux() const { return listeAnimaux.size(); }
@@ -37,7 +42,7 @@ public:
     void afficherTuileHexa(std::ostream& f = std::cout) const;
 
     json toJson() const;
-    static Tuile fromJson(const json& j);
+    static Tuile& fromJson(const json& j);
 };
 
 

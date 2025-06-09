@@ -22,7 +22,8 @@ Action* Action::fromJson(const json& j, Partie* partie) {
     if (type == "PlacementTuile") {
         int x = j.at("position").at("x");
         int y = j.at("position").at("y");
-        Tuile* tuile = new Tuile(Tuile::fromJson(j.at("tuile")));
+        unsigned int idTuile = j.at("tuile").at("id");
+        Tuile* tuile = ControleurGeneral::getInstance().getTuileById(idTuile);
         int idJoueur = j.at("joueur");
         Joueur* joueur = partie->getJoueur(idJoueur);
         return new ActionPlacerTuile(tuile, Position{ x, y }, joueur);
@@ -31,7 +32,7 @@ Action* Action::fromJson(const json& j, Partie* partie) {
     if (type == "PlacementJeton") {
         int idJoueur = j.at("joueur");
         Joueur* joueur = partie->getJoueur(idJoueur);
-        Animal* jeton = new Animal(*fromStringAnimal(j.at("jeton")));
+        Animal* jeton = new Animal(fromStringAnimal(j.at("jeton")));
         Position pos{
             j["TuileCible"]["position"]["x"],
             j["TuileCible"]["position"]["y"]

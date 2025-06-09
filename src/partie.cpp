@@ -215,6 +215,7 @@ void Partie::jouerTour() {
 
     vector<int> historiqueActions;  // Pour enregistrer l'historique des choix du joueur
 
+    ///! désactiver si nouvelle partie
     // Initialisation à partir de l'historique qd chargement
     for (Action* a : controleur->getListeActions()) {
         if (auto selT = dynamic_cast<ActionSelectionTuile*>(a)) {

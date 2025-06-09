@@ -20,7 +20,7 @@ public:
     static CarteMarquageFaune fromJson(const json& j) {
         CarteMarquageFaune c;
         c.id = j.at("id");
-        c.animalCarte = *fromStringAnimal(j.at("animal"));
+        c.animalCarte = fromStringAnimal(j.at("animal"));
         return c;
     }
 };

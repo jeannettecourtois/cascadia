@@ -1,5 +1,6 @@
 #include <sstream>
 #include "tuile.h"
+#include "ControleurGeneral.h"
 
 using namespace std;
 
@@ -90,15 +91,11 @@ void Tuile::afficherTuileHexa(ostream& f) const {
 json Tuile::toJson() const {
     json j;
     j["id"] = id;
+    j["starter"] = starter;
 
     j["habitats"] = json::array();
-    for (const Habitat h : getVectHabitat()) {
-        int c = static_cast<int>(h);
-    if (c < 0 || c > 4) {
-        std::cerr << "[ERREUR] Tuile id = " << id << " contient Habitat invalide : " << c << std::endl;
-    }
-    j["habitats"].push_back(toString(h));
-    }
+    for (const Habitat h : getVectHabitat())
+        j["habitats"].push_back(toString(h));
 
     j["animaux"] = json::array();
     for (const Animal a : getVectAnimaux())
@@ -107,18 +104,17 @@ json Tuile::toJson() const {
     return j;
 }
 
-Tuile Tuile::fromJson(const json& j) {
-    Tuile t;
-    t.id = j.at("id");
+Tuile& Tuile::fromJson(const json& j) {
+    Tuile& t = *ControleurGeneral::getInstance().getTuileById(j.at("id"));
 
     for (const auto& h : j.at("habitats")) {
         string h_str = h.get<string>();
-        t.listeHabitat.push_back(*fromStringHabitat(h_str));
+        t.listeHabitat.push_back(fromStringHabitat(h_str));
     }
 
     for (const auto& a : j.at("animaux")) {
         string a_str = a.get<string>();
-        t.listeAnimaux.push_back(*fromStringAnimal(a_str));
+        t.listeAnimaux.push_back(fromStringAnimal(a_str));
     }
 
     return t;

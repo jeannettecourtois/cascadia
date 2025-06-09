@@ -66,7 +66,6 @@ public:
             f << "Aucune tuile placee.\n";
             return;
         }
-
         f << "Tuile avec " << tuile->getNbAnimaux() << " animaux et " << tuile->getNbHabitat() << " habitats.\n";
         f << "Animaux : ";
         for (unsigned int i = 0; i < tuile->getNbAnimaux(); ++i) {
@@ -78,40 +77,16 @@ public:
         }
         f << std::endl;
     }
-    // Pour gerer l'affichage
-    json toJson() const {
-        json j;
-        j["tuile"] = tuile->toJson();
-        j["position"] = {{"x", this->getX()}, {"y", this->getY()}};
-        j["rotation"] = rotation;
-        j["jeton"] = toString(jeton);
-        return j;
-    }
-    static TuilePlacee fromJson(const json& j) {
-        // Tuile : creation dynamique
-        const Tuile* t = new Tuile(Tuile::fromJson(j.at("tuile")));
-
-        // Jeton
-        Animal jt = *fromStringAnimal(j["jeton"]);
-
-        // Position
-        Position p(j["position"]["x"], j["position"]["y"]);
-
-        // Rotation
-        int r = j.at("rotation");
-
-        return TuilePlacee(t, jt, p, r);
-    }
+    // Pour gerer 
+    json toJson() const;
+    static TuilePlacee fromJson(const json& j);
 };
 
 class TuilePlaceeDeplacable : public TuilePlacee {
 public:
     TuilePlaceeDeplacable() = default;
 
-    TuilePlaceeDeplacable(const Tuile* tuile, Animal a, const Position& p, int rot = 0)
-        : TuilePlacee(tuile, a, p, rot) {
-    }
-
+    TuilePlaceeDeplacable(const Tuile* tuile, Animal a, const Position& p, int rot = 0): TuilePlacee(tuile, a, p, rot) {}
     ~TuilePlaceeDeplacable() = default;
 
     void deplacer(const Position& p2) override { pos.SetPosition(p2); }

@@ -13,13 +13,35 @@ SacTuile::~SacTuile() {}
 
 Tuile* SacTuile::Piocher() {
     if (tuiles.empty()) return nullptr;
-    int index = rand() % tuiles.size();
-    Tuile* t = tuiles[index];
-    tuiles.erase(tuiles.begin() + index);
-    return t;
-} 
+
+    // Filtrer uniquement les tuiles valides (non-starters)
+    std::vector<Tuile*> candidates;
+    for (Tuile* t : tuiles) {
+        if (!t->isStarterTile()) {
+            candidates.push_back(t);
+        }
+    }
+
+    if (candidates.empty()) return nullptr; // Plus rien à piocher d'utile
+
+    int index = rand() % candidates.size();
+    Tuile* selected = candidates[index];
+
+    // Trouver l'index original pour l'enlever du sac
+    auto it = std::find(tuiles.begin(), tuiles.end(), selected);
+    if (it != tuiles.end()) {
+        tuiles.erase(it);
+    }
+
+    return selected;
+}
+
 
 void SacTuile::mettreDansLeSac(Tuile* t) {
+    if (t->isStarterTile()) {
+        std::cerr << "[WARN] Tuile starter ignorée lors de l'ajout au sac (id = " << t->getId() << ").\n";
+        return; // Ne pas ajouter les tuiles de départ
+    }
     tuiles.push_back(t);
 }
 
@@ -229,34 +251,39 @@ json Pioche::toJson() const {
 }
 
 void Pioche::fromJson(const json& j) {
-    sacDeTuiles->getTuiles().clear();
-    for (const auto& tuile : j.at("sacTuiles")) {
-        sacDeTuiles->mettreDansLeSac(new Tuile(Tuile::fromJson(tuile)));
+    ControleurGeneral& controleur = ControleurGeneral::getInstance();
+
+    // --- Chargement du sac de tuiles ---
+    auto& sac = sacDeTuiles->getTuiles();
+    sac.clear();  // On part d’un sac vide
+    for (const auto& tuileJson : j.at("sacTuiles")) {
+        unsigned int id = tuileJson.at("id");
+        Tuile* t = controleur.getTuileById(id);
+        if (!t) {
+            throw std::runtime_error("Tuile introuvable dans le controleur pour l'id: " + std::to_string(id));
+        }
+        sac.push_back(t);
     }
 
-    vector<int> compte(6, 0); // 5 animaux
-    for (const auto& jn : j.at("sacJetons")) {
-        Animal a = *fromStringAnimal(jn);
-        ++compte[static_cast<int>(a)]; // creer erreur out of range
+    // --- Chargement des tuiles de la pioche ---
+    for (int i = 0; i < 4; ++i) {
+        unsigned int id = j["tuilesPioche"][i].at("id");
+        tuiles[i] = controleur.getTuileById(id);
     }
+
+    // --- Chargement des jetons du sac ---
+    std::vector<int> compte(6, 0);
+    for (const auto& jn : j.at("sacJetons")) {
+        Animal a = fromStringAnimal(jn);
+        ++compte[static_cast<int>(a)];
+    }
+    delete sacDeJetons;
     sacDeJetons = new SacJeton(compte);
 
-    // Les tuiles de la pioche
+    // --- Chargement des 4 jetons visibles ---
     for (int i = 0; i < 4; ++i) {
-        if (i < j["tuilesPioche"].size())
-            tuiles[i] = new Tuile(Tuile::fromJson(j["tuilesPioche"][i]));
-        else
-            tuiles[i] = nullptr;
-    }
-
-    // Les jetons de la pioche
-    for (int i = 0; i < 4; ++i) {
-        if (i < j["jetonsPioche"].size()) {
-            Animal a = *fromStringAnimal(j["jetonsPioche"][i]);
-            jetons[i] = new Animal(a);
-        }
-        else {
-            jetons[i] = nullptr;
-        }
+        Animal a = fromStringAnimal(j["jetonsPioche"][i]);
+        delete jetons[i]; // sécurisation mémoire si un ancien pointeur existe
+        jetons[i] = new Animal(a);
     }
 }

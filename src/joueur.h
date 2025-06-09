@@ -43,7 +43,7 @@ public:
         return nullptr;
     }
     // renvoie le vector en entier
-    vector<TuilePlacee> getPlateau() { return plateau; }
+    const vector<TuilePlacee>& getPlateau() { return plateau; }
 
     // Pour sauvegarder
     json toJson() const;

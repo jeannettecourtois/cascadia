@@ -52,7 +52,7 @@ private:
     TuileDepart** tuilesDepart = nullptr;
 
     JetonFaune* tabJetons[100];
-    Tuile* tabTuiles[85];
+    Tuile* tabTuiles[100]; // 0–84 : normales, + 15 de départ (5 x 3)
     CarteMarquageFaune* tabCartesMarquage[15];
 
     std::random_device rd;
@@ -70,8 +70,22 @@ public:
     static ControleurGeneral& getInstance();
 
     Tuile* getTuile();
+    Tuile* getTuileById(unsigned int id) const {
+        if (id >= 100) throw std::out_of_range("Tuile id invalide : " + std::to_string(id));
+        return tabTuiles[id];
+    }
+
     JetonFaune* getJetonFaune();
     CarteMarquageFaune* getCarteMarquageParAnimalAleatoire(Animal a);
 
     TuileDepart* getTuileDepartAleatoire();
+    Tuile* getStarterTuileByIndex(int i) {
+        if (i < 0 || i >= 5) throw std::out_of_range("Starter tuile invalide");
+        return tabTuiles[85 + i];
+    }
+
+    Tuile* getStarterTile(unsigned int i) {
+        if (i >= 5) throw std::out_of_range("StarterTile index hors limites");
+        return tabTuiles[85 + i];
+    }
 };

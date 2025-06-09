@@ -32,6 +32,7 @@ std::ostream& operator<<(std::ostream& f, const AnimalFormateur& af) {
 
 // COnverti un animal vers un string
 std::string toString(const Animal& a) {
+    std::cout << "[TRACE] Appel toString sur Animal = " << static_cast<int>(a) << std::endl;
     switch (a) {
     case Animal::Vide:   return "Vide";
     case Animal::Ours:   return "Ours";
@@ -44,13 +45,13 @@ std::string toString(const Animal& a) {
 }
 
 // COnverti un string vers un animal
-Animal* fromStringAnimal(const std::string& s) {
-    if (s == "Vide")   return new Animal(Animal::Vide);
-    if (s == "Ours")    return new Animal(Animal::Ours);
-    if (s == "Cerf")    return new Animal(Animal::Cerf);
-    if (s == "Saumon")   return new Animal(Animal::Saumon);
-    if (s == "Aigle") return new Animal(Animal::Aigle);
-    if (s == "Renard") return new Animal(Animal::Renard);
+Animal fromStringAnimal(const std::string& s) {
+    if (s == "Vide")   return Animal::Vide;
+    if (s == "Ours")    return Animal::Ours;
+    if (s == "Cerf")    return Animal::Cerf;
+    if (s == "Saumon")   return Animal::Saumon;
+    if (s == "Aigle") return Animal::Aigle;
+    if (s == "Renard") return Animal::Renard;
     throw std::invalid_argument("Unknown Animal string: " + s);
 }
 
@@ -96,11 +97,11 @@ std::string toString(const Habitat& h) {
 }
 
 // Converti un string en habitat
-Habitat* fromStringHabitat(const std::string& s) {
-    if (s == "Foret")     return new Habitat(Habitat::Foret);
-    if (s == "Montagne")  return new Habitat(Habitat::Montagne);
-    if (s == "Riviere")   return new Habitat(Habitat::Riviere);
-    if (s == "Prairie")   return new Habitat(Habitat::Prairie);
-    if (s == "Marais")    return new Habitat(Habitat::Marais);
+Habitat fromStringHabitat(const std::string& s) {
+    if (s == "Foret")     return Habitat::Foret;
+    if (s == "Montagne")  return Habitat::Montagne;
+    if (s == "Riviere")   return Habitat::Riviere;
+    if (s == "Prairie")   return Habitat::Prairie;
+    if (s == "Marais")    return Habitat::Marais;
     throw std::invalid_argument("Unknown Habitat string: " + s);
 }

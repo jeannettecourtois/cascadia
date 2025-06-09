@@ -5,10 +5,10 @@
 enum class Animal {
     Vide = 0,
     Ours = 1,
-    Cerf, 
-    Saumon,
-    Aigle,
-    Renard
+    Cerf = 2, 
+    Saumon = 3,
+    Aigle = 4,
+    Renard = 5
 };
 
 enum class Habitat {
@@ -20,10 +20,10 @@ enum class Habitat {
 };
 
 std::string toString(const Animal& a);
-Animal* fromStringAnimal(const std::string& s);
+Animal fromStringAnimal(const std::string& s);
 
 std::string toString(const Habitat& h);
-Habitat* fromStringHabitat(const std::string& s);
+Habitat fromStringHabitat(const std::string& s);
 
 // Pour differencier l'affichage entre dans le jeu (affichage) et plateau (tuile)
 enum class Format {
