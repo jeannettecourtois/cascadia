@@ -209,8 +209,8 @@ void Partie::jouerTour() {
 
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
-    Animal animalJetonSelectionne = Animal::Vide;
-    bool aJeton = false;
+    this->animalJetonSelectionne = Animal::Vide;
+    this->aJeton = false;
     bool tuilePlacee = false;
     bool jetonPlace = false;
 
@@ -228,10 +228,22 @@ void Partie::jouerTour() {
             historiqueActions.push_back(2);
         }
         else if (auto selJ = dynamic_cast<ActionSelectionJeton*>(a)) {
-            animalJetonSelectionne = selJ->getJetonSelection();
-            aJeton = true;
-            historiqueActions.push_back(3);
+            Animal jetonLu = selJ->getJetonSelection();
+            if (jetonLu >= Animal::Aigle && jetonLu <= Animal::Saumon) {
+                this->animalJetonSelectionne = jetonLu;
+                this->aJeton = true;
+                std::cerr << "[TRACE] Jeton recopié depuis ActionSelectionJeton : "
+                    << static_cast<int>(jetonLu) << " @ "
+                    << static_cast<const void*>(&animalJetonSelectionne) << "\n";
+                historiqueActions.push_back(3);
+            }
+            else {
+                std::cerr << "[LOGIC WARNING] JetonSelection invalide ignoré ("
+                    << static_cast<int>(jetonLu) << ") @ "
+                    << static_cast<const void*>(&jetonLu) << "\n";
+            }
         }
+
         else if (dynamic_cast<ActionPlacerJeton*>(a)) {
             jetonPlace = true;
             historiqueActions.push_back(4);
@@ -364,8 +376,8 @@ void Partie::jouerTour() {
                 delete action;
             }
             else {
-                animalJetonSelectionne = *pioche->getJeton(indiceSelection);
-                aJeton = true;
+                this->animalJetonSelectionne = *pioche->getJeton(indiceSelection);
+                this->aJeton = true;
                 controleur->executerAction(action);
                 historiqueActions.push_back(3);
             }
@@ -407,8 +419,8 @@ void Partie::jouerTour() {
                 case 1: tuileSelectionnee = nullptr; break;
                 case 2: tuilePlacee = false;       break;
                 case 3: {
-                    animalJetonSelectionne = Animal::Vide;
-                    aJeton = false;
+                    this->animalJetonSelectionne = Animal::Vide;
+                    this->aJeton = false;
                     break;
                 }
                 case 4: jetonPlace = false;       break;
@@ -430,6 +442,12 @@ void Partie::jouerTour() {
         }
         case 7: {
             cout << "Sauvegarde en cours..." << endl;
+            //!!! DEBUG
+            if (static_cast<int>(animalJetonSelectionne) < 0 || static_cast<int>(animalJetonSelectionne) > 5) {
+                std::cerr << "[BUG] animalJetonSelectionne invalide AVANT sauvegarde : "
+                    << static_cast<int>(animalJetonSelectionne) << "\n";
+            }
+            std::cerr << "[TRACE] animalJetonSelectionne = " << static_cast<int>(animalJetonSelectionne) << "\n";
             if (FileHandler().saveGame(askFilename())) {
                 cout << "Partie sauvegardee ! Fin de la partie." << endl;
                 exit(0); // pour ne pas update la pioche

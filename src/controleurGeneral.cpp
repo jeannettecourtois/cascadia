@@ -9,10 +9,7 @@ TuileDepart::~TuileDepart() { for (int i = 0; i < 3; ++i) delete tuiles[i]; }
 
 TuileDepart::TuileDepart(const TuileDepart& other) {
     for (int i = 0; i < 3; ++i) {
-        if (other.tuiles[i])
-            tuiles[i] = new TuilePlacee(*other.tuiles[i]); // Copie profonde
-        else
-            tuiles[i] = nullptr;
+        tuiles[i] = (other.tuiles[i] ? new TuilePlacee(*other.tuiles[i]) : nullptr);
     }
 }
 
@@ -113,9 +110,9 @@ void ControleurGeneral::initialiserTuilesDepart() {
         tabTuiles[87]->setStarter(true);
 
         tuilesDepart[0] = new TuileDepart();
-        tuilesDepart[0]->setTuile(0, new TuilePlacee(tabTuiles[85]));
-        tuilesDepart[0]->setTuile(1, new TuilePlacee(tabTuiles[86]));
-        tuilesDepart[0]->setTuile(2, new TuilePlacee(tabTuiles[87]));
+        tuilesDepart[0]->setTuile(0, new TuilePlacee(tabTuiles[85], Animal::Vide));
+        tuilesDepart[0]->setTuile(1, new TuilePlacee(tabTuiles[86], Animal::Vide));
+        tuilesDepart[0]->setTuile(2, new TuilePlacee(tabTuiles[87], Animal::Vide));
     }
 
     // TuileDepart 1
@@ -136,9 +133,9 @@ void ControleurGeneral::initialiserTuilesDepart() {
         tabTuiles[90]->setStarter(true);
 
         tuilesDepart[1] = new TuileDepart();
-        tuilesDepart[1]->setTuile(0, new TuilePlacee(tabTuiles[88]));
-        tuilesDepart[1]->setTuile(1, new TuilePlacee(tabTuiles[89]));
-        tuilesDepart[1]->setTuile(2, new TuilePlacee(tabTuiles[90]));
+        tuilesDepart[1]->setTuile(0, new TuilePlacee(tabTuiles[88], Animal::Vide));
+        tuilesDepart[1]->setTuile(1, new TuilePlacee(tabTuiles[89], Animal::Vide));
+        tuilesDepart[1]->setTuile(2, new TuilePlacee(tabTuiles[90], Animal::Vide));
     }
 
 
@@ -160,9 +157,9 @@ void ControleurGeneral::initialiserTuilesDepart() {
         tabTuiles[93]->setStarter(true);
 
         tuilesDepart[2] = new TuileDepart();
-        tuilesDepart[2]->setTuile(0, new TuilePlacee(tabTuiles[91]));
-        tuilesDepart[2]->setTuile(1, new TuilePlacee(tabTuiles[92]));
-        tuilesDepart[2]->setTuile(2, new TuilePlacee(tabTuiles[93]));
+        tuilesDepart[2]->setTuile(0, new TuilePlacee(tabTuiles[91], Animal::Vide));
+        tuilesDepart[2]->setTuile(1, new TuilePlacee(tabTuiles[92], Animal::Vide));
+        tuilesDepart[2]->setTuile(2, new TuilePlacee(tabTuiles[93], Animal::Vide));
     }
 
 
@@ -184,9 +181,9 @@ void ControleurGeneral::initialiserTuilesDepart() {
         tabTuiles[96]->setStarter(true);
 
         tuilesDepart[3] = new TuileDepart();
-        tuilesDepart[3]->setTuile(0, new TuilePlacee(tabTuiles[94]));
-        tuilesDepart[3]->setTuile(1, new TuilePlacee(tabTuiles[95]));
-        tuilesDepart[3]->setTuile(2, new TuilePlacee(tabTuiles[96]));
+        tuilesDepart[3]->setTuile(0, new TuilePlacee(tabTuiles[94], Animal::Vide));
+        tuilesDepart[3]->setTuile(1, new TuilePlacee(tabTuiles[95], Animal::Vide));
+        tuilesDepart[3]->setTuile(2, new TuilePlacee(tabTuiles[96], Animal::Vide));
     }
 
 
@@ -208,9 +205,9 @@ void ControleurGeneral::initialiserTuilesDepart() {
         tabTuiles[99]->setStarter(true);
 
         tuilesDepart[4] = new TuileDepart();
-        tuilesDepart[4]->setTuile(0, new TuilePlacee(tabTuiles[97]));
-        tuilesDepart[4]->setTuile(1, new TuilePlacee(tabTuiles[98]));
-        tuilesDepart[4]->setTuile(2, new TuilePlacee(tabTuiles[99]));
+        tuilesDepart[4]->setTuile(0, new TuilePlacee(tabTuiles[97], Animal::Vide));
+        tuilesDepart[4]->setTuile(1, new TuilePlacee(tabTuiles[98], Animal::Vide));
+        tuilesDepart[4]->setTuile(2, new TuilePlacee(tabTuiles[99], Animal::Vide));
     }
 }
 

@@ -16,7 +16,17 @@ Action* Action::fromJson(const json& j, Partie* partie) {
 
     if (type == "SelectionJeton") {
         int index = j.at("indiceJeton");
-        return new ActionSelectionJeton(index, partie->getPioche());
+        Animal jeton = Animal::Vide;
+        if (j.contains("jeton") && j["jeton"].is_string()) {
+            jeton = fromStringAnimal(j["jeton"].get<std::string>());
+        }
+        else {
+            std::cerr << "[WARN] jeton non trouvé ou mal typé dans JSON, valeur forcée à Vide\n";
+            jeton = Animal::Vide;
+        }
+        auto* action = new ActionSelectionJeton(index, partie->getPioche());
+        action->setJetonSelection(jeton); // ici ça validera la valeur
+        return action;
     }
 
     if (type == "PlacementTuile") {
@@ -67,6 +77,7 @@ void ActionSelectionTuile::annuler() {
         tuileSelection = nullptr;
     }
 }
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 // ActionSelectionJeton
@@ -77,6 +88,14 @@ ActionSelectionJeton::ActionSelectionJeton(int indice, Pioche* p)
 ActionSelectionJeton::~ActionSelectionJeton() {}
 
 int ActionSelectionJeton::executer() {
+    if (!pioche || indiceSelection < 0 || indiceSelection > 3 || !pioche->getJeton(indiceSelection)) {
+        std::cerr << "[ERROR] ActionSelectionJeton::executer() - pioche invalide ou indice incorrect\n";
+        return -1;
+    }
+    jetonSelection = *pioche->getJeton(indiceSelection);
+    std::cerr << "[DEBUG] Jeton sélectionné depuis la pioche : " << static_cast<int>(jetonSelection) << "\n";
+    return indiceSelection;
+    /*
     if (indiceSelection < 0 || indiceSelection > 3 || !pioche->getJeton(indiceSelection)) {
         cout << "Indice invalide." << endl;
         return -1;  // Retourne un code d'erreur
@@ -85,12 +104,20 @@ int ActionSelectionJeton::executer() {
     jetonSelection = *jeton;
     cout << "Jeton " << indiceSelection << " selectionne : " << AnimalFormateur{ jetonSelection, Format::Complet } << endl;
     return indiceSelection;  // Retourne l'indice du jeton selectionne
+    */
 }
 
 void ActionSelectionJeton::annuler() {
     // Logique pour annuler l'action si necessaire
 }
 
+json ActionSelectionJeton::toJson() const {
+    return {
+        {"type", "SelectionJeton"},
+        {"indiceJeton", indiceSelection},
+        {"jeton", toString(jetonSelection)}
+    };
+}
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 // ActionPlacerTuile

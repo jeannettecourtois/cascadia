@@ -40,6 +40,11 @@ private:
     int nbTour = 20;
     int joueurCourant = 0;
 
+    Animal animalJetonSelectionne = Animal::Vide;
+    int sentinel = 0xDEADBEEF;
+
+    bool aJeton = false;
+
     Partie(); // constructeur prive (singleton), appele qu'une seule fois
     Partie(const Partie&) = delete;
     Partie& operator=(const Partie&) = delete;
@@ -63,6 +68,9 @@ public:
     int getJoueurCourant() const { return joueurCourant; }
     CarteMarquageFaune* getCarteRegle(int i) const { return cartesRegles[i]; }
     ControleurTour* getControleurTour() const { return ctrlTour; }
+    const Animal& getAnimalJetonSelectionne() const { return animalJetonSelectionne; }
+    Animal& Partie::getAnimalJetonSelectionne() { return animalJetonSelectionne; }
+    bool getAJeton() const { return aJeton; }
 
     string getPhaseCourante() const;
 
@@ -82,4 +90,6 @@ public:
     void initialiserCartesRegles();
     void jouerTour();
     void passerAuJoueurSuivant();
+
+    int getSentinel() const { return sentinel; }
 };

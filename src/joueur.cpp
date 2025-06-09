@@ -127,6 +127,8 @@ json Joueur::toJson() const {
     // Plateau du joueur
     j["plateau"] = json::array();
     for (const TuilePlacee& tp : plateau->getPlateau()) {
+        //!!! DEBUG
+        tp.verifierJeton("Joueur::toJson()");
         j["plateau"].push_back(tp.toJson()); // toJson dans TuilePlacee
     }
     return j;

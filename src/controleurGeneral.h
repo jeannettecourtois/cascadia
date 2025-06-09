@@ -18,7 +18,7 @@ public:
     TuilePlacee* getTuile(int i) const { return tuiles[i]; }
     void setTuile(int i, TuilePlacee* t) {;
         if (i >= 0 && i < 3) {
-            tuiles[i] = t;
+            tuiles[i] = new TuilePlacee(*t);
         } else {
             std::cerr << "Index hors limites pour les tuiles de depart.\n";
         }

@@ -43,6 +43,8 @@ private:
 public:
     Pioche(int nbJoueurs);
     ~Pioche();
+    Pioche(const Pioche&) = delete; //!!! DEBUG
+    Pioche& operator=(const Pioche&) = delete; //!!! DEBUG
     void preparerPioche();
     void afficherTuilesDisponibles() const;
     void afficherJetonsDisponibles() const;

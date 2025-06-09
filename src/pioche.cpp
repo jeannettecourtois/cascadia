@@ -81,7 +81,7 @@ void SacJeton::mettreDansLeSac(Animal a) {
 
 /* Pioche */
 Pioche::Pioche(int nbJoueurs) {
-    for (int i = 0; i < 4; ++i) {
+    for (size_t  i = 0; i < 4; ++i) {
         tuiles[i] = nullptr;
         jetons[i] = nullptr;
     }
@@ -124,6 +124,9 @@ void Pioche::preparerPioche() {
         tuiles[i] = sacDeTuiles->Piocher();
         Animal a = sacDeJetons->Piocher();
         jetons[i] = new Animal(a);
+        //!!! DEBUG
+        std::cerr << "[TRACE] jetons[" << i << "] initialisé à " << static_cast<int>(*jetons[i])
+            << " à l'adresse " << static_cast<void*>(jetons[i]) << "\n";
     }
 }
 
@@ -175,12 +178,22 @@ void Pioche::completerPioche(const Animal* a, const Tuile* t) {
             tuiles[i] = sacDeTuiles->Piocher();
         }
     }
-
+    
+    /*
     // on change le jeton animal
     for (int i = 0; i < 4; ++i) {
         if (a && jetons[i] && *jetons[i] == *a) {
-            Animal a = sacDeJetons->Piocher();
-            jetons[i] = new Animal(a);
+            Animal ani = sacDeJetons->Piocher();
+            jetons[i] = new Animal(ani);
+        }
+    }*/
+    for (int i = 0; i < 4; ++i) {
+        if (a && jetons[i] && *jetons[i] == *a) {
+            Animal tirage = sacDeJetons->Piocher();
+            delete jetons[i];
+            jetons[i] = new Animal(tirage);
+            std::cerr << "[TRACE] jetons[" << i << "] remplacé par " << static_cast<int>(tirage)
+                << " à " << static_cast<void*>(jetons[i]) << "\n";
         }
     }
 
@@ -244,6 +257,7 @@ json Pioche::toJson() const {
     j["jetonsPioche"] = nlohmann::json::array();
     for (size_t i = 0; i < 4; i++) {
         Animal* a = jetons[i];
+        // delete jetons[i]; ==> bug
         j["jetonsPioche"].push_back(toString(*a));
     }
 
@@ -279,11 +293,14 @@ void Pioche::fromJson(const json& j) {
     }
     delete sacDeJetons;
     sacDeJetons = new SacJeton(compte);
-
+    /*
     // --- Chargement des 4 jetons visibles ---
     for (int i = 0; i < 4; ++i) {
         try {
             Animal a = fromStringAnimal(j["jetonsPioche"][i]);
+            if (static_cast<int>(a) < 0 || static_cast<int>(a) > 5) {
+                std::cerr << "[BUG] Jeton[" << i << "] chargé = " << static_cast<int>(a) << "\n";
+            }
             delete jetons[i];
             jetons[i] = new Animal(a);
         }
@@ -291,5 +308,15 @@ void Pioche::fromJson(const json& j) {
             std::cerr << "[ERREUR] Chargement du jeton[" << i << "] : " << e.what() << "\n";
             jetons[i] = new Animal(Animal::Vide);
         }
+    }*/
+    for (int i = 0; i < 4; ++i) {
+        Animal a = fromStringAnimal(j["jetonsPioche"][i]);
+        if (jetons[i]) {
+            std::cerr << "[TRACE] delete jetons[" << i << "] = " << static_cast<void*>(jetons[i]) << "\n";
+            delete jetons[i];
+        }
+        jetons[i] = new Animal(a);
+        std::cerr << "[TRACE] jetons[" << i << "] réassigné à " << static_cast<int>(a)
+            << " à l'adresse " << static_cast<void*>(jetons[i]) << "\n";
     }
 }

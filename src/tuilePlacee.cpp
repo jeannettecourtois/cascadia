@@ -3,6 +3,8 @@
 #include "enum.h"
 
 json TuilePlacee::toJson() const {
+    //!!! DEBUG
+    verifierJeton("toJson()");
     if (static_cast<int>(jeton) < 0 || static_cast<int>(jeton) > 5) {
         std::cerr << "[BUG] jeton invalide dans TuilePlacee::toJson: " << static_cast<int>(jeton)
             << " (pos " << pos.x << "," << pos.y << ")\n";
@@ -21,6 +23,8 @@ TuilePlacee TuilePlacee::fromJson(const json& j) {
     const Tuile* t = ControleurGeneral::getInstance().getTuileById(id);
 
     // Jeton
+    std::string jetonStr = j["jeton"];
+    std::cout << "[DEBUG] jeton string recu = '" << jetonStr << "'\n";
     Animal jt = fromStringAnimal(j["jeton"]);
     // Garde-fou en attendant de trouver l'erreur
     if (!j.contains("jeton") || !j["jeton"].is_string()) {

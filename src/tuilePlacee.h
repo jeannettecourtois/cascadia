@@ -42,13 +42,19 @@ public:
     TuilePlacee(const Tuile* tuile, Animal a) : tuile(tuile), jeton(a), pos(0, 0), rotation(0) {}
     TuilePlacee(const Tuile* tuile) : tuile(tuile), jeton(Animal::Vide), pos(0, 0), rotation(0) {}
 
-    TuilePlacee(const TuilePlacee& other) : tuile(other.tuile), pos(other.pos), rotation(other.rotation), jeton(other.jeton) {}
+    TuilePlacee(const TuilePlacee& other) : tuile(other.tuile), pos(other.pos), rotation(other.rotation), jeton(other.jeton) {
+        //!!! DEBUG
+        verifierJeton("constructeur copie");
+    }
     TuilePlacee& operator=(const TuilePlacee& other) {
+        std::cerr << "[DEBUG COPY =] jeton=" << static_cast<int>(other.jeton) << "\n";
         if (this != &other) {
             tuile = other.tuile;
             pos = other.pos;
             rotation = other.rotation;
             jeton = other.jeton;
+            //!!! DEBUG
+            verifierJeton("constructeur copie");
         }
         return *this;
     }
@@ -56,7 +62,10 @@ public:
     virtual ~TuilePlacee() = default;
 
     const Tuile* getTuile() const { return tuile; }
-    Animal getJeton() const { return jeton; }
+    Animal getJeton() const {
+        //!!! DEBUG
+        verifierJeton("getJeton()");
+        return jeton; }
     virtual Position getPosition() const { return pos; }
     virtual int getRotation() const { return rotation; }
 
@@ -91,6 +100,17 @@ public:
     // Pour gerer 
     json toJson() const;
     static TuilePlacee fromJson(const json& j);
+
+    //!!! DEBUG
+    void verifierJeton(const std::string& contexte = "") const {
+        int val = static_cast<int>(jeton);
+        if (val < 0 || val > 5) {
+            std::cerr << "[CORRUPTION] Jeton invalide détecté " << (contexte.empty() ? "" : "dans " + contexte)
+                << " : " << val << ", tuile id = "
+                << (tuile ? tuile->getId() : -1)
+                << ", pos = (" << pos.x << "," << pos.y << ")\n";
+        }
+    }
 };
 
 class TuilePlaceeDeplacable : public TuilePlacee {

@@ -71,13 +71,18 @@ public:
             cout << "Aucun jeton selectionne." << endl;
         }
     }
-    json toJson() const override {
-        return {
-            {"type", "SelectionJeton"},
-            {"indiceJeton", indiceSelection}
-        };
+    json toJson() const override;
+    Animal getJetonSelection() const {
+        int val = static_cast<int>(jetonSelection);
+        std::cerr << "[TRACE] getJetonSelection retourne : " << val << "\n";
+        return jetonSelection;
     }
-    Animal getJetonSelection() const { return jetonSelection; }
+    void setJetonSelection(Animal a) {
+        if (static_cast<int>(a) < 0 || static_cast<int>(a) > 5)
+            throw std::invalid_argument("JetonSelection invalide : " + std::to_string(static_cast<int>(a)));
+        jetonSelection = a;
+    }
+
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -98,6 +103,7 @@ public:
         tuile->afficherTuile();
     }
     json toJson() const;
+    const Position& getPosition() const { return pos; }
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -109,8 +115,9 @@ private:
     Animal jeton; // plus simple de travailler par recopie
     Joueur* joueur;
 public:
-    ActionPlacerJeton(Animal a, TuilePlacee* tuile, Joueur* j)
-        : jeton(a), joueur(j), posTuile(tuile->getPosition()) {
+    ActionPlacerJeton(Animal a, TuilePlacee* tuile, Joueur* j) : jeton(a), joueur(j), posTuile(tuile->getPosition()) {
+        if (static_cast<int>(jeton) < 0 || static_cast<int>(jeton) > 5)
+            throw std::invalid_argument("ActionPlacerJeton: jeton invalide");
     }
 
     ActionPlacerJeton(Animal a, Position pos, Joueur* j)
