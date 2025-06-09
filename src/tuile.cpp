@@ -15,14 +15,14 @@ Tuile::Tuile() : id(idCounter++) {
     unsigned int nbAnimaux = dist3(gen);
 
     // Ajout unique des animaux
-    vector<int> animauxIndices = { 0, 1, 2, 3, 4 };
+    vector<int> animauxIndices = { 1, 2, 3, 4, 5 }; // pas de 0 car vide
     shuffle(animauxIndices.begin(), animauxIndices.end(), gen);
     for (unsigned int i = 0; i < nbAnimaux; ++i) {
         listeAnimaux.push_back(static_cast<Animal>(animauxIndices[i]));
     }
 
     // Ajout unique des habitats
-    vector<int> habitatsIndices = { 0, 1, 2, 3, 4 };
+    vector<int> habitatsIndices = { 0, 1, 2, 3, 4 }; // attribué automatiquement
     shuffle(habitatsIndices.begin(), habitatsIndices.end(), gen);
     for (unsigned int i = 0; i < nbHabitat; ++i) {
         listeHabitat.push_back(static_cast<Habitat>(habitatsIndices[i]));

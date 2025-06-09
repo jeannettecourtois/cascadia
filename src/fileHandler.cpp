@@ -88,13 +88,14 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
             Action* a = Action::fromJson(ja, &partie);
 
             // Exécuter uniquement les actions de sélection, ignorer si invalide
-            if (dynamic_cast<ActionSelectionTuile*>(a) != nullptr || dynamic_cast<ActionSelectionJeton*>(a) != nullptr) {
-                if (a->executer() == -1) {
-                    delete a;
-                    continue; // Ne pas ajouter au controleur
-                }
+            if (auto* selT = dynamic_cast<ActionSelectionTuile*>(a)) {
+                selT->executer();  // stocke la tuile dans l’action
+                nouveauCtrl->executerAction(selT);
             }
-            nouveauCtrl->executerAction(a);
+            else if (auto* selJ = dynamic_cast<ActionSelectionJeton*>(a)) {
+                selJ->executer();  // stocke le jeton dans l’action
+                nouveauCtrl->executerAction(selJ);
+            }
         }
         catch (const std::exception& e) {
             std::cerr << "Erreur lors du chargement d'une action : " << e.what() << std::endl;

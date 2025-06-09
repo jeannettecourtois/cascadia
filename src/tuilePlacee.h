@@ -37,10 +37,21 @@ protected:
     Position pos;
     int rotation;
 public:
-    TuilePlacee() : tuile(nullptr), jeton(Animal::Vide), pos(0, 0), rotation(0) {}
+    TuilePlacee() : tuile(nullptr), pos(0, 0), rotation(0), jeton(Animal::Vide) {}
     TuilePlacee(const Tuile* tuile, Animal a, const Position& p, int rot = 0) : tuile(tuile), jeton(a), pos(p), rotation(rot) {}
     TuilePlacee(const Tuile* tuile, Animal a) : tuile(tuile), jeton(a), pos(0, 0), rotation(0) {}
     TuilePlacee(const Tuile* tuile) : tuile(tuile), jeton(Animal::Vide), pos(0, 0), rotation(0) {}
+
+    TuilePlacee(const TuilePlacee& other) : tuile(other.tuile), pos(other.pos), rotation(other.rotation), jeton(other.jeton) {}
+    TuilePlacee& operator=(const TuilePlacee& other) {
+        if (this != &other) {
+            tuile = other.tuile;
+            pos = other.pos;
+            rotation = other.rotation;
+            jeton = other.jeton;
+        }
+        return *this;
+    }
 
     virtual ~TuilePlacee() = default;
 

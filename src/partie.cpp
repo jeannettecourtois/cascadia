@@ -209,13 +209,14 @@ void Partie::jouerTour() {
 
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
-    Animal* animalJetonSelectionne = nullptr;
+    Animal animalJetonSelectionne = Animal::Vide;
+    bool aJeton = false;
     bool tuilePlacee = false;
     bool jetonPlace = false;
 
     vector<int> historiqueActions;  // Pour enregistrer l'historique des choix du joueur
 
-    ///! désactiver si nouvelle partie
+
     // Initialisation à partir de l'historique qd chargement
     for (Action* a : controleur->getListeActions()) {
         if (auto selT = dynamic_cast<ActionSelectionTuile*>(a)) {
@@ -227,7 +228,8 @@ void Partie::jouerTour() {
             historiqueActions.push_back(2);
         }
         else if (auto selJ = dynamic_cast<ActionSelectionJeton*>(a)) {
-            animalJetonSelectionne = new Animal(selJ->getJetonSelection());
+            animalJetonSelectionne = selJ->getJetonSelection();
+            aJeton = true;
             historiqueActions.push_back(3);
         }
         else if (dynamic_cast<ActionPlacerJeton*>(a)) {
@@ -258,11 +260,11 @@ void Partie::jouerTour() {
             cout << "2. Placer une tuile sur votre plateau" << endl;
         }
         // On n'affiche que si la tuile a été placée ET pas encore de jeton sélectionné
-        if (phase == "SELECTION_JETON" && tuilePlacee && !animalJetonSelectionne) {
+        if (phase == "SELECTION_JETON" && tuilePlacee && !aJeton) {
             cout << "3. Selectionner un jeton faune" << endl;
         }
         // On n'affiche que si un jeton a été sélectionné ET pas encore placé
-        if (phase == "PLACEMENT_JETON" && animalJetonSelectionne && !jetonPlace) {
+        if (phase == "PLACEMENT_JETON" && aJeton && !jetonPlace) {
             cout << "4. Placer un jeton faune" << endl;
         }
         // Annulation possible si on a déjà fait au moins une action
@@ -349,7 +351,7 @@ void Partie::jouerTour() {
             break;
         }
         case 3: { // Selectionner un jeton faune
-            if (!tuilePlacee || animalJetonSelectionne) break;
+            if (!tuilePlacee || jetonPlace) break;
             int indiceJeton;
             pioche->afficherJetonsDisponibles();
             cout << "Quel jeton faune souhaitez-vous prendre (indice 0-3) ? ";
@@ -362,16 +364,17 @@ void Partie::jouerTour() {
                 delete action;
             }
             else {
-                animalJetonSelectionne = pioche->getJeton(indiceSelection);
+                animalJetonSelectionne = *pioche->getJeton(indiceSelection);
+                aJeton = true;
                 controleur->executerAction(action);
                 historiqueActions.push_back(3);
             }
             break;
         }
         case 4: { // Placer un jeton faune
-            if (!animalJetonSelectionne || jetonPlace) break;
+            if (!aJeton || jetonPlace) break;
             int x, y;
-            cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << AnimalFormateur{ *animalJetonSelectionne, Format::Complet } << endl;
+            cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << AnimalFormateur{ animalJetonSelectionne, Format::Complet } << endl;
             cout << " x : ";
             cin >> x;
             cout << " y : ";
@@ -383,11 +386,11 @@ void Partie::jouerTour() {
                 cout << "Aucune tuile placee a cette position. Veuillez selectionner une tuile deja placee." << endl;
                 break;
             }
-            if (!tuilePlaceePtr->getTuile()->contientAnimal(*animalJetonSelectionne)) {
+            if (!tuilePlaceePtr->getTuile()->contientAnimal(animalJetonSelectionne)) {
                 cout << "Le jeton faune ne peut pas etre place sur cette tuile." << endl;
                 break;
             }
-
+            // On crée dynamiquement une nouvelle copie, pour respecter le constructeur attendu.
             Action* action = new ActionPlacerJeton(animalJetonSelectionne, tuilePlaceePtr, joueur);
             controleur->executerAction(action);
             jetonPlace = true;
@@ -403,7 +406,11 @@ void Partie::jouerTour() {
                 switch (derniereAction) {
                 case 1: tuileSelectionnee = nullptr; break;
                 case 2: tuilePlacee = false;       break;
-                case 3: animalJetonSelectionne = nullptr; break;
+                case 3: {
+                    animalJetonSelectionne = Animal::Vide;
+                    aJeton = false;
+                    break;
+                }
                 case 4: jetonPlace = false;       break;
                 }
             }
@@ -436,7 +443,7 @@ void Partie::jouerTour() {
         }
     }
     // Update la pioche
-    pioche->completerPioche(animalJetonSelectionne, tuileSelectionnee);
+    pioche->completerPioche(&animalJetonSelectionne, tuileSelectionnee);
     // Passe au joueur suivant
     passerAuJoueurSuivant();
 }

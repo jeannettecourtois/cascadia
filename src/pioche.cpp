@@ -178,7 +178,7 @@ void Pioche::completerPioche(const Animal* a, const Tuile* t) {
 
     // on change le jeton animal
     for (int i = 0; i < 4; ++i) {
-        if (jetons[i] == a) {
+        if (a && jetons[i] && *jetons[i] == *a) {
             Animal a = sacDeJetons->Piocher();
             jetons[i] = new Animal(a);
         }
@@ -282,8 +282,14 @@ void Pioche::fromJson(const json& j) {
 
     // --- Chargement des 4 jetons visibles ---
     for (int i = 0; i < 4; ++i) {
-        Animal a = fromStringAnimal(j["jetonsPioche"][i]);
-        delete jetons[i]; // sécurisation mémoire si un ancien pointeur existe
-        jetons[i] = new Animal(a);
+        try {
+            Animal a = fromStringAnimal(j["jetonsPioche"][i]);
+            delete jetons[i];
+            jetons[i] = new Animal(a);
+        }
+        catch (const std::exception& e) {
+            std::cerr << "[ERREUR] Chargement du jeton[" << i << "] : " << e.what() << "\n";
+            jetons[i] = new Animal(Animal::Vide);
+        }
     }
 }

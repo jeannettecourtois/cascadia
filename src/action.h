@@ -105,25 +105,27 @@ public:
 // Placer un jeton sur une tuile qui est deja placee
 class ActionPlacerJeton : public Action {
 private:
-    TuilePlacee* cible;
-    Animal* jeton;
+    Position posTuile;
+    Animal jeton; // plus simple de travailler par recopie
     Joueur* joueur;
 public:
-    ActionPlacerJeton(Animal* j, TuilePlacee* c, Joueur* joueur);
+    ActionPlacerJeton(Animal a, TuilePlacee* tuile, Joueur* j)
+        : jeton(a), joueur(j), posTuile(tuile->getPosition()) {
+    }
+
+    ActionPlacerJeton(Animal a, Position pos, Joueur* j)
+        : jeton(a), joueur(j), posTuile(pos) {
+    }
     ~ActionPlacerJeton();
     int executer() override; // Modifie pour retourner un int
     void annuler() override;
     void afficher() const override {
         cout << "\nAction Placement du jeton " << endl;
-        if (jeton) {
-            cout << "Jeton place : " << AnimalFormateur{ *jeton, Format::Complet } << endl;
-        }
-        else {
-            cout << "Aucun jeton place." << endl;
-        }
-        cible->afficherTuilePlacee();
+        cout << "Jeton place : " << AnimalFormateur{ jeton, Format::Complet } << endl;
+        //cible->afficherTuilePlacee();
     }
     json toJson() const;
+    static ActionPlacerJeton* fromJson(const json& j, Partie* partie);
 };
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
