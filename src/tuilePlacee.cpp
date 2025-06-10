@@ -18,9 +18,13 @@ json TuilePlacee::toJson() const {
 }
 
 TuilePlacee TuilePlacee::fromJson(const json& j) {
-    // Tuile récupérer de CG par l'id
+    // Tuile recuperer de CG par l'id
     unsigned int id = j.at("tuile").at("id");
     const Tuile* t = ControleurGeneral::getInstance().getTuileById(id);
+    if (t == nullptr) {
+        std::cerr << "[ERREUR] TuilePlacee::fromJson : pas de Tuile avec id=" << id << "\n";
+    }
+
 
     // Jeton
     std::string jetonStr = j["jeton"];
@@ -32,7 +36,13 @@ TuilePlacee TuilePlacee::fromJson(const json& j) {
         jt = Animal::Vide;
     }
     else {
-        jt = fromStringAnimal(j["jeton"]);
+        try { // Si fromStringAnimal lance ou renvoie une valeur invalide, capturer/traiter.
+            jt = fromStringAnimal(j["jeton"]);
+        }
+        catch (...) {
+            std::cerr << "[ERREUR] TuilePlacee::fromJson : format 'jeton' invalide: " << j["jeton"] << "\n";
+            jt = Animal::Vide;
+        }
     }    
 
     // Position

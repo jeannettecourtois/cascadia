@@ -39,8 +39,8 @@ Tuile* SacTuile::Piocher() {
 
 void SacTuile::mettreDansLeSac(Tuile* t) {
     if (t->isStarterTile()) {
-        std::cerr << "[WARN] Tuile starter ignorée lors de l'ajout au sac (id = " << t->getId() << ").\n";
-        return; // Ne pas ajouter les tuiles de départ
+        std::cerr << "[WARN] Tuile starter ignoree lors de l'ajout au sac (id = " << t->getId() << ").\n";
+        return; // Ne pas ajouter les tuiles de depart
     }
     tuiles.push_back(t);
 }
@@ -125,7 +125,7 @@ void Pioche::preparerPioche() {
         Animal a = sacDeJetons->Piocher();
         jetons[i] = new Animal(a);
         //!!! DEBUG
-        std::cerr << "[TRACE] jetons[" << i << "] initialisé à " << static_cast<int>(*jetons[i])
+        std::cerr << "[TRACE] jetons[" << i << "] initialise à " << static_cast<int>(*jetons[i])
             << " à l'adresse " << static_cast<void*>(jetons[i]) << "\n";
     }
 }
@@ -192,7 +192,7 @@ void Pioche::completerPioche(const Animal* a, const Tuile* t) {
             Animal tirage = sacDeJetons->Piocher();
             delete jetons[i];
             jetons[i] = new Animal(tirage);
-            std::cerr << "[TRACE] jetons[" << i << "] remplacé par " << static_cast<int>(tirage)
+            std::cerr << "[TRACE] jetons[" << i << "] remplace par " << static_cast<int>(tirage)
                 << " à " << static_cast<void*>(jetons[i]) << "\n";
         }
     }
@@ -299,7 +299,7 @@ void Pioche::fromJson(const json& j) {
         try {
             Animal a = fromStringAnimal(j["jetonsPioche"][i]);
             if (static_cast<int>(a) < 0 || static_cast<int>(a) > 5) {
-                std::cerr << "[BUG] Jeton[" << i << "] chargé = " << static_cast<int>(a) << "\n";
+                std::cerr << "[BUG] Jeton[" << i << "] charge = " << static_cast<int>(a) << "\n";
             }
             delete jetons[i];
             jetons[i] = new Animal(a);
@@ -316,7 +316,7 @@ void Pioche::fromJson(const json& j) {
             delete jetons[i];
         }
         jetons[i] = new Animal(a);
-        std::cerr << "[TRACE] jetons[" << i << "] réassigné à " << static_cast<int>(a)
+        std::cerr << "[TRACE] jetons[" << i << "] reassigne à " << static_cast<int>(a)
             << " à l'adresse " << static_cast<void*>(jetons[i]) << "\n";
     }
 }

@@ -21,7 +21,7 @@ Action* Action::fromJson(const json& j, Partie* partie) {
             jeton = fromStringAnimal(j["jeton"].get<std::string>());
         }
         else {
-            std::cerr << "[WARN] jeton non trouvé ou mal typé dans JSON, valeur forcée à Vide\n";
+            std::cerr << "[WARN] jeton non trouve ou mal type dans JSON, valeur forcee à Vide\n";
             jeton = Animal::Vide;
         }
         auto* action = new ActionSelectionJeton(index, partie->getPioche());
@@ -93,7 +93,7 @@ int ActionSelectionJeton::executer() {
         return -1;
     }
     jetonSelection = *pioche->getJeton(indiceSelection);
-    std::cerr << "[DEBUG] Jeton sélectionné depuis la pioche : " << static_cast<int>(jetonSelection) << "\n";
+    std::cerr << "[DEBUG] Jeton selectionne depuis la pioche : " << static_cast<int>(jetonSelection) << "\n";
     return indiceSelection;
     /*
     if (indiceSelection < 0 || indiceSelection > 3 || !pioche->getJeton(indiceSelection)) {
@@ -167,7 +167,7 @@ int ActionPlacerJeton::executer() {
     // Verifie si la tuile accepte ce jeton (animal)
     if (!cible->getTuile()->contientAnimal(jeton)) {
         std::cout << "Le jeton " << toString(jeton)
-            << " ne peut pas être place sur cette tuile." << std::endl;
+            << " ne peut pas etre place sur cette tuile." << std::endl;
         return -1;
     }
     // Verifie si un jeton est dejà place

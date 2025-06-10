@@ -92,4 +92,10 @@ public:
     void passerAuJoueurSuivant();
 
     int getSentinel() const { return sentinel; }
+    void setAnimalJetonSelectionne(Animal a) { animalJetonSelectionne = a; }
+    void setAJeton(bool val) { aJeton = val; }
+    void Partie::resetJetonSelection() {
+        animalJetonSelectionne = Animal::Vide;
+        aJeton = false;
+    }
 };

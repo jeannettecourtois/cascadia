@@ -7,8 +7,8 @@ using namespace std;
 unsigned int Tuile::idCounter = 0;
 
 Tuile::Tuile() : id(idCounter++) {
-    random_device rd;
-    mt19937 gen(rd());
+    // Gen déterministe basée sur l'ID et BASE_SEED
+    mt19937 gen(BASE_SEED + id);
     uniform_int_distribution<> dist3(1, 3);
 
     unsigned int nbHabitat = dist3(gen);
@@ -22,7 +22,7 @@ Tuile::Tuile() : id(idCounter++) {
     }
 
     // Ajout unique des habitats
-    vector<int> habitatsIndices = { 0, 1, 2, 3, 4 }; // attribué automatiquement
+    vector<int> habitatsIndices = { 0, 1, 2, 3, 4 }; // attribue automatiquement
     shuffle(habitatsIndices.begin(), habitatsIndices.end(), gen);
     for (unsigned int i = 0; i < nbHabitat; ++i) {
         listeHabitat.push_back(static_cast<Habitat>(habitatsIndices[i]));

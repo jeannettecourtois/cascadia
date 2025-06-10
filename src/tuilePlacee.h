@@ -105,7 +105,7 @@ public:
     void verifierJeton(const std::string& contexte = "") const {
         int val = static_cast<int>(jeton);
         if (val < 0 || val > 5) {
-            std::cerr << "[CORRUPTION] Jeton invalide détecté " << (contexte.empty() ? "" : "dans " + contexte)
+            std::cerr << "[CORRUPTION] Jeton invalide detecte " << (contexte.empty() ? "" : "dans " + contexte)
                 << " : " << val << ", tuile id = "
                 << (tuile ? tuile->getId() : -1)
                 << ", pos = (" << pos.x << "," << pos.y << ")\n";

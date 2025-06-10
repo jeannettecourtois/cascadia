@@ -17,12 +17,16 @@ private:
     bool starter = false;
 
     static unsigned int idCounter;
+    
+    // Seed fixe pour génération déterministe : choix arbitraire, mais constant
+    static constexpr unsigned int BASE_SEED = 123456789u;
 
 public:
     Tuile();
     Tuile(unsigned int nbAnimaux, unsigned int nbHabitat, const Animal* animauxArr, const Habitat* habitatsArr);
     ~Tuile() = default;
 
+    static void resetIdCounter() { idCounter = 0; }
     void setStarter(bool b) { starter = b; }
     bool isStarterTile() const { return starter; }
 

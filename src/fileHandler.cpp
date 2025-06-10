@@ -46,7 +46,7 @@ static json toJsonPartie(const Partie& partie) {
     // Historique d'actions
     j["actionHistory"] = partie.getControleurTour()->toJson();
 
-    // Si un jeton a été sélectionné sans être encore placé, on l’ajoute manuellement à la sauvegarde
+    // Si un jeton a ete selectionne sans etre encore place, on l’ajoute manuellement à la sauvegarde
     const auto& actions = partie.getControleurTour()->getListeActions();
 
     if (partie.getAJeton() && !actions.empty()) {
@@ -61,7 +61,7 @@ static json toJsonPartie(const Partie& partie) {
         }
 
         if (!jetonDejaPlace) {
-            // Rechercher la dernière tuile placée
+            // Rechercher la derniere tuile placee
             bool posTrouvee = false;
             Position posDerniereTuile;
             for (auto it = actions.rbegin(); it != actions.rend(); ++it) {
@@ -87,7 +87,7 @@ static json toJsonPartie(const Partie& partie) {
                     delete action;
                 }
                 else {
-                    std::cerr << "[ERREUR] Tuile non trouvée à la position "
+                    std::cerr << "[ERREUR] Tuile non trouvee à la position "
                         << posDerniereTuile.x << "," << posDerniereTuile.y
                         << " pour placement du jeton en attente.\n";
                 }
@@ -102,6 +102,7 @@ static json toJsonPartie(const Partie& partie) {
 static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
     partie.reinitialiserPartie(); // reset : une option pour kill la partie en cours rapidement et fermer le porgramme/retourner au debut
 
+    // Supprime
     if (partie.getControleurTour()) {
         ControleurTour* ancienCtrl = partie.getControleurTour();
         for (Action* a : ancienCtrl->getListeActions()) {
@@ -130,7 +131,7 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
     nouvellePioche->fromJson(j["pioche"]);
     partie.setPioche(nouvellePioche);
 
-    // État du jeu
+    // etat du jeu
     partie.setNbTour(j["gameState"]["toursRestants"]);
     partie.setJoueurCourant(j["gameState"]["joueurCourant"]);
 
@@ -138,7 +139,7 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
     ControleurTour* nouveauCtrl = new ControleurTour();
     partie.setControleurTour(nouveauCtrl);
 
-    // Historique d'actions : exécute les actions de sélection si valides
+    // Historique d'actions : execute les actions de selection si valides
     for (const auto& ja : j["actionHistory"]) {
         try {
             Action* a = Action::fromJson(ja, &partie);
@@ -161,9 +162,20 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
             }
         }
         catch (const std::exception& e) {
-            std::cerr << "[ERREUR] Chargement d'une action échoué : " << e.what() << "\n";
+            std::cerr << "[ERREUR] Chargement d'une action echoue : " << e.what() << "\n";
         }
     }
+    for (const auto& action : nouveauCtrl->getListeActions()) {
+    if (auto selJ = dynamic_cast<ActionSelectionJeton*>(action)) {
+        Animal a = selJ->getJetonSelection();
+        if (a >= Animal::Aigle && a <= Animal::Saumon) {
+            partie.setAnimalJetonSelectionne(a);
+            partie.setAJeton(true);
+            std::cerr << "[INFO] Jeton sélectionné restauré depuis ActionSelectionJeton: "
+                      << static_cast<int>(a) << "\n";
+        }
+    }
+}
 }
 
 

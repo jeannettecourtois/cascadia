@@ -232,13 +232,13 @@ void Partie::jouerTour() {
             if (jetonLu >= Animal::Aigle && jetonLu <= Animal::Saumon) {
                 this->animalJetonSelectionne = jetonLu;
                 this->aJeton = true;
-                std::cerr << "[TRACE] Jeton recopié depuis ActionSelectionJeton : "
+                std::cerr << "[TRACE] Jeton recopie depuis ActionSelectionJeton : "
                     << static_cast<int>(jetonLu) << " @ "
                     << static_cast<const void*>(&animalJetonSelectionne) << "\n";
                 historiqueActions.push_back(3);
             }
             else {
-                std::cerr << "[LOGIC WARNING] JetonSelection invalide ignoré ("
+                std::cerr << "[LOGIC WARNING] JetonSelection invalide ignore ("
                     << static_cast<int>(jetonLu) << ") @ "
                     << static_cast<const void*>(&jetonLu) << "\n";
             }
@@ -261,29 +261,29 @@ void Partie::jouerTour() {
         const string phase = getPhaseCourante();
         cout << "Phase actuelle : " << phase << "\n";
 
-        // Affichage des actions possibles en fonction de l'état actuel du jeu
+        // Affichage des actions possibles en fonction de l'etat actuel du jeu
         cout << "Que voulez-vous faire ?" << endl;
-        // On n'affiche l'option que si la tuile n'a pas encore été sélectionnée
+        // On n'affiche l'option que si la tuile n'a pas encore ete selectionnee
         if (phase == "SELECTION_TUILE" && !tuileSelectionnee) {
             cout << "1. Selectionner une tuile de la pioche" << endl;
         }
-        // On n'affiche que si une tuile est sélectionnée ET pas encore placée
+        // On n'affiche que si une tuile est selectionnee ET pas encore placee
         if (phase == "PLACEMENT_TUILE" && tuileSelectionnee && !tuilePlacee) {
             cout << "2. Placer une tuile sur votre plateau" << endl;
         }
-        // On n'affiche que si la tuile a été placée ET pas encore de jeton sélectionné
+        // On n'affiche que si la tuile a ete placee ET pas encore de jeton selectionne
         if (phase == "SELECTION_JETON" && tuilePlacee && !aJeton) {
             cout << "3. Selectionner un jeton faune" << endl;
         }
-        // On n'affiche que si un jeton a été sélectionné ET pas encore placé
+        // On n'affiche que si un jeton a ete selectionne ET pas encore place
         if (phase == "PLACEMENT_JETON" && aJeton && !jetonPlace) {
             cout << "4. Placer un jeton faune" << endl;
         }
-        // Annulation possible si on a déjà fait au moins une action
+        // Annulation possible si on a dejà fait au moins une action
         if (!historiqueActions.empty()) {
             cout << "5. Annuler la derniere action" << endl;
         }
-        // On n'affiche Terminer que si tuile et jeton ont été placés
+        // On n'affiche Terminer que si tuile et jeton ont ete places
         if (phase == "TERMINER" && tuilePlacee && jetonPlace) {
             cout << "6. Terminer mon tour" << endl;
         }
@@ -294,7 +294,7 @@ void Partie::jouerTour() {
 
         switch (choix) {
         case 1: { // Selectionner une tuile de la pioche
-            if (tuileSelectionnee) break;  // déjà fait
+            if (tuileSelectionnee) break;  // dejà fait
             int indiceTuile;
             pioche->afficherTuilesDisponibles(); // Affiche les tuiles disponibles dans la pioche
             pioche->afficherJetonsDisponibles(); // Affiche les jetons faune disponibles pour orienter le choix
@@ -402,7 +402,12 @@ void Partie::jouerTour() {
                 cout << "Le jeton faune ne peut pas etre place sur cette tuile." << endl;
                 break;
             }
-            // On crée dynamiquement une nouvelle copie, pour respecter le constructeur attendu.
+            //!!! DEBUG
+            this->aJeton = false;
+            this->animalJetonSelectionne = Animal::Vide;
+            std::cerr << "[DEBUG] Jeton consomme, etat reset.\n";
+
+            // On cree dynamiquement une nouvelle copie, pour respecter le constructeur attendu.
             Action* action = new ActionPlacerJeton(animalJetonSelectionne, tuilePlaceePtr, joueur);
             controleur->executerAction(action);
             jetonPlace = true;

@@ -52,7 +52,7 @@ private:
     TuileDepart** tuilesDepart = nullptr;
 
     JetonFaune* tabJetons[100];
-    Tuile* tabTuiles[100]; // 0–84 : normales, + 15 de départ (5 x 3)
+    Tuile* tabTuiles[100]; // 0–84 : normales, + 15 de depart (5 x 3)
     CarteMarquageFaune* tabCartesMarquage[15];
 
     std::random_device rd;

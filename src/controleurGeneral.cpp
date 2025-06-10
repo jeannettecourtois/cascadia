@@ -35,7 +35,7 @@ ControleurGeneral::ControleurGeneral()
 
     // Construction des Tuiles
     for (size_t i = 0; i < 85; ++i) tabTuiles[i] = new Tuile();
-    // Construction des Tuiles de départ (placeholder)
+    // Construction des Tuiles de depart (placeholder)
     for (size_t i = 85; i < 90; ++i) { tabTuiles[i] = nullptr; } // seront remplies dans initialiserTuilesDepart
 
     // Construction des Cartes de Marquage Faune
