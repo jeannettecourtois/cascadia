@@ -47,7 +47,6 @@ public:
         verifierJeton("constructeur copie");
     }
     TuilePlacee& operator=(const TuilePlacee& other) {
-        std::cerr << "[DEBUG COPY =] jeton=" << static_cast<int>(other.jeton) << "\n";
         if (this != &other) {
             tuile = other.tuile;
             pos = other.pos;

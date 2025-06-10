@@ -17,6 +17,7 @@ public:
     void afficherActions() const;
     vector<Action*>& getListeActions() { return listeActions; }
     void viderActions();
+    void ajouterAction(Action* a) { listeActions.push_back(a); }
 
     json toJson() const;
 };

@@ -205,9 +205,6 @@ void Partie::jouerTour() {
             Animal jetonLu = selJ->getJetonSelection();
             if (jetonLu != Animal::Vide) {
                 this->setAnimalJetonSelectionne(jetonLu);
-                std::cerr << "[TRACE] Jeton recopie depuis ActionSelectionJeton : "
-                    << static_cast<int>(jetonLu) << " @ "
-                    << static_cast<const void*>(&animalJetonSelectionne) << "\n";
                 historiqueActions.push_back(3);
             }
             else {
@@ -384,12 +381,6 @@ void Partie::jouerTour() {
         }
         case 7: {
             cout << "Sauvegarde en cours..." << endl;
-            //!!! DEBUG
-            if (static_cast<int>(animalJetonSelectionne) < 0 || static_cast<int>(animalJetonSelectionne) > 5) {
-                std::cerr << "[BUG] animalJetonSelectionne invalide AVANT sauvegarde : "
-                    << static_cast<int>(animalJetonSelectionne) << "\n";
-            }
-            std::cerr << "[TRACE] animalJetonSelectionne = " << static_cast<int>(animalJetonSelectionne) << "\n";
             if (FileHandler().saveGame(askFilename())) {
                 cout << "Partie sauvegardee ! Fin de la partie." << endl;
                 exit(0); // pour ne pas update la pioche

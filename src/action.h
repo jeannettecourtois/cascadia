@@ -72,9 +72,9 @@ public:
         }
     }
     json toJson() const override;
+    static ActionSelectionJeton* fromJson(const json& j, Pioche* pioche);
     Animal getJetonSelection() const {
         int val = static_cast<int>(jetonSelection);
-        std::cerr << "[TRACE] getJetonSelection retourne : " << val << "\n";
         return jetonSelection;
     }
     void setJetonSelection(Animal a) {

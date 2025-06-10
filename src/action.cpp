@@ -89,7 +89,6 @@ int ActionSelectionJeton::executer() {
         return -1;
     }
     jetonSelection = *pioche->getJeton(indiceSelection);
-    std::cerr << "[DEBUG] Jeton selectionne depuis la pioche : " << static_cast<int>(jetonSelection) << "\n";
     return indiceSelection;
     /*
     if (indiceSelection < 0 || indiceSelection > 3 || !pioche->getJeton(indiceSelection)) {
@@ -113,6 +112,13 @@ json ActionSelectionJeton::toJson() const {
         {"indiceJeton", indiceSelection},
         {"jeton", toString(jetonSelection)}
     };
+}
+ActionSelectionJeton* ActionSelectionJeton::fromJson(const json& j, Pioche* p) {
+    int index = j.at("indiceJeton");
+    Animal a = fromStringAnimal(j.at("jeton"));
+    auto* act = new ActionSelectionJeton(index, p);
+    act->setJetonSelection(a);
+    return act;
 }
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

@@ -32,7 +32,6 @@ std::ostream& operator<<(std::ostream& f, const AnimalFormateur& af) {
 
 // COnverti un animal vers un string
 std::string toString(const Animal& a) {
-    std::cout << "[TRACE] Appel toString sur Animal = " << static_cast<int>(a) << std::endl;
     switch (a) {
     case Animal::Vide:   return "Vide";
     case Animal::Ours:   return "Ours";

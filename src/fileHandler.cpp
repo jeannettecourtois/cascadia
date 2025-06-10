@@ -27,13 +27,6 @@ static json toJsonPartie(const Partie& partie) {
         CarteMarquageFaune* carte = partie.getCarteRegle(i);
         j["carteMarquageFaune"].push_back(carte->toJson());
     }
-    
-    //!!! DEBUG
-    for (const auto& joueur : partie.getJoueurs()) {
-        for (const auto& tp : joueur->getPlateau()->getPlateau()) {
-            tp.verifierJeton("Partie::toJsonPartie()");
-        }
-    }
 
     // Joueurs
     j["players"] = json::array();
@@ -71,28 +64,23 @@ static json toJsonPartie(const Partie& partie) {
                     break;
                 }
             }
-
+            if (posTrouvee) {
+                j["actionHistory"].push_back({
+                    {"type", "PlacementJeton"},
+                    {"TuileCible", {{"x", posDerniereTuile.x}, {"y", posDerniereTuile.y}}},
+                    {"jeton", toString(partie.getAnimalJetonSelectionne())}
+                });
+            }/*
             if (posTrouvee) {
                 Joueur* joueur = partie.getJoueur(partie.getJoueurCourant());
                 TuilePlacee* cible = joueur->getPlateau()->getTuilePlacee(posDerniereTuile);
-
                 if (cible) {
-                    ActionPlacerJeton* action = new ActionPlacerJeton(
-                        partie.getAnimalJetonSelectionne(),
-                        cible,
-                        joueur
-                    );
+                    ActionPlacerJeton* action = new ActionPlacerJeton(partie.getAnimalJetonSelectionne(), cible, joueur);
                     action->executer();  // important : place le jeton dans la tuile
                     j["actionHistory"].push_back(action->toJson());
                     delete action;
                 }
-                else {
-                    std::cerr << "[ERREUR] Tuile non trouvee a la position ";
-                    std::cerr << "[ERREUR] Tuile non trouvee a la position "
-                        << posDerniereTuile.x << "," << posDerniereTuile.y
-                        << " pour placement du jeton en attente.\n";
-                }
-            }
+            }*/
         }
     }
 
@@ -143,24 +131,16 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
     // Historique d'actions : execute les actions de selection si valides
     for (const auto& ja : j["actionHistory"]) {
         try {
+            if (ja["type"] == "SelectionJeton") {
+                auto* act = ActionSelectionJeton::fromJson(ja, partie.getPioche());
+                nouveauCtrl->ajouterAction(act);
+                continue;
+            }
             Action* a = Action::fromJson(ja, &partie);
-
-            if (auto* selT = dynamic_cast<ActionSelectionTuile*>(a)) {
-                selT->executer();
-                nouveauCtrl->executerAction(selT);
-            }
-            else if (auto* selJ = dynamic_cast<ActionSelectionJeton*>(a)) {
-                selJ->executer();
-                nouveauCtrl->executerAction(selJ);
-            }
-            else if (auto* placerT = dynamic_cast<ActionPlacerTuile*>(a)) {
-                placerT->executer();
-                nouveauCtrl->executerAction(placerT);
-            }
-            else if (auto* placerJ = dynamic_cast<ActionPlacerJeton*>(a)) {
-                placerJ->executer();
-                nouveauCtrl->executerAction(placerJ);
-            }
+            if (auto* selT = dynamic_cast<ActionSelectionTuile*>(a)) { nouveauCtrl->ajouterAction(selT); }
+            else if (auto* selJ = dynamic_cast<ActionSelectionJeton*>(a)) { nouveauCtrl->ajouterAction(selJ); }
+            else if (auto* placerT = dynamic_cast<ActionPlacerTuile*>(a)) { nouveauCtrl->ajouterAction(placerT); }
+            else if (auto* placerJ = dynamic_cast<ActionPlacerJeton*>(a)) { nouveauCtrl->ajouterAction(placerJ);}
         }
         catch (const std::exception& e) {
             std::cerr << "[ERREUR] Chargement d'une action echoue : " << e.what() << "\n";
@@ -169,7 +149,7 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
     for (const auto& action : nouveauCtrl->getListeActions()) {
     if (auto selJ = dynamic_cast<ActionSelectionJeton*>(action)) {
         Animal a = selJ->getJetonSelection();
-        if (a >= Animal::Aigle && a <= Animal::Saumon) {
+        if (a != Animal::Vide) {
             partie.setAnimalJetonSelectionne(a);
             std::cerr << "[INFO] Jeton selectionne restaure depuis ActionSelectionJeton: "
                       << static_cast<int>(a) << "\n";
@@ -198,18 +178,8 @@ bool FileHandler::saveGame(const std::string& filename) {
     // On recupere la partie
     Partie& partie = Partie::getInstance();
 
-    //!!! DEBUG
-    Animal* ptr = &(partie.getAnimalJetonSelectionne());
-    std::cerr << "[TRACE] Adresse de animalJetonSelectionne = "
-        << static_cast<const void*>(ptr)
-        << ", valeur = " << static_cast<int>(*ptr) << "\n";
-    std::cerr << "[SENTINEL] Valeur sentinelle = " << std::hex << partie.getSentinel() << std::dec << "\n";
-
-
     // On transforme la partie en json
     json j = toJsonPartie(partie);
-    std::cerr << "[TRACE] Apres toJsonPartie, valeur de animalJetonSelectionne = "
-        << static_cast<int>(*ptr) << "\n";
 
     ofstream file(filename);
     if (!file) return false;
