@@ -7,7 +7,7 @@ using namespace std;
 unsigned int Tuile::idCounter = 0;
 
 Tuile::Tuile() : id(idCounter++) {
-    // Gen déterministe basée sur l'ID et BASE_SEED
+    // Gen deterministe basee sur l'ID et BASE_SEED
     mt19937 gen(BASE_SEED + id);
     uniform_int_distribution<> dist3(1, 3);
 

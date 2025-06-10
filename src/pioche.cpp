@@ -22,7 +22,7 @@ Tuile* SacTuile::Piocher() {
         }
     }
 
-    if (candidates.empty()) return nullptr; // Plus rien à piocher d'utile
+    if (candidates.empty()) return nullptr; // Plus rien a piocher d'utile
 
     int index = rand() % candidates.size();
     Tuile* selected = candidates[index];
@@ -125,8 +125,8 @@ void Pioche::preparerPioche() {
         Animal a = sacDeJetons->Piocher();
         jetons[i] = new Animal(a);
         //!!! DEBUG
-        std::cerr << "[TRACE] jetons[" << i << "] initialise à " << static_cast<int>(*jetons[i])
-            << " à l'adresse " << static_cast<void*>(jetons[i]) << "\n";
+        std::cerr << "[TRACE] jetons[" << i << "] initialise a " << static_cast<int>(*jetons[i])
+            << " a l'adresse " << static_cast<void*>(jetons[i]) << "\n";
     }
 }
 
@@ -193,7 +193,7 @@ void Pioche::completerPioche(const Animal* a, const Tuile* t) {
             delete jetons[i];
             jetons[i] = new Animal(tirage);
             std::cerr << "[TRACE] jetons[" << i << "] remplace par " << static_cast<int>(tirage)
-                << " à " << static_cast<void*>(jetons[i]) << "\n";
+                << " a " << static_cast<void*>(jetons[i]) << "\n";
         }
     }
 
@@ -316,7 +316,7 @@ void Pioche::fromJson(const json& j) {
             delete jetons[i];
         }
         jetons[i] = new Animal(a);
-        std::cerr << "[TRACE] jetons[" << i << "] reassigne à " << static_cast<int>(a)
-            << " à l'adresse " << static_cast<void*>(jetons[i]) << "\n";
+        std::cerr << "[TRACE] jetons[" << i << "] reassigne a " << static_cast<int>(a)
+            << " a l'adresse " << static_cast<void*>(jetons[i]) << "\n";
     }
 }

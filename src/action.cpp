@@ -21,7 +21,7 @@ Action* Action::fromJson(const json& j, Partie* partie) {
             jeton = fromStringAnimal(j["jeton"].get<std::string>());
         }
         else {
-            std::cerr << "[WARN] jeton non trouve ou mal type dans JSON, valeur forcee à Vide\n";
+            std::cerr << "[WARN] jeton non trouve ou mal type dans JSON, valeur forcee a Vide\n";
             jeton = Animal::Vide;
         }
         auto* action = new ActionSelectionJeton(index, partie->getPioche());
@@ -34,20 +34,16 @@ Action* Action::fromJson(const json& j, Partie* partie) {
         int y = j.at("position").at("y");
         unsigned int idTuile = j.at("tuile").at("id");
         Tuile* tuile = ControleurGeneral::getInstance().getTuileById(idTuile);
-        int idJoueur = j.at("joueur");
-        Joueur* joueur = partie->getJoueur(idJoueur);
-        return new ActionPlacerTuile(tuile, Position{ x, y }, joueur);
+        return new ActionPlacerTuile(tuile, Position{ x, y }, partie->getJoueur(partie->getJoueurCourant()));
     }
 
     if (type == "PlacementJeton") {
-        int idJoueur = j.at("joueur");
-        Joueur* joueur = partie->getJoueur(idJoueur);
         Animal jeton = fromStringAnimal(j.at("jeton"));
         Position pos{
             j["TuileCible"]["x"],
             j["TuileCible"]["y"]
         };
-        return new ActionPlacerJeton(jeton, pos, joueur);
+        return new ActionPlacerJeton(jeton, pos, partie->getJoueur(partie->getJoueurCourant()));
     }
 
     throw std::runtime_error("Type d'action inconnu : " + type);
@@ -148,8 +144,7 @@ json ActionPlacerTuile::toJson() const {
     return {
         {"type", "PlacementTuile"},
         {"tuile", tuile->toJson()},
-        {"position", {{"x", pos.x}, {"y", pos.y}}},
-        { "joueur", joueur->getIdJoueur() }
+        {"position", {{"x", pos.x}, {"y", pos.y}}}
     };
 }
 
@@ -170,9 +165,9 @@ int ActionPlacerJeton::executer() {
             << " ne peut pas etre place sur cette tuile." << std::endl;
         return -1;
     }
-    // Verifie si un jeton est dejà place
+    // Verifie si un jeton est deja place
     if (cible->getJeton() != Animal::Vide) {
-        std::cout << "Il y a dejà un jeton sur cette tuile." << std::endl;
+        std::cout << "Il y a deja un jeton sur cette tuile." << std::endl;
         return -1;
     }
     // Effectue le placement
@@ -191,7 +186,6 @@ json ActionPlacerJeton::toJson() const {
     j["type"] = "PlacementJeton";
     j["TuileCible"] = { {"x", posTuile.x}, {"y", posTuile.y} };
     j["jeton"] = toString(jeton);
-    j["joueur"] = joueur->getIdJoueur();
     return j;
 }
 ActionPlacerJeton* ActionPlacerJeton::fromJson(const json& j, Partie* partie) {

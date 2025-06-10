@@ -27,45 +27,6 @@ static Position askPosition(const string& prompt) {
     }
 }
 
-// CONTROLEUR TOUR
-ControleurTour::ControleurTour() {}
-
-ControleurTour::~ControleurTour() {
-    for (Action* a : listeActions) {
-        delete a;
-    }
-    listeActions.clear();
-}
-
-void ControleurTour::executerAction(Action* a) {
-    a->executer();
-    listeActions.push_back(a);
-}
-
-void ControleurTour::annulerDerniereAction() {
-    if (!listeActions.empty()) {
-        listeActions.back()->afficher(); //!!! Pour debug -> observe que lorsque annule, 3. selection jeton faune: enft annule placement tuile 3
-        listeActions.back()->annuler(); // annuler la derniere action
-        delete listeActions.back(); // liberer la memoire
-        listeActions.pop_back(); // supprimer l'action du vecteur
-    }
-}
-
-void ControleurTour::afficherActions() const {
-    cout << "\nListe des actions du tour : " << endl;
-    for (Action* action : listeActions) {
-        action->afficher();
-    }
-}
-
-json ControleurTour::toJson() const {
-    json j = json::array();
-    for (const auto& action : listeActions)
-        j.push_back(action->toJson());
-    return j;
-}
-
-
 
 // PARTIE
 
@@ -107,7 +68,7 @@ void Partie::reinitialiserPartie() {
     delete pioche;
     pioche = nullptr;
 
-    // Liberation du contrôleur de tour
+    // Liberation du controleur de tour
     delete ctrlTour;
     ctrlTour = nullptr;
 
@@ -203,12 +164,6 @@ void Partie::setPioche(Pioche* nouvellePioche) {
     pioche = nouvellePioche;
 }
 
-//!!! dernier ajout
-void ControleurTour::viderActions() {
-    for (Action* a : listeActions) delete a;
-    listeActions.clear();
-}
-
 void Partie::jouerTour() {
     if (estFini()) {
         cout << "\nLa partie est terminee." << endl;
@@ -236,7 +191,7 @@ void Partie::jouerTour() {
     vector<int> historiqueActions;  // Pour enregistrer l'historique des choix du joueur
 
 
-    // Initialisation à partir de l'historique qd chargement
+    // Initialisation a partir de l'historique qd chargement
     for (Action* a : controleur->getListeActions()) {
         if (auto selT = dynamic_cast<ActionSelectionTuile*>(a)) {
             tuileSelectionnee = selT->getTuileSelectionnee();
@@ -248,7 +203,7 @@ void Partie::jouerTour() {
         }
         else if (auto selJ = dynamic_cast<ActionSelectionJeton*>(a)) {
             Animal jetonLu = selJ->getJetonSelection();
-            if (jetonLu >= Animal::Aigle && jetonLu <= Animal::Saumon) {
+            if (jetonLu != Animal::Vide) {
                 this->setAnimalJetonSelectionne(jetonLu);
                 std::cerr << "[TRACE] Jeton recopie depuis ActionSelectionJeton : "
                     << static_cast<int>(jetonLu) << " @ "
@@ -294,7 +249,7 @@ void Partie::jouerTour() {
 
         switch (choix) {
         case 1: { // Selectionner une tuile de la pioche
-            if (tuileSelectionnee) break;  // dejà fait
+            if (tuileSelectionnee) break;  // deja fait
             int indiceTuile;
             pioche->afficherTuilesDisponibles(); // Affiche les tuiles disponibles dans la pioche
             pioche->afficherJetonsDisponibles(); // Affiche les jetons faune disponibles pour orienter le choix

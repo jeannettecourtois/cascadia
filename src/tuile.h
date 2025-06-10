@@ -18,7 +18,7 @@ private:
 
     static unsigned int idCounter;
     
-    // Seed fixe pour génération déterministe : choix arbitraire, mais constant
+    // Seed fixe pour generation deterministe : choix arbitraire, mais constant
     static constexpr unsigned int BASE_SEED = 123456789u;
 
 public:
@@ -56,6 +56,6 @@ public:
     Keystone();
     ~Keystone() override;
     // Donne un jeton keyStone a joueur si pose animal sur bonne case keyStone
-    void associationJeton() const override; // Où mettre joueur ?
+    void associationJeton() const override; // Ou mettre joueur ?
     // on peut mettre dans ActionPlacerJeton car derniere action du tour
 };*/

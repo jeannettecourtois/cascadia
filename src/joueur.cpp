@@ -92,7 +92,7 @@ void PlateauJoueur::afficherPlateau() const {
             const TuilePlacee* tuile = getTuilePlacee(Position(i, j));
             if (tuile) {
                 std::ostringstream jetons;
-                // On affiche soit les animaux natifs à la tuile, soit le jeton pose dessus
+                // On affiche soit les animaux natifs a la tuile, soit le jeton pose dessus
                 if (tuile->getJeton() == Animal::Vide) {
                     jetons << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 2) ? tuile->getTuile()->getVectAnimaux()[1] : Animal::Vide, Format::Court } << AnimalFormateur{ tuile->getTuile()->getVectAnimaux()[0], Format::Court } << AnimalFormateur{ (tuile->getTuile()->getNbAnimaux() >= 3) ? tuile->getTuile()->getVectAnimaux()[2] : Animal::Vide, Format::Court };
                 }

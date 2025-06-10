@@ -1,14 +1,22 @@
 #pragma once
 #include <vector>
-/*
+#include "action.h"
+
 class Action;
 
+using namespace std;
+
+// ControleurTour : gere les actions du tour de jeu
 class ControleurTour {
-private:
-    std::vector<Action*> history_;
+    vector<Action*> listeActions; // Liste des actions effectuees durant le tour du joueur
 public:
+    ControleurTour();
+    ~ControleurTour();
     void executerAction(Action* a);
     void annulerDerniereAction();
-    const std::vector<Action*>& getHistory() const;
+    void afficherActions() const;
+    vector<Action*>& getListeActions() { return listeActions; }
+    void viderActions();
+
+    json toJson() const;
 };
-*/

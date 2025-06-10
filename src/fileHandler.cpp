@@ -46,7 +46,7 @@ static json toJsonPartie(const Partie& partie) {
     // Historique d'actions
     j["actionHistory"] = partie.getControleurTour()->toJson();
 
-    // Si un jeton a ete selectionne sans etre encore place, on l’ajoute manuellement à la sauvegarde
+    // Si un jeton a ete selectionne sans etre encore place, on l’ajoute manuellement a la sauvegarde
     const auto& actions = partie.getControleurTour()->getListeActions();
 
     if (!actions.empty()) {
@@ -136,7 +136,7 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
     partie.setNbTour(j["gameState"]["toursRestants"]);
     partie.setJoueurCourant(j["gameState"]["joueurCourant"]);
 
-    // Contrôleur de tour neuf
+    // Controleur de tour neuf
     ControleurTour* nouveauCtrl = new ControleurTour();
     partie.setControleurTour(nouveauCtrl);
 
