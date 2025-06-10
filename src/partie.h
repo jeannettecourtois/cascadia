@@ -69,7 +69,7 @@ public:
     CarteMarquageFaune* getCarteRegle(int i) const { return cartesRegles[i]; }
     ControleurTour* getControleurTour() const { return ctrlTour; }
     const Animal& getAnimalJetonSelectionne() const { return animalJetonSelectionne; }
-    Animal& Partie::getAnimalJetonSelectionne() { return animalJetonSelectionne; }
+    Animal& getAnimalJetonSelectionne() { return animalJetonSelectionne; }
     bool getAJeton() const { return aJeton; }
 
     string getPhaseCourante() const;

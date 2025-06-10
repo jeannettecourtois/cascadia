@@ -41,7 +41,7 @@ public:
         }
     }
     Tuile* getTuileSelectionnee() const { return tuileSelection; }
-    json ActionSelectionTuile::toJson() const {
+    json toJson() const {
         return {
             {"type", "SelectionTuile"},
             {"indiceTuile", indiceSelection}

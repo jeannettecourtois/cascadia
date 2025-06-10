@@ -14,7 +14,7 @@ public:
     ~SacTuile();
     Tuile* Piocher();
     void mettreDansLeSac(Tuile* t);
-    std::vector<Tuile*> getTuiles() { return tuiles; }
+    std::vector<Tuile*>& getTuiles() { return tuiles; }
 };
 
 
