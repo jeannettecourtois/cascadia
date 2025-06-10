@@ -56,6 +56,7 @@ private:
     int nbJetonNature;
     PlateauJoueur* plateau;
     Partie* partie;
+    string nom;
 public:
     Joueur(Partie* p, int id);
     ~Joueur();
