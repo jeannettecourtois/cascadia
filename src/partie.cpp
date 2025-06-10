@@ -7,6 +7,26 @@
 
 using namespace std;
 
+static Position askPosition(const string& prompt) {
+    int x, y;
+    while (true) {
+        cout << prompt << endl;
+        cout << " x : ";
+        if (!(cin >> x)) {
+            cout << "Valeur invalide pour x. Veuillez entrer un entier.\n";
+            cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        cout << " y : ";
+        if (!(cin >> y)) {
+            cout << "Valeur invalide pour y. Veuillez entrer un entier.\n";
+            cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        return Position(x, y);
+    }
+}
+
 // CONTROLEUR TOUR
 ControleurTour::ControleurTour() {}
 
@@ -297,15 +317,7 @@ void Partie::jouerTour() {
         }
         case 2: { // Placer une tuile sur le plateau
             if (!tuileSelectionnee || tuilePlacee) break;
-            int refX, refY;
-            string direction;
-            cout << "A quelle tuile existante sur votre plateau souhaitez-vous coller la tuile ? (x,y) : \n";
-            cout << " x : ";
-            cin >> refX;
-            cout << " y : ";
-            cin >> refY;
-            Position posRef(refX, refY);
-
+            Position posRef = askPosition("A quelle tuile existante sur votre plateau souhaitez - vous coller la tuile ? ");
             // Verification si une tuile existe a cette position
             TuilePlacee* tuileExistante = joueur->getPlateau()->getTuilePlacee(posRef);
             if (!tuileExistante) {
@@ -317,6 +329,7 @@ void Partie::jouerTour() {
             tuileExistante->getTuile()->afficherTuile();
 
             cout << "position : " << endl;
+            string direction;
             cin >> direction;
             transform(direction.begin(), direction.end(), direction.begin(), ::toupper);
             Position pos;
@@ -364,14 +377,7 @@ void Partie::jouerTour() {
         }
         case 4: { // Placer un jeton faune
             if (jetonPlace) break;
-            int x, y;
-            cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << AnimalFormateur{ animalJetonSelectionne, Format::Complet } << endl;
-            cout << " x : ";
-            cin >> x;
-            cout << " y : ";
-            cin >> y;
-
-            Position pos(x, y);
+            Position pos = askPosition("Sur quelle tuile souhaitez-vous placer le jeton faune ? " + toString(animalJetonSelectionne));
             TuilePlacee* tuilePlaceePtr = joueur->getPlateau()->getTuilePlacee(pos);
             if (!tuilePlaceePtr) {
                 cout << "Aucune tuile placee a cette position. Veuillez selectionner une tuile deja placee." << endl;
