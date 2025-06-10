@@ -49,7 +49,7 @@ static json toJsonPartie(const Partie& partie) {
     // Si un jeton a ete selectionne sans etre encore place, on l’ajoute manuellement à la sauvegarde
     const auto& actions = partie.getControleurTour()->getListeActions();
 
-    if (partie.getAJeton() && !actions.empty()) {
+    if (!actions.empty()) {
         const auto& actions = partie.getControleurTour()->getListeActions();
 
         bool jetonDejaPlace = false;
@@ -171,7 +171,6 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
         Animal a = selJ->getJetonSelection();
         if (a >= Animal::Aigle && a <= Animal::Saumon) {
             partie.setAnimalJetonSelectionne(a);
-            partie.setAJeton(true);
             std::cerr << "[INFO] Jeton selectionne restaure depuis ActionSelectionJeton: "
                       << static_cast<int>(a) << "\n";
         }

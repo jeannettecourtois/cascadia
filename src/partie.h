@@ -43,8 +43,6 @@ private:
     Animal animalJetonSelectionne = Animal::Vide;
     int sentinel = 0xDEADBEEF;
 
-    bool aJeton = false;
-
     Partie(); // constructeur prive (singleton), appele qu'une seule fois
     Partie(const Partie&) = delete;
     Partie& operator=(const Partie&) = delete;
@@ -70,7 +68,6 @@ public:
     ControleurTour* getControleurTour() const { return ctrlTour; }
     const Animal& getAnimalJetonSelectionne() const { return animalJetonSelectionne; }
     Animal& getAnimalJetonSelectionne() { return animalJetonSelectionne; }
-    bool getAJeton() const { return aJeton; }
 
     string getPhaseCourante() const;
 
@@ -93,9 +90,4 @@ public:
 
     int getSentinel() const { return sentinel; }
     void setAnimalJetonSelectionne(Animal a) { animalJetonSelectionne = a; }
-    void setAJeton(bool val) { aJeton = val; }
-    void resetJetonSelection() {
-        animalJetonSelectionne = Animal::Vide;
-        aJeton = false;
-    }
 };

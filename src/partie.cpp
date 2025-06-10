@@ -209,8 +209,7 @@ void Partie::jouerTour() {
 
     bool actionFinie = false;
     Tuile* tuileSelectionnee = nullptr;
-    this->animalJetonSelectionne = Animal::Vide;
-    this->aJeton = false;
+    this->setAnimalJetonSelectionne(Animal::Vide);
     bool tuilePlacee = false;
     bool jetonPlace = false;
 
@@ -230,8 +229,7 @@ void Partie::jouerTour() {
         else if (auto selJ = dynamic_cast<ActionSelectionJeton*>(a)) {
             Animal jetonLu = selJ->getJetonSelection();
             if (jetonLu >= Animal::Aigle && jetonLu <= Animal::Saumon) {
-                this->animalJetonSelectionne = jetonLu;
-                this->aJeton = true;
+                this->setAnimalJetonSelectionne(jetonLu);
                 std::cerr << "[TRACE] Jeton recopie depuis ActionSelectionJeton : "
                     << static_cast<int>(jetonLu) << " @ "
                     << static_cast<const void*>(&animalJetonSelectionne) << "\n";
@@ -263,30 +261,12 @@ void Partie::jouerTour() {
 
         // Affichage des actions possibles en fonction de l'etat actuel du jeu
         cout << "Que voulez-vous faire ?" << endl;
-        // On n'affiche l'option que si la tuile n'a pas encore ete selectionnee
-        if (phase == "SELECTION_TUILE" && !tuileSelectionnee) {
-            cout << "1. Selectionner une tuile de la pioche" << endl;
-        }
-        // On n'affiche que si une tuile est selectionnee ET pas encore placee
-        if (phase == "PLACEMENT_TUILE" && tuileSelectionnee && !tuilePlacee) {
-            cout << "2. Placer une tuile sur votre plateau" << endl;
-        }
-        // On n'affiche que si la tuile a ete placee ET pas encore de jeton selectionne
-        if (phase == "SELECTION_JETON" && tuilePlacee && !aJeton) {
-            cout << "3. Selectionner un jeton faune" << endl;
-        }
-        // On n'affiche que si un jeton a ete selectionne ET pas encore place
-        if (phase == "PLACEMENT_JETON" && aJeton && !jetonPlace) {
-            cout << "4. Placer un jeton faune" << endl;
-        }
-        // Annulation possible si on a dejà fait au moins une action
-        if (!historiqueActions.empty()) {
-            cout << "5. Annuler la derniere action" << endl;
-        }
-        // On n'affiche Terminer que si tuile et jeton ont ete places
-        if (phase == "TERMINER" && tuilePlacee && jetonPlace) {
-            cout << "6. Terminer mon tour" << endl;
-        }
+        if (phase == "SELECTION_TUILE") {cout << "1. Selectionner une tuile de la pioche" << endl;}
+        if (phase == "PLACEMENT_TUILE") {cout << "2. Placer une tuile sur votre plateau" << endl;}
+        if (phase == "SELECTION_JETON") { cout << "3. Selectionner un jeton faune" << endl; }
+        if (phase == "PLACEMENT_JETON") { cout << "4. Placer un jeton faune" << endl;}
+        if (!historiqueActions.empty()) {cout << "5. Annuler la derniere action" << endl;}
+        if (phase == "TERMINER") {cout << "6. Terminer mon tour" << endl;}
         cout << "7. Sauvegarder et quitter la partie" << endl;
 
         int choix;
@@ -376,15 +356,14 @@ void Partie::jouerTour() {
                 delete action;
             }
             else {
-                this->animalJetonSelectionne = *pioche->getJeton(indiceSelection);
-                this->aJeton = true;
+                this->setAnimalJetonSelectionne(*pioche->getJeton(indiceSelection));
                 controleur->executerAction(action);
                 historiqueActions.push_back(3);
             }
             break;
         }
         case 4: { // Placer un jeton faune
-            if (!aJeton || jetonPlace) break;
+            if (jetonPlace) break;
             int x, y;
             cout << "Sur quelle tuile souhaitez-vous placer le jeton faune ? (x,y) : " << AnimalFormateur{ animalJetonSelectionne, Format::Complet } << endl;
             cout << " x : ";
@@ -402,10 +381,6 @@ void Partie::jouerTour() {
                 cout << "Le jeton faune ne peut pas etre place sur cette tuile." << endl;
                 break;
             }
-            //!!! DEBUG
-            this->aJeton = false;
-            this->animalJetonSelectionne = Animal::Vide;
-            std::cerr << "[DEBUG] Jeton consomme, etat reset.\n";
 
             // On cree dynamiquement une nouvelle copie, pour respecter le constructeur attendu.
             Action* action = new ActionPlacerJeton(animalJetonSelectionne, tuilePlaceePtr, joueur);
@@ -422,13 +397,14 @@ void Partie::jouerTour() {
                 cout << "Action annulee." << endl;
                 switch (derniereAction) {
                 case 1: tuileSelectionnee = nullptr; break;
-                case 2: tuilePlacee = false;       break;
+                case 2: tuilePlacee = false; break;
                 case 3: {
-                    this->animalJetonSelectionne = Animal::Vide;
-                    this->aJeton = false;
+                    this->setAnimalJetonSelectionne(Animal::Vide);
                     break;
                 }
-                case 4: jetonPlace = false;       break;
+                case 4: 
+                    jetonPlace = false;
+                    break;
                 }
             }
             else {
@@ -466,7 +442,7 @@ void Partie::jouerTour() {
         }
     }
     // Update la pioche
-    pioche->completerPioche(&animalJetonSelectionne, tuileSelectionnee);
+    pioche->completerPioche(&getAnimalJetonSelectionne(), tuileSelectionnee);
     // Passe au joueur suivant
     passerAuJoueurSuivant();
 }
