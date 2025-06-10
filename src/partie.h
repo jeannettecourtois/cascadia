@@ -28,7 +28,7 @@ public:
 };
 
 // Partie : gere la partie avec plusieurs joueurs
-class Partie {
+class Partie { //Singleton
 private:
     static Partie* instance;
 
@@ -94,7 +94,7 @@ public:
     int getSentinel() const { return sentinel; }
     void setAnimalJetonSelectionne(Animal a) { animalJetonSelectionne = a; }
     void setAJeton(bool val) { aJeton = val; }
-    void Partie::resetJetonSelection() {
+    void resetJetonSelection() {
         animalJetonSelectionne = Animal::Vide;
         aJeton = false;
     }

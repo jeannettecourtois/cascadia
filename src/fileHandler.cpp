@@ -88,7 +88,7 @@ static json toJsonPartie(const Partie& partie) {
                 }
                 else {
                     std::cerr << "[ERREUR] Tuile non trouvee a la position ";
-                    std::cerr << "[ERREUR] Tuile non trouvee à la position "
+                    std::cerr << "[ERREUR] Tuile non trouvee a la position "
                         << posDerniereTuile.x << "," << posDerniereTuile.y
                         << " pour placement du jeton en attente.\n";
                 }
@@ -172,7 +172,7 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
         if (a >= Animal::Aigle && a <= Animal::Saumon) {
             partie.setAnimalJetonSelectionne(a);
             partie.setAJeton(true);
-            std::cerr << "[INFO] Jeton sélectionné restauré depuis ActionSelectionJeton: "
+            std::cerr << "[INFO] Jeton selectionne restaure depuis ActionSelectionJeton: "
                       << static_cast<int>(a) << "\n";
         }
     }
