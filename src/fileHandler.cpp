@@ -87,7 +87,7 @@ static json toJsonPartie(const Partie& partie) {
                     delete action;
                 }
                 else {
-                    std::cerr << "[ERREUR] Tuile non trouvée à la position "
+                    std::cerr << "[ERREUR] Tuile non trouvee a la position "
                         << posDerniereTuile.x << "," << posDerniereTuile.y
                         << " pour placement du jeton en attente.\n";
                 }
@@ -161,7 +161,7 @@ static void fromJsonPartie(const nlohmann::json& j, Partie& partie) {
             }
         }
         catch (const std::exception& e) {
-            std::cerr << "[ERREUR] Chargement d'une action échoué : " << e.what() << "\n";
+            std::cerr << "[ERREUR] Chargement d'une action echoue : " << e.what() << "\n";
         }
     }
 }
