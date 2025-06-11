@@ -141,6 +141,7 @@
     <ClInclude Include="src\enum.h" />
     <ClInclude Include="src\fileHandler.h" />
     <ClInclude Include="src\joueur.h" />
+    <ClInclude Include="src\json.hpp" />
     <ClInclude Include="src\partie.h" />
     <ClInclude Include="src\pioche.h" />
     <ClInclude Include="src\tuile.h" />

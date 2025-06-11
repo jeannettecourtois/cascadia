@@ -92,10 +92,11 @@
     <ClInclude Include="src\controleurTour.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\save.json">
-      <Filter>Resource Files</Filter>
-    </None>
+    <None Include="save.json" />
   </ItemGroup>
 </Project>
