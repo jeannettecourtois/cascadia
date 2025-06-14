@@ -7,7 +7,7 @@
 #include "tuile.h"
 #include "fileHandler.h"
 #include "util.h"
-    
+
 using namespace std;
 
 static void createNewGame() {
