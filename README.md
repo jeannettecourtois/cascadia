@@ -1,101 +1,56 @@
 # Cascadia
 
+🎮 **Jeu original :** https://cascadiagame.github.io/
+📖 **Règles officielles du jeu (PDF) :** https://www.alderac.com/wp-content/uploads/2021/08/Cascadia-Rules.pdf
+
+**Branche principale : `VF-architecture`**
+
+## Installation & Prérequis
+
+Ce projet est en C++. Pour compiler et exécuter le projet, vous devez avoir un compilateur C++ installé.
+
+### Avec Visual Studio
+
+Visual Studio n'installe pas le compilateur C++ par défaut. Il faut installer la charge de travail dédiée :
+
+1. Ouvrez le **Visual Studio Installer**
+2. Sélectionnez la charge de travail **"Développement Desktop en C++"**
+3. Installez / Modifiez
+
+Cela installe le compilateur **MSVC**, les outils CMake et le débogueur nécessaires.
+
+### Avec Visual Studio Code
+
+⚠️ **Non recommandé pour ce projet.** VS Code n'est qu'un éditeur : il faut installer et configurer un compilateur séparément (MSVC via les Build Tools, ou MinGW-w64/MSYS2), ce qui est plus complexe à mettre en place. Préférez Visual Studio.
+
+### Commandes de compilation
+
+Avec **g++** (MinGW) :
+```bash
+g++ -std=c++17 -o cascadia main.cpp *.cpp
+./cascadia
+```
+
+Avec **MSVC** (cl.exe, depuis la Developer Command Prompt) :
+```bash
+cl /EHsc /std:c++17 main.cpp *.cpp /Fe:cascadia.exe
+cascadia.exe
+```
+
 ## Répartition
-- [ ] Action			Jeanne
-- [ ] CarteMarquageFaune	Alexandre
-- [ ] ControleurGeneral	Jeanette
-- [ ] Joueur			Corentin
+
+- [x] Action			Jeanne
+- [x] CarteMarquageFaune	Alexandre
+- [x] ControleurGeneral	Jeanette
+- [x] Joueur			Corentin
 - [x] Partie			Jeanne
-- [ ] Pioche			Alexandre
-- [ ] TuilePlacee		Corentin
-- [ ] Tuile			Yan
+- [x] Pioche			Alexandre
+- [x] TuilePlacee		Corentin
+- [x] Tuile			Yan
 - [x] Debbug de départ 	Yan
-- [ ] README Yan
+- [x] README Yan
 
 <details><summary>Convention typage C++</summary>
-
-### 1. Noms de Variables
-
-- **Variables locales** : Utilisez le style `camelCase`.
-  - Exemple :
-    ```cpp
-    int myVariable = 10;
-    double distanceInKm = 15.5;
-    ```
-
-- **Variables globales** : Préfixez les variables globales avec `g_` en utilisant le style `snake_case`.
-  - Exemple :
-    ```cpp
-    int g_maxValue;
-    double g_currentSpeed;
-    ```
-
-- **Constantes** : Utilisez le style `UPPER_SNAKE_CASE` pour les constantes et les macros.
-  - Exemple :
-    ```cpp
-    const int MAX_VALUE = 100;
-    #define PI 3.14159
-    ```
-
-- **Pointeurs** : Utilisez le type suivi de l'astérisque (`*`) à côté du nom de la variable (plutôt que de l'ajouter au type).
-  - Exemple :
-    ```cpp
-    int* pInt;
-    char* pChar;
-    ```
-
-## 2. Noms de Fonctions
-
-- **Fonctions** : Utilisez le style `camelCase` pour les noms de fonctions.
-  - Exemple :
-    ```cpp
-    void calculateTotal() { }
-    int findMax(int a, int b) { return a > b ? a : b; }
-    ```
-
-- **Fonctions membres** : Utilisez également le style `camelCase` pour les noms de fonctions membres.
-  - Exemple :
-    ```cpp
-    class MyClass {
-    public:
-        void doSomething();
-    private:
-        int myVar;
-    };
-    ```
-
-- **Fonctions de type getter/setter** : Les getters commencent par `get` et les setters par `set`, suivis de la variable concernée.
-  - Exemple :
-    ```cpp
-    int getAge() const { return age; }
-    void setAge(int newAge) { age = newAge; }
-    ```
-
-## 3. Noms de Classes et Structs
-
-- Utilisez le style `PascalCase` pour les classes et structs.
-  - Exemple :
-    ```cpp
-    class Person {};
-    struct Employee {};
-    ```
-
-- Pour les structures ou classes qui représentent une ressource système ou une entité dans le domaine, utilisez un nom explicite.
-  - Exemple :
-    ```cpp
-    class DatabaseConnection {};
-    ```
-
-## 4. Noms de Fichiers
-
-- Les fichiers d'en-tête (`.h`, `.hpp`) et de source (`.cpp`) doivent être en `camelCase`.
-  - Exemple : 
-    ```text
-    my_class.hpp
-    database_connection.cpp
-    ```
-
-</details>
 
 ## UML
 ![](UML.png)
