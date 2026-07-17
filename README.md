@@ -1,6 +1,8 @@
 # Cascadia
 
 🎮 **Jeu original :** https://cascadiagame.github.io/
+
+
 📖 **Règles officielles du jeu (PDF) :** https://www.alderac.com/wp-content/uploads/2021/08/Cascadia-Rules.pdf
 
 **Branche principale : `VF-architecture`**
@@ -49,8 +51,6 @@ cascadia.exe
 - [x] Tuile			Yan
 - [x] Debbug de départ 	Yan
 - [x] README Yan
-
-<details><summary>Convention typage C++</summary>
 
 ## UML
 ![](UML.png)
